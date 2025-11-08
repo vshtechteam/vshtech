@@ -34,11 +34,41 @@
     .btn{appearance:none;border:0;border-radius:12px;padding:12px 14px;background:#1f2937;color:#dbe7ff;cursor:pointer}
     .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--ink);font-weight:700}
     .btn.ghost{background:#1a2433}
+    .btn.linklike{background:transparent;padding:0;color:var(--accent);text-decoration:underline;cursor:pointer}
     .divider{height:1px;background:rgba(255,255,255,.06);margin:18px 0}
     .tiny{font-size:12px;opacity:.8}
     .hint{font-size:14px;color:#a7b6cc;margin-top:8px}
     .ok{display:none;margin-top:10px;color:#93e5ff}.ok.show{display:block}
     a,button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+
+    /* ==== UI chuyên nghiệp cho danh sách eSign bổ sung ==== */
+    .more-wrap{margin-top:12px}
+    .toggle-line{display:flex;align-items:center;gap:8px;margin-top:8px}
+    .chev{display:inline-block;width:10px;height:10px;transform:rotate(0deg);transition:transform .2s ease}
+    .more-open .chev{transform:rotate(90deg)}
+    .apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px}
+    .app-card{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:12px;
+      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));
+      box-shadow:0 8px 24px rgba(0,0,0,.25);
+      padding:12px;
+      transition:transform .12s ease, border-color .12s ease;
+    }
+    .app-card:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.12)}
+    .app-head{display:flex;align-items:center;gap:10px}
+    .app-icon{
+      width:34px;height:34px;border-radius:8px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 2px 10px rgba(0,0,0,.3);
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink)
+    }
+    .app-title{font-weight:700}
+    .app-note{margin-top:4px;font-size:12px;color:var(--muted);min-height:14px}
+    .app-actions{margin-top:10px;display:flex;gap:8px}
+    .btn.install{flex:1;text-align:center;border-radius:10px}
+    .btn.install.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--ink);font-weight:700}
+    .hidden{display:none}
   </style>
 </head>
 <body>
@@ -54,7 +84,15 @@
         <p class="tiny">Nếu iPhone bạn cài bản đầu không được, hãy thử “Xem thêm”.</p>
         <div class="row">
           <button class="btn primary" id="btn-esign">Cài eSign</button>
-          <button class="btn ghost" id="btn-esign-more">Xem thêm</button>
+          <button class="btn ghost" id="btn-esign-more" aria-expanded="false" aria-controls="more-esign">
+            <span class="chev" aria-hidden="true">▶</span> Xem thêm
+          </button>
+        </div>
+
+        <!-- Khu "Xem thêm" (ẩn mặc định) -->
+        <div id="more-wrap" class="more-wrap hidden">
+          <div id="more-esign" class="apps"></div>
+          <p class="tiny" id="more-hint">Mẹo: sửa dòng chữ nhỏ dưới mỗi bản để ghi <b>tên chứng chỉ</b> riêng.</p>
         </div>
       </section>
 
@@ -85,24 +123,30 @@
   </div>
 
   <script>
-    /* Ép về non-www (nếu có) */
+    /* (tùy chọn) Ép về non-www nếu cần
     if (location.hostname === 'www.vshtech.online') {
       location.replace('https://vshtech.online' + location.pathname + location.search + location.hash);
-    }
+    } */
 
     // ===== Links cố định =====
     const LINK_CERT_PAGE   = 'https://vshtech.online/certificate/';                // trang /certificate/
     const LINK_CERT_DIRECT = 'https://vshtech.online/certificate/files/cert.zip';  // link trực tiếp .zip
-    const LINK_OTA_PLIST   = 'https://vshtech.online/certificate/plist/ok.plist';  // manifest OTA
+    const LINK_OTA_PLIST   = 'https://vshtech.online/certificate/plist/ok.plist';  // manifest OTA (nút "Cài eSign")
 
-    // App Store search cho nút "Xem thêm"
+    // 15 eSign “Xem thêm” — sửa các URL plist này khi bạn có file thật
+    const MORE_ESIGN = Array.from({length:15}, (_,i) => ({
+      title: `Cài eSign #${i+1}`,
+      plist: `https://vshtech.online/certificate/plist/esign-${i+1}.plist`,
+      note:  `Tên chứng chỉ cho eSign #${i+1} (sửa ở đây)`
+    }));
+
+    // App Store search (nếu muốn mở danh sách eSign trên Store khi long-press)
     const APPSTORE_SEARCH_HTTPS = 'https://apps.apple.com/vn/search?term=ESign';
     const APPSTORE_SEARCH_ITMS  = 'itms-apps://apps.apple.com/vn/search?term=ESign';
 
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     const openStoreSearch = () => location.assign(isIOS ? APPSTORE_SEARCH_ITMS : APPSTORE_SEARCH_HTTPS);
 
-    // Chỉ chạy sau khi DOM sẵn sàng (tránh mọi khả năng auto-load)
     document.addEventListener('DOMContentLoaded', () => {
       // Nút "Cài eSign" -> cài OTA bằng itms-services
       document.getElementById('btn-esign')?.addEventListener('click', () => {
@@ -111,16 +155,56 @@
         location.assign(ota);
       });
 
-      // Nút "Xem thêm" -> mở App Store
-      document.getElementById('btn-esign-more')?.addEventListener('click', openStoreSearch);
+      // Nút "Xem thêm" -> toggle & render 15 eSign
+      const btnMore  = document.getElementById('btn-esign-more');
+      const moreWrap = document.getElementById('more-wrap');
+      const moreGrid = document.getElementById('more-esign');
 
-      // Nút "Tải chứng chỉ (.zip)" -> chuyển sang /certificate/
+      let rendered = false;
+      btnMore?.addEventListener('click', () => {
+        const willOpen = moreWrap.classList.contains('hidden');
+        btnMore.setAttribute('aria-expanded', String(willOpen));
+        btnMore.parentElement.classList.toggle('more-open', willOpen);
+        moreWrap.classList.toggle('hidden');
+
+        if (willOpen && !rendered) {
+          MORE_ESIGN.forEach(({title, plist, note}, idx) => {
+            const card = document.createElement('div'); card.className = 'app-card';
+
+            const head = document.createElement('div'); head.className = 'app-head';
+            const icon = document.createElement('div'); icon.className = 'app-icon'; icon.textContent = (idx+1);
+            const titleEl = document.createElement('div'); titleEl.className = 'app-title'; titleEl.textContent = title;
+            head.appendChild(icon); head.appendChild(titleEl);
+
+            const noteEl = document.createElement('div'); noteEl.className = 'app-note'; noteEl.textContent = note;
+
+            const actions = document.createElement('div'); actions.className = 'app-actions';
+            const install = document.createElement('a');
+            install.className = 'btn install primary';
+            install.href = `itms-services://?action=download-manifest&url=${encodeURIComponent(plist)}`;
+            install.textContent = 'Cài nhanh';
+
+            actions.appendChild(install);
+            card.appendChild(head);
+            card.appendChild(noteEl);
+            card.appendChild(actions);
+            moreGrid.appendChild(card);
+          });
+          rendered = true;
+        }
+      });
+
+      // Long-press "Xem thêm" để mở App Store (tùy chọn)
+      btnMore?.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        openStoreSearch();
+      });
+
+      // Nút "Tải chứng chỉ (.zip)" -> tới /certificate/
       const btnCert = document.getElementById('btn-cert');
       const tip     = document.getElementById('progress');
       const ok      = document.getElementById('ok');
       const direct  = document.getElementById('direct-cert');
-
-      // cập nhật link trực tiếp đúng yêu cầu
       if (direct) { direct.href = LINK_CERT_DIRECT; direct.textContent = LINK_CERT_DIRECT; }
 
       btnCert?.addEventListener('click', () => {
