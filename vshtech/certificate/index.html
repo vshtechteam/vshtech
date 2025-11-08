@@ -195,6 +195,14 @@
     const WWW = 'https://www.vshtech.online';
     const LINK_CERT_DIRECT = WWW + '/certificate/files/cert.zip';
 
+    /* --- Fix URL sai: /certificate/%20target= -> /certificate/ --- */
+    (function fixBadCertificatePath(){
+      const p = location.pathname || '';
+      if (/^\/certificate\/%20target=/i.test(p) || /^\/certificate\/\s*target=/i.test(decodeURIComponent(p))) {
+        location.replace(WWW + '/certificate/' + location.search + location.hash);
+      }
+    })();
+
     /* Ép về www nếu đang ở non-www để đồng nhất cookie/SSL */
     if (location.hostname === 'vshtech.online') {
       location.replace(WWW + location.pathname + location.search + location.hash);
@@ -257,7 +265,7 @@
           const install = document.createElement('a');
           install.className = 'btn install primary';
           install.href = 'itms-services://?action=download-manifest&url=' + encodeURIComponent(plist);
-          install.textContent = 'Install';  /* đổi nhãn nút */
+          install.textContent = 'Cài đặt';
           install.rel = 'noopener';
 
           actions.appendChild(install);
@@ -341,14 +349,16 @@
         setTimeout(()=> ok?.classList.add('show'), 900);
       });
 
-      // Chặn các href bị lẫn "%20target=" hoặc "/tager"
+      // Áo giáp: nếu có link nào bị dính "%20target=" thì sửa ngay
       document.addEventListener('click', (e) => {
         const a = e.target.closest && e.target.closest('a[href]');
         if (!a) return;
-        const href = a.getAttribute('href') || '';
-        if (href.includes('%20target=') || /\/tager\/?$/.test(href)) {
+        let href = a.getAttribute('href') || '';
+        if (href.includes('%20target=')) {
           e.preventDefault();
-          window.location.assign(LINK_CERT_DIRECT);
+          // sửa về đúng /certificate/
+          if (/^\/certificate\/%20target=/i.test(href)) location.assign('/certificate/');
+          else location.assign(LINK_CERT_DIRECT);
         }
       }, {passive:false});
     })();
@@ -367,6 +377,7 @@
       }, {passive:false});
     });
   </script>
+
   <noscript>
     <ul>
       <li><a href="https://www.vshtech.online/certificate/files/cert.zip" target="_self" rel="noopener">Tải chứng chỉ (.zip)</a></li>
