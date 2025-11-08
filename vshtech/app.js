@@ -138,22 +138,3 @@ const ROLES = [
 })();
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.getElementById('installBtn');
-  if (!btn) return;
-
-  const FILE = '/install/profiles/vpn.mobileconfig';
-  const tip  = document.getElementById('tip');
-
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();                // nếu nút là <a>, chặn nhảy trang
-    if (tip) tip.hidden = false;
-
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = FILE;                 // gửi file ở nền, KHÔNG đổi URL
-    document.body.appendChild(iframe);
-
-    setTimeout(() => location.href = '/install/thanks/', 1500);
-  });
-});
