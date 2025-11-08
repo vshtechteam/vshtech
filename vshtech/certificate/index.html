@@ -6,12 +6,12 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>eSign & chứng chỉ – VSH TECH</title>
   <meta name="color-scheme" content="dark">
-  <!-- Đồng bộ màu UI & overscroll -->
+  <!-- Màu UI & thanh địa chỉ -->
   <meta name="theme-color" content="#0b0f14">
   <style>
     /* iOS UX tweaks */
     html, body { height:100%; -webkit-text-size-adjust:100%; }
-    body { touch-action: manipulation; }
+    body { touch-action: manipulation; min-height:100dvh; }
     input, select, textarea { font-size:16px; }
 
     :root{
@@ -20,16 +20,26 @@
     }
 
     *{box-sizing:border-box}
-    /* Nền html để overscroll không lệch màu */
-    html{background:var(--bg)}
-    html,body{height:100%}
+
+    /* 1) NỀN ĐỒNG MÀU KHI OVERSCROLL (không còn đen) */
+    html{background-color:var(--bg)}
     body{
-      margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;
-      background:radial-gradient(1100px 560px at 50% -10%,#172235 0%,var(--bg) 60%) fixed;
-      color:var(--text)
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;
+      color:var(--text);
+      background-color:var(--bg); /* fallback */
+      /* KHÔNG đặt gradient trực tiếp ở body nữa */
+      position:relative;
+    }
+    /* Lớp nền phủ cố định cả viewport, kể cả rubber-band */
+    body::before{
+      content:"";
+      position:fixed; inset:0; z-index:-1;
+      background:
+        radial-gradient(1100px 560px at 50% -10%, #172235 0%, var(--bg) 60%);
+      will-change:transform;
     }
 
-    /* ====== Thanh tiến trình cuộn (luôn hiện trên đỉnh) ====== */
+    /* ====== Thanh tiến trình cuộn (luôn trên đỉnh) ====== */
     .scrollbar{
       position:fixed; top:0; left:0; right:0; height:4px; z-index:2000;
       background:rgba(255,255,255,.06);
@@ -135,7 +145,7 @@
         </div>
         <p class="tiny" style="margin-top:6px">Bấm để mở danh sách 15 bản eSign. Dưới mỗi bản có chỗ ghi tên chứng chỉ.</p>
 
-        <!-- Accordion (nhãn theo yêu cầu) -->
+        <!-- Accordion -->
         <div class="acc" id="acc-more" aria-expanded="false">
           <div class="acc-hd" id="btn-esign-more" role="button" aria-controls="acc-body" aria-expanded="false">
             <div style="display:flex;align-items:center;gap:10px">
@@ -164,16 +174,9 @@
         <div class="row">
           <button class="btn" id="btn-cert">Mở trang chứng chỉ</button>
         </div>
-        <p class="hint" id="progress" hidden>Đang chuyển…</p>
-        <p class="ok" id="ok">Đã chuyển. Nếu chưa thấy, thử bấm lại.</p>
-        <p class="tiny">
+        <p class="tiny" style="margin-top:8px">
           Link trực tiếp:
-          <!-- ĐÚNG CÚ PHÁP: đóng nháy trước target để tránh /%20target= -->
-          <a id="direct-cert"
-             href="https://www.vshtech.online/certificate/"
-             target="_self" rel="noopener">
-             https://www.vshtech.online/certificate/
-          </a>
+          <a id="direct-cert" href="#" target="_self" rel="noopener">https://www.vshtech.online/certificate/</a>
         </p>
       </section>
 
@@ -182,14 +185,32 @@
     </main>
   </div>
 
-  <!-- Toast overlay -->
   <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <script>
-    // ===== Links cố định (dùng WWW như bạn yêu cầu) =====
-    const LINK_CERT_PAGE   = 'https://www.vshtech.online/certificate/';
+    /* ===================== CẤU HÌNH LINK CHUẨN ===================== */
+    const LINK_CERT_PAGE = 'https://www.vshtech.online/certificate/';
 
-    /* Danh sách 15 eSign (sửa title/note/plist theo ý bạn) */
+    /* (Tuỳ chọn) Ép về www nếu người dùng đang ở non-www */
+    if (location.hostname === 'vshtech.online') {
+      location.replace('https://www.vshtech.online' + location.pathname + location.search + location.hash);
+    }
+
+    /* ===== Thanh tiến trình cuộn ===== */
+    (function progressBar(){
+      const fill = document.getElementById('scrollbarFill');
+      function update(){
+        const y = window.scrollY || 0;
+        const dh = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = dh>0 ? Math.min(100, Math.max(0, (y/dh)*100)) : 0;
+        fill.style.width = pct + '%';
+      }
+      window.addEventListener('scroll', update, {passive:true});
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+    /* ===== DỮ LIỆU 15 ESign ===== */
     const MORE_ESIGN = [
       { title: 'ESign #1',  note: 'Chứng chỉ: Viettel Group',  plist: 'https://vshtech.online/certificate/plist/esign-1.plist'  },
       { title: 'ESign #2',  note: 'Chứng chỉ: FPT',            plist: 'https://vshtech.online/certificate/plist/esign-2.plist'  },
@@ -208,21 +229,7 @@
       { title: 'ESign #15', note: 'Chứng chỉ: OCB',            plist: 'https://vshtech.online/certificate/plist/esign-15.plist' }
     ];
 
-    /* ===== Thanh tiến trình cuộn ===== */
-    (function progressBar(){
-      const fill = document.getElementById('scrollbarFill');
-      function update(){
-        const y = window.scrollY || 0;
-        const dh = document.documentElement.scrollHeight - window.innerHeight;
-        const pct = dh>0 ? Math.min(100, Math.max(0, (y/dh)*100)) : 0;
-        fill.style.width = pct + '%';
-      }
-      window.addEventListener('scroll', update, {passive:true});
-      window.addEventListener('resize', update);
-      update();
-    })();
-
-    // ===== Accordion mở/đóng & render danh sách =====
+    /* ===== Render eSign cards & accordion ===== */
     (function setupAccordion(){
       const acc  = document.getElementById('acc-more');
       const hd   = document.getElementById('btn-esign-more');
@@ -282,19 +289,21 @@
       });
     })();
 
-    // ===== Toast helper (tuỳ chọn) =====
+    /* ===== Toast nhỏ (tuỳ chọn) ===== */
     function showToast(msg){
       const el = document.getElementById('toast');
       if (!el) return;
       el.textContent = msg;
       el.classList.add('show');
-      setTimeout(()=> el.classList.remove('show'), 1800);
+      setTimeout(()=> el.classList.remove('show'), 1400);
     }
 
-    // Nút "Mở trang chứng chỉ" -> TỚI ĐÚNG https://www.vshtech.online/certificate/
+    /* ===== Điều hướng tới CERT PAGE – CHẮC CHẮN KHÔNG %20target= ===== */
     (function setupCert(){
       const btnCert = document.getElementById('btn-cert');
       const direct  = document.getElementById('direct-cert');
+
+      // Set anchor bằng JS để tránh sai cú pháp HTML
       if (direct) {
         direct.setAttribute('href', LINK_CERT_PAGE);
         direct.textContent = LINK_CERT_PAGE;
@@ -302,13 +311,25 @@
         direct.setAttribute('rel', 'noopener');
       }
 
+      // Nút bấm: đi thẳng tới trang chứng chỉ
       btnCert?.addEventListener('click', () => {
-        showToast('Đang chuyển tới trang chứng chỉ…');
+        showToast('Đang mở trang chứng chỉ…');
         window.location.assign(LINK_CERT_PAGE);
       });
+
+      // Bộ chặn an toàn: nếu có bất kỳ <a> nào bị dính "%20target="
+      document.addEventListener('click', (e) => {
+        const a = e.target.closest && e.target.closest('a[href]');
+        if (!a) return;
+        const href = a.getAttribute('href') || '';
+        if (href.includes('%20target=')) {
+          e.preventDefault();
+          window.location.assign(LINK_CERT_PAGE);
+        }
+      }, {passive:false});
     })();
 
-    // Chặn nhấn-giữ mở menu trên iOS cho các nút
+    // Ngăn nhấn-giữ mở menu trên iOS cho các nút
     ['contextmenu','touchstart'].forEach(evt=>{
       document.addEventListener(evt, e=>{
         const onBtn = e.target.closest && e.target.closest('.btn'); if(!onBtn) return;
