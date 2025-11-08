@@ -1,6 +1,16 @@
 <!doctype html>
 <html lang="vi">
 <head>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<style>
+  /* Ngăn text tự phóng to trên iOS, giữ layout ổn định */
+  html, body { height:100%; -webkit-text-size-adjust: 100%; }
+  /* Giảm double-tap zoom, vẫn cho kéo/scroll */
+  body { touch-action: manipulation; }
+  /* Tránh iOS tự zoom khi focus input (font <16px) */
+  input, select, textarea { font-size:16px; }
+</style>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>eSign & chứng chỉ – VSH TECH</title>
@@ -71,50 +81,58 @@
     </main>
   </div>
 
-<script>
-  // ===== CHỌN 1 TRONG 2 DÒNG BASE SAU =====
-  // Nếu build output = `certificate` (site root = /certificate):
-  const BASE = '';                // <-- dùng dòng này
-  // Nếu site root = repo root:
-  // const BASE = '/certificate'; // <-- hoặc dùng dòng này
+  <script>
+    // ===== Cấu hình link (sửa khi cần) =====
+    const BASE_CERT = '/certificate';
+    const LINK_CERT_ZIP   = `${BASE_CERT}/files/cert.zip`; // vshtech/certificate/files/cert.zip
+    const LINK_OTA_PLIST  = `https://vshtech.online${BASE_CERT}/plist/ok.plist`; // manifest OTA
 
-  // File bạn đã đặt sẵn
-  const LINK_CERT_ZIP  = `${BASE}/files/cert.zip`;
-  const LINK_OTA_PLIST = `${BASE}/plist/ok.plist`;
+    // Link mở App Store tìm kiếm eSign (cho nút "Xem thêm")
+    const APPSTORE_SEARCH_HTTPS = 'https://apps.apple.com/vn/search?term=ESign';
+    const APPSTORE_SEARCH_ITMS  = 'itms-apps://apps.apple.com/vn/search?term=ESign';
 
-  // App Store search (nút "Xem thêm")
-  const APPSTORE_SEARCH_HTTPS = 'https://apps.apple.com/vn/search?term=ESign';
-  const APPSTORE_SEARCH_ITMS  = 'itms-apps://apps.apple.com/vn/search?term=ESign';
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const openStoreSearch = () => location.assign(isIOS ? APPSTORE_SEARCH_ITMS : APPSTORE_SEARCH_HTTPS);
 
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const openStoreSearch = () => location.assign(isIOS ? APPSTORE_SEARCH_ITMS : APPSTORE_SEARCH_HTTPS);
+    // Nút "Cài eSign" -> cài OTA bằng itms-services
+    document.getElementById('btn-esign')?.addEventListener('click', () => {
+      const ota = `itms-services://?action=download-manifest&url=${encodeURIComponent(LINK_OTA_PLIST)}`;
+      if (!isIOS) alert('Hãy mở trang bằng Safari trên iPhone/iPad để cài đặt OTA.');
+      location.assign(ota);
+    });
 
-  // Nút "Cài eSign" -> cài OTA bằng itms-services
-  const btnInstall = document.getElementById('btn-esign');
-  btnInstall?.addEventListener('click', () => {
-    const ota = `itms-services://?action=download-manifest&url=${location.origin}${LINK_OTA_PLIST}`;
-    if (!isIOS) alert('Hãy mở trang bằng Safari trên iPhone/iPad để cài đặt OTA.');
-    location.assign(ota);
-  });
+    // Nút "Xem thêm" -> mở App Store
+    document.getElementById('btn-esign-more')?.addEventListener('click', openStoreSearch);
 
-  // Nút "Xem thêm" -> mở App Store search
-  document.getElementById('btn-esign-more')?.addEventListener('click', openStoreSearch);
+    // Nút tải chứng chỉ (giữ người dùng ở lại trang)
+    const btnCert = document.getElementById('btn-cert');
+    const tip     = document.getElementById('progress');
+    const ok      = document.getElementById('ok');
+    const direct  = document.getElementById('direct-cert');
+    direct.href = LINK_CERT_ZIP; direct.textContent = LINK_CERT_ZIP;
 
-  // Nút tải chứng chỉ .zip (giữ nguyên hành vi của bạn)
-  const btnCert = document.getElementById('btn-cert');
-  const tip     = document.getElementById('progress');
-  const ok      = document.getElementById('ok');
-  const direct  = document.getElementById('direct-cert');
-  direct.href = LINK_CERT_ZIP; direct.textContent = LINK_CERT_ZIP;
+    btnCert?.addEventListener('click', ()=>{
+      tip?.removeAttribute('hidden'); ok?.classList.remove('show');
+      const iframe = document.createElement('iframe');
+      iframe.style.display='none'; iframe.src = LINK_CERT_ZIP;
+      document.body.appendChild(iframe);
+      setTimeout(()=> ok?.classList.add('show'), 900);
+    });
 
-  btnCert?.addEventListener('click', ()=>{
-    tip?.removeAttribute('hidden'); ok?.classList.remove('show');
-    const iframe = document.createElement('iframe');
-    iframe.style.display='none'; iframe.src = LINK_CERT_ZIP;
-    document.body.appendChild(iframe);
-    setTimeout(()=> ok?.classList.add('show'), 900);
-  });
-</script>
+    // Chặn nhấn-giữ mở menu trên iOS cho các nút
+    ['contextmenu','touchstart'].forEach(evt=>{
+      document.addEventListener(evt, e=>{
+        const onBtn = e.target.closest && e.target.closest('.btn'); if(!onBtn) return;
+        if(evt==='touchstart'){
+          let t; const cancel=()=>{clearTimeout(t);document.removeEventListener('touchend',cancel,{passive:true});document.removeEventListener('touchmove',cancel,{passive:true});};
+          t=setTimeout(()=>{e.preventDefault();},400);
+          document.addEventListener('touchend',cancel,{passive:true});
+          document.addEventListener('touchmove',cancel,{passive:true});
+        }
+        if(evt==='contextmenu') e.preventDefault();
+      }, {passive:false});
+    });
+  </script>
 
   <noscript>
     Trình duyệt đang tắt JavaScript.
