@@ -1,4 +1,4 @@
 /install/profiles/*.mobileconfig
   Content-Type: application/x-apple-aspen-config
-  Content-Disposition: attachment; filename="vpn.mobileconfig"
   Cache-Control: no-store
+  # Content-Disposition: attachment; filename="vpn.mobileconfig"
