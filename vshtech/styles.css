@@ -1,0 +1,146 @@
+  :root{
+    --bg:#ffffff;
+    --text:#0f172a;
+    --muted:#64748b;
+    --border:#e5e7eb;
+    --ring:#dbeafe;
+
+    /* màu chữ xoay giống ảnh */
+    --grad-start:#6ea3ff;
+    --grad-end:#a78bfa;
+
+    --accent:#2563eb;
+    --accent-2:#8b5cf6;
+
+    /* sẽ được JS set lại theo px để luôn THẲNG HÀNG */
+    --baseline-fix:0px;
+
+    --radius:18px;
+    --shadow:0 12px 34px rgba(2,6,23,.08);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; color:var(--text);
+    font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Inter,Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(1600px 700px at -10% -10%, #f8fafc 0%, transparent 60%),
+      radial-gradient(1400px 600px at 110% -10%, #f1f5f9 0%, transparent 60%),
+      var(--bg);
+  }
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:3px solid var(--ring); outline-offset:3px; border-radius:12px}
+
+  .wrap{max-width:1000px;margin:76px auto;padding:0 18px}
+  .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));z-index:60;box-shadow:0 0 14px #2563eb66}
+
+  /* ===== Header ===== */
+  .header{padding:26px 22px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  .avatar{width:108px;height:108px;border-radius:26px;overflow:hidden;flex:0 0 auto;border:1px solid var(--border);box-shadow:0 12px 26px rgba(2,6,23,.08), inset 0 1px 0 #fff}
+  .avatar img{width:100%;height:100%;object-fit:cover}
+  .nameRow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  h1{margin:0;font-size:clamp(28px,4vw,42px)}
+  .meta-badge{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 30% 30%, #6ec1ff, #1da1ff 60%, #1278ff 100%);box-shadow:0 2px 10px rgba(37,99,235,.35)}
+  .meta-badge svg{width:14px;height:14px;fill:#fff}
+
+  .line{
+    display:flex; gap:10px; align-items:baseline;
+    font-size:clamp(18px,2.2vw,22px);
+    line-height:1; /* giữ baseline ổn định */
+  }
+  .lead{font-weight:800;color:#0b1220}
+
+  /* ===== Rotator: thẳng hàng + caret đi theo chữ ===== */
+  .rotator{
+    position:relative; display:inline-block; vertical-align:baseline;
+    min-width:14ch; height:1em; line-height:1;
+    transform:translateY(var(--baseline-fix)); /* JS đặt px chuẩn */
+  }
+  /* các frame chồng lên nhau, bám đáy để baseline đúng */
+  .frame{position:absolute; left:0; bottom:0; white-space:nowrap; opacity:0}
+  .frame.in{opacity:1}
+
+  .char{
+    display:inline-block; vertical-align:baseline;
+    transform:translateX(18px); opacity:0;
+    transition:transform .46s cubic-bezier(.22,.61,.36,1), opacity .46s ease;
+    background:linear-gradient(90deg,var(--grad-start),var(--grad-end));
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent; color:transparent;
+    font-weight:900; letter-spacing:.2px;
+  }
+  .frame.in .char{transform:translateX(0); opacity:1}
+  .frame.out .char{transform:translateX(-12px); opacity:0; transition-duration:.30s}
+
+  /* caret đặt TRONG frame ⇒ luôn bám theo chữ */
+  .caret{
+    display:inline-block; vertical-align:baseline;
+    height:.95em; border-left:3px solid #9ca3af; margin-left:4px;
+    transform:translateX(18px); opacity:0;
+    transition:transform .46s cubic-bezier(.22,.61,.36,1), opacity .46s ease;
+    animation:blink 1s step-end infinite;
+  }
+  .frame.in .caret{transform:translateX(0); opacity:1}
+  .frame.out .caret{transform:translateX(-12px); opacity:0; transition-duration:.30s}
+  @keyframes blink{50%{opacity:0}}
+
+  /* ===== Bio (chia dòng theo yêu cầu) ===== */
+  .bio{color:var(--muted);margin:.7rem 0 0}
+  .bio .head{display:block;font-weight:800;color:#0b1220;margin-bottom:.18rem}
+  .bio .row{display:block;margin:.12rem 0}
+  .bio .row::before{content:"• "; color:#94a3b8; font-weight:900}
+
+  .tools{margin-left:auto;display:flex;gap:10px}
+  .btn{border:1px solid var(--border);background:#f8fafc;color:var(--text);padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;transition:.18s}
+  .btn:hover{transform:translateY(-1px);background:#eef2ff;border-color:#e0e7ff}
+
+  /* ===== Link cards ===== */
+  .section{margin-top:18px;padding:14px}
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .link{display:flex;gap:14px;align-items:center;padding:16px;border-radius:16px;border:1px solid var(--border);background:linear-gradient(#fff,#fff) padding-box,linear-gradient(120deg,#fff,#eef2ff) border-box;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+  .link:hover{transform:translateY(-2px);border-color:#dbeafe;box-shadow:0 12px 32px rgba(2,6,23,.1)}
+  .ico{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.45)}
+  .ico svg{display:block;width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  /* brand tints */
+  .ico.certificate{background:radial-gradient(60% 60% at 30% 30%,#60a5fa,#2563eb)}
+  .ico.telegram{background:radial-gradient(60% 60% at 30% 30%,#7dd3fc,#0ea5e9)}
+  .ico.group{background:radial-gradient(60% 60% at 30% 30%,#a5b4fc,#6366f1)}
+  .ico.discord{background:radial-gradient(60% 60% at 30% 30%,#a78bfa,#7c3aed)}
+  .ico.facebook{background:radial-gradient(60% 60% at 30% 30%,#93c5fd,#1d4ed8)}
+  .ico.messenger{background:radial-gradient(60% 60% at 30% 30%,#60a5fa,#8b5cf6)}
+  .ico.zalo{background:radial-gradient(60% 60% at 30% 30%,#60a5fa,#2563eb)}
+  /* Install: Cloud Download để cảm giác tải xuống */
+  .ico.install{background:radial-gradient(60% 60% at 30% 30%,#67e8f9,#22d3ee)}
+  .ico.download{background:radial-gradient(60% 60% at 30% 30%,#86efac,#22c55e)}
+  .ico.info{background:radial-gradient(60% 60% at 30% 30%,#fde68a,#f59e0b)}
+  .title{font-weight:800}
+  .desc{font-size:13px;color:var(--muted)}
+
+  /* ===== Reveal chuyên nghiệp (fade+slide+scale + stagger) ===== */
+  .reveal{opacity:0;transform:translateY(22px) scale(.985);filter:blur(6px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1), filter .7s}
+  .reveal.visible{opacity:1;transform:none;filter:none}
+
+  /* ===== Skills bars ===== */
+  .skills-wrap{padding:22px}
+  .skills-wrap h2{margin:0 0 18px;font-size:clamp(20px,2.6vw,28px);text-align:center}
+  .skills{display:grid;gap:18px}
+  .skill .label{font-weight:800;text-align:center;margin-bottom:8px}
+  .bar{position:relative;height:20px;border-radius:999px;background:#e5e7eb;overflow:hidden}
+  .fill{position:absolute;inset:0 auto 0 0;width:var(--val,0%);background:linear-gradient(90deg,#ef4444,#f97316);border-radius:inherit;transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.22,.7,.2,1)}
+  .skill.active .fill{transform:scaleX(1)}
+  /* màu từng skill */
+  .skill[data-skill="html"] .fill{background:linear-gradient(90deg,#ef4444,#f97316)}
+  .skill[data-skill="lua"] .fill{background:linear-gradient(90deg,#60a5fa,#2563eb)}
+  .skill[data-skill="php"] .fill{background:linear-gradient(90deg,#a78bfa,#7c3aed)}
+  .skill[data-skill="mysql"] .fill{background:linear-gradient(90deg,#fbbf24,#f59e0b)}
+
+  /* ===== Contact on background (không cho vào ô) ===== */
+  .contact{padding:28px 18px;text-align:center}
+  .contact h2{margin:0 0 10px;font-size:clamp(20px,2.6vw,28px)}
+  .mailto{font-weight:800;color:var(--accent)}
+  .mailto:hover{text-decoration:underline}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  footer{color:var(--muted);text-align:center;margin:18px 0 8px}
+  .copy{cursor:pointer;font-weight:700;color:var(--accent)}
