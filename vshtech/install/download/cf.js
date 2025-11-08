@@ -1,5 +1,5 @@
 // Đổi tên file nếu bạn đặt khác (ví dụ '/profiles/8.mobileconfig')
-const FILE = '/profiles/vpn.mobileconfig';
+const FILE = '/install/profiles/vpn.mobileconfig';
 
 const btn  = document.getElementById('installBtn');
 const prog = document.getElementById('progress');
