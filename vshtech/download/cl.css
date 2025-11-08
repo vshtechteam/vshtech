@@ -1,0 +1,38 @@
+:root{
+  --bg:#0b0f14; --card:#111723; --muted:#8b9bb4; --text:#eaf1ff; --accent:#0ea5e9; --accent-2:#38bdf8;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;
+  background: radial-gradient(1200px 600px at 50% -10%, #142032 0%, var(--bg) 60%) fixed;
+  color:var(--text);
+  -webkit-user-select:none; user-select:none;
+  -webkit-touch-callout:none;
+}
+.wrap{min-height:100%; display:flex; align-items:center; justify-content:center; padding:28px}
+.card{
+  width:100%; max-width:640px; background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:28px 22px 22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+.brand{display:flex; align-items:center; gap:10px; margin-bottom:6px; opacity:.9}
+.dot{width:10px;height:10px;border-radius:999px;background:var(--accent-2);box-shadow:0 0 16px var(--accent-2)}
+h1{margin:6px 0 12px; font-size:20px; font-weight:700}
+p{margin:10px 0; color:var(--muted)}
+.steps{margin:16px 0 22px; padding:0; list-style:none}
+.steps li{margin:8px 0; display:flex; gap:10px; align-items:flex-start}
+.idx{width:22px;height:22px;border-radius:6px;background:#152436;color:#9ec6ff; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex:0 0 22px}
+.btn{
+  appearance:none; border:0; border-radius:12px; padding:14px 18px; width:100%;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#001018; font-weight:700; font-size:16px; letter-spacing:.2px; cursor:pointer;
+  box-shadow:0 8px 28px rgba(14,165,233,.35);
+  transition:transform .06s ease, filter .2s ease; will-change:transform;
+}
+.btn:active{transform:translateY(1px); filter:saturate(1.05)}
+.hint{margin:14px 0 0; font-size:14px; color:#a7b6cc}
+.muted{color:#7f92ad}
+.tiny{font-size:12px; opacity:.75}
+.divider{height:1px;background:rgba(255,255,255,.06); margin:18px 0}
+a,button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
