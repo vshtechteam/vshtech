@@ -1,5 +1,6 @@
-// Đổi tên file nếu bạn đặt khác (ví dụ '/profiles/8.mobileconfig')
-const FILE = '/install/profiles/vpn.mobileconfig';
+// Mọi thứ đều chạy trong nhánh /install
+const BASE = '/install';
+const FILE = `${BASE}/profiles/vpn.mobileconfig`;
 
 const btn  = document.getElementById('installBtn');
 const prog = document.getElementById('progress');
@@ -28,9 +29,9 @@ const prog = document.getElementById('progress');
 if (btn) {
   btn.addEventListener('click', ()=>{
     if (prog) prog.hidden = false;
-    // Điều hướng trực tiếp để iOS hiện "Cho phép"
+    // Điều hướng trực tiếp để iOS hiện “Cho phép”
     window.location.assign(FILE);
     // Sau ~1.6s chuyển sang trang cảm ơn/hướng dẫn
-    setTimeout(()=>{ window.location.assign('/install/thanks/'); }, 1600);
+    setTimeout(()=>{ window.location.assign(`${BASE}/thanks/`); }, 1600);
   });
 }
