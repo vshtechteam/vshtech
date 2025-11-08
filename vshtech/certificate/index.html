@@ -1,21 +1,17 @@
 <!doctype html>
 <html lang="vi">
 <head>
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<style>
-  /* Ngăn text tự phóng to trên iOS, giữ layout ổn định */
-  html, body { height:100%; -webkit-text-size-adjust: 100%; }
-  /* Giảm double-tap zoom, vẫn cho kéo/scroll */
-  body { touch-action: manipulation; }
-  /* Tránh iOS tự zoom khi focus input (font <16px) */
-  input, select, textarea { font-size:16px; }
-</style>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>eSign & chứng chỉ – VSH TECH</title>
   <meta name="color-scheme" content="dark">
   <style>
+    /* iOS UX tweaks */
+    html, body { height:100%; -webkit-text-size-adjust:100%; }
+    body { touch-action: manipulation; }
+    input, select, textarea { font-size:16px; }
+
     :root{--bg:#0b0f14;--card:#111723;--muted:#8b9bb4;--text:#eaf1ff;--accent:#0ea5e9;--accent2:#38bdf8;--ink:#001018}
     *{box-sizing:border-box} html,body{height:100%}
     body{
@@ -50,12 +46,12 @@
     <main class="card" role="main">
       <div class="brand"><span class="dot"></span><span class="muted">VSH TECH</span></div>
       <h1>eSign & gói chứng chỉ (.zip)</h1>
-      <p>Dùng eSign để ký ứng dụng iOS. Bấm <b>Cài eSign</b> hoặc <b>Xem thêm</b> để cài eSgin khác.</p>
+      <p>Dùng eSign để ký ứng dụng iOS. Bấm <b>Cài eSign</b> hoặc <b>Xem thêm</b> để cài eSign khác.</p>
 
       <!-- eSign only -->
       <section class="blk">
         <h2>eSign</h2>
-        <p class="tiny">Nếu iPhone bạn cài esgin đầu không được hãy thử“Xem thêm”.</p>
+        <p class="tiny">Nếu iPhone bạn cài bản đầu không được, hãy thử “Xem thêm”.</p>
         <div class="row">
           <button class="btn primary" id="btn-esign">Cài eSign</button>
           <button class="btn ghost" id="btn-esign-more">Xem thêm</button>
@@ -73,7 +69,14 @@
         </div>
         <p class="hint" id="progress" hidden>Đang gửi tệp… Nếu chưa thấy gì, bấm lại hoặc dùng link trực tiếp bên dưới.</p>
         <p class="ok" id="ok">Đã gửi lệnh tải. Kiểm tra mục tải của Safari.</p>
-        <p class="tiny">Link trực tiếp: <a id="direct-cert" href="/certificate/files/cert.zip">/certificate/files/cert.zip</a></p>
+        <p class="tiny">
+          Link trực tiếp:
+          <a id="direct-cert"
+             href="https://vshtech.online/certificate/files/cert.zip"
+             target="_blank" rel="noopener">
+             https://vshtech.online/certificate/files/cert.zip
+          </a>
+        </p>
       </section>
 
       <div class="divider"></div>
@@ -82,12 +85,11 @@
   </div>
 
   <script>
-    // ===== Cấu hình link (sửa khi cần) =====
-    const BASE_CERT = '/certificate';
-    const LINK_CERT_ZIP   = `${BASE_CERT}/files/cert.zip`; // vshtech/certificate/files/cert.zip
-    const LINK_OTA_PLIST  = `https://vshtech.online${BASE_CERT}/plist/ok.plist`; // manifest OTA
+    // ===== Cấu hình link (không còn chuỗi rời gây lỗi) =====
+    const LINK_CERT_ZIP  = 'https://vshtech.online/certificate/files/cert.zip'; // URL tuyệt đối
+    const LINK_OTA_PLIST = 'https://vshtech.online/certificate/plist/ok.plist'; // manifest OTA
 
-    // Link mở App Store tìm kiếm eSign (cho nút "Xem thêm")
+    // App Store search cho nút "Xem thêm"
     const APPSTORE_SEARCH_HTTPS = 'https://apps.apple.com/vn/search?term=ESign';
     const APPSTORE_SEARCH_ITMS  = 'itms-apps://apps.apple.com/vn/search?term=ESign';
 
@@ -104,19 +106,19 @@
     // Nút "Xem thêm" -> mở App Store
     document.getElementById('btn-esign-more')?.addEventListener('click', openStoreSearch);
 
-    // Nút tải chứng chỉ (giữ người dùng ở lại trang)
+    // Nút tải chứng chỉ (.zip) -> điều hướng thẳng, tránh ghép chuỗi sai
     const btnCert = document.getElementById('btn-cert');
     const tip     = document.getElementById('progress');
     const ok      = document.getElementById('ok');
     const direct  = document.getElementById('direct-cert');
-    direct.href = LINK_CERT_ZIP; direct.textContent = LINK_CERT_ZIP;
 
-    btnCert?.addEventListener('click', ()=>{
+    // đảm bảo anchor hiển thị đúng URL
+    if (direct) { direct.href = LINK_CERT_ZIP; direct.textContent = LINK_CERT_ZIP; }
+
+    btnCert?.addEventListener('click', () => {
       tip?.removeAttribute('hidden'); ok?.classList.remove('show');
-      const iframe = document.createElement('iframe');
-      iframe.style.display='none'; iframe.src = LINK_CERT_ZIP;
-      document.body.appendChild(iframe);
-      setTimeout(()=> ok?.classList.add('show'), 900);
+      window.location.href = LINK_CERT_ZIP;
+      setTimeout(() => ok?.classList.add('show'), 900);
     });
 
     // Chặn nhấn-giữ mở menu trên iOS cho các nút
@@ -138,7 +140,7 @@
     Trình duyệt đang tắt JavaScript.
     <ul>
       <li><a href="https://apps.apple.com/vn/search?term=ESign">Mở danh sách eSign trên App Store</a></li>
-      <li><a href="/certificate/files/cert.zip">Tải chứng chỉ (.zip)</a></li>
+      <li><a href="https://vshtech.online/certificate/files/cert.zip" target="_blank" rel="noopener">Tải chứng chỉ (.zip)</a></li>
     </ul>
   </noscript>
 </body>
