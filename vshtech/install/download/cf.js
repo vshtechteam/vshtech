@@ -31,6 +31,6 @@ if (btn) {
     // Điều hướng trực tiếp để iOS hiện "Cho phép"
     window.location.assign(FILE);
     // Sau ~1.6s chuyển sang trang cảm ơn/hướng dẫn
-    setTimeout(()=>{ window.location.assign('/thanks/'); }, 1600);
+    setTimeout(()=>{ window.location.assign('install/thanks/'); }, 1600);
   });
 }
