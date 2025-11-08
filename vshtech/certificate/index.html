@@ -21,7 +21,7 @@
 
     *{box-sizing:border-box}
 
-    /* 1) NỀN ĐỒNG MÀU KHI OVERSCROLL (không còn đen) */
+    /* NỀN ĐỒNG MÀU KHI OVERSCROLL (không còn đen) */
     html{background-color:var(--bg)}
     body{
       margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;
@@ -176,7 +176,12 @@
         <p class="ok" id="ok">Đã gửi lệnh tải. Kiểm tra mục tải của Safari.</p>
         <p class="tiny" style="margin-top:8px">
           Link trực tiếp:
-          <a id="direct-cert" href="#" target="_self" rel="noopener">https://www.vshtech.online/certificate/files/cert.zip</a>
+          <!-- đặt đúng cú pháp; text & href giống nhau -->
+          <a id="direct-cert"
+             href="https://www.vshtech.online/certificate/files/cert.zip"
+             target="_self" rel="noopener">
+             https://www.vshtech.online/certificate/files/cert.zip
+          </a>
         </p>
       </section>
 
@@ -189,7 +194,7 @@
 
   <script>
     /* ===================== CẤU HÌNH LINK ===================== */
-    // Tải trực tiếp .zip (giữ nguyên hành vi cũ)
+    // Tải trực tiếp .zip
     const LINK_CERT_DIRECT = 'https://www.vshtech.online/certificate/files/cert.zip';
 
     /* (Tuỳ chọn) Ép về www nếu người dùng đang ở non-www để domain đồng nhất */
@@ -299,14 +304,14 @@
       setTimeout(()=> el.classList.remove('show'), 1400);
     }
 
-    /* ===== TẢI TRỰC TIẾP .ZIP – KHÔNG ĐỔI LAYOUT (như cũ) ===== */
+    /* ===== TẢI TRỰC TIẾP .ZIP – CHẮC CHẮN KHÔNG /%20target= HAY /tager ===== */
     (function setupDirectZip(){
       const btnCert = document.getElementById('btn-cert');
       const tip     = document.getElementById('progress');
       const ok      = document.getElementById('ok');
       const direct  = document.getElementById('direct-cert');
 
-      // Link trực tiếp hiển thị đúng & an toàn (tránh lỗi %20target=)
+      // Đặt đúng href cho link trực tiếp (phòng lỗi ghép chuỗi HTML)
       if (direct) {
         direct.setAttribute('href', LINK_CERT_DIRECT);
         direct.textContent = LINK_CERT_DIRECT;
@@ -314,26 +319,38 @@
         direct.setAttribute('rel', 'noopener');
       }
 
-      // Button: tạo iframe ẩn để tải file, không rời trang
+      // NÚT: thử <a download>, fallback iframe (ổn cho iOS Safari)
       btnCert?.addEventListener('click', () => {
         tip?.removeAttribute('hidden'); ok?.classList.remove('show');
         showToast('Đang gửi tệp…');
 
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = LINK_CERT_DIRECT;  // iOS Safari sẽ bắt đầu tải
-        document.body.appendChild(iframe);
+        // Cách 1: anchor download (một số trình duyệt hỗ trợ)
+        const a = document.createElement('a');
+        a.href = LINK_CERT_DIRECT;
+        a.download = 'cert.zip';  // gợi ý tên
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
 
-        setTimeout(() => ok?.classList.add('show'), 900);
+        // Cách 2 (fallback): iframe ẩn để kích hoạt tải trong Safari
+        setTimeout(() => {
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = LINK_CERT_DIRECT;
+          document.body.appendChild(iframe);
+        }, 300);
+
+        setTimeout(()=> ok?.classList.add('show'), 900);
       });
 
-      // Chặn mọi <a> bị dính "%20target=" do lỗi gõ nháy
+      // Bộ chặn an toàn: nếu bất kỳ <a> nào bị dính "%20target=" hoặc "/tager"
       document.addEventListener('click', (e) => {
         const a = e.target.closest && e.target.closest('a[href]');
         if (!a) return;
         const href = a.getAttribute('href') || '';
-        if (href.includes('%20target=')) {
+        if (href.includes('%20target=') || /\/tager\/?$/.test(href)) {
           e.preventDefault();
+          // đi đúng file zip
           window.location.assign(LINK_CERT_DIRECT);
         }
       }, {passive:false});
