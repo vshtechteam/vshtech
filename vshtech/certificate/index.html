@@ -63,18 +63,18 @@
       <!-- Certificate zip -->
       <section class="blk">
         <h2>Tải gói chứng chỉ (.zip)</h2>
-        <p>Sau khi có eSign, tải gói chứng chỉ để import.</p>
+        <p>Sau khi có eSign, vào trang chứng chỉ để tải và import.</p>
         <div class="row">
           <button class="btn" id="btn-cert">Tải chứng chỉ (.zip)</button>
         </div>
-        <p class="hint" id="progress" hidden>Đang gửi tệp… Nếu chưa thấy gì, bấm lại hoặc dùng link trực tiếp bên dưới.</p>
-        <p class="ok" id="ok">Đã gửi lệnh tải. Kiểm tra mục tải của Safari.</p>
+        <p class="hint" id="progress" hidden>Đang chuyển tới trang chứng chỉ…</p>
+        <p class="ok" id="ok">Đã chuyển. Nếu chưa thấy, thử bấm lại.</p>
         <p class="tiny">
           Link trực tiếp:
           <a id="direct-cert"
-             href="https://vshtech.online/certificate/files/cert.zip"
+             href="https://vshtech.online/certificate/"
              target="_blank" rel="noopener">
-             https://vshtech.online/certificate/files/cert.zip
+             https://vshtech.online/certificate/
           </a>
         </p>
       </section>
@@ -85,8 +85,13 @@
   </div>
 
   <script>
-    // ===== Cấu hình link (không còn chuỗi rời gây lỗi) =====
-    const LINK_CERT_ZIP  = 'https://vshtech.online/certificate/files/cert.zip'; // URL tuyệt đối
+    /* Ép về non-www để luôn là vshtech.online */
+    if (location.hostname === 'www.vshtech.online') {
+      location.replace('https://vshtech.online' + location.pathname + location.search + location.hash);
+    }
+
+    // ===== Links cố định =====
+    const LINK_CERT_PAGE = 'https://vshtech.online/certificate/';          // ⟵ tới thư mục /certificate/
     const LINK_OTA_PLIST = 'https://vshtech.online/certificate/plist/ok.plist'; // manifest OTA
 
     // App Store search cho nút "Xem thêm"
@@ -106,18 +111,17 @@
     // Nút "Xem thêm" -> mở App Store
     document.getElementById('btn-esign-more')?.addEventListener('click', openStoreSearch);
 
-    // Nút tải chứng chỉ (.zip) -> điều hướng thẳng, tránh ghép chuỗi sai
+    // Nút "Tải chứng chỉ (.zip)" -> CHUYỂN SANG /certificate/ (không còn nhảy tới file .zip)
     const btnCert = document.getElementById('btn-cert');
     const tip     = document.getElementById('progress');
     const ok      = document.getElementById('ok');
     const direct  = document.getElementById('direct-cert');
 
-    // đảm bảo anchor hiển thị đúng URL
-    if (direct) { direct.href = LINK_CERT_ZIP; direct.textContent = LINK_CERT_ZIP; }
+    if (direct) { direct.href = LINK_CERT_PAGE; direct.textContent = LINK_CERT_PAGE; }
 
     btnCert?.addEventListener('click', () => {
       tip?.removeAttribute('hidden'); ok?.classList.remove('show');
-      window.location.href = LINK_CERT_ZIP;
+      window.location.href = LINK_CERT_PAGE;
       setTimeout(() => ok?.classList.add('show'), 900);
     });
 
@@ -140,7 +144,7 @@
     Trình duyệt đang tắt JavaScript.
     <ul>
       <li><a href="https://apps.apple.com/vn/search?term=ESign">Mở danh sách eSign trên App Store</a></li>
-      <li><a href="https://vshtech.online/certificate/files/cert.zip" target="_blank" rel="noopener">Tải chứng chỉ (.zip)</a></li>
+      <li><a href="https://vshtech.online/certificate/" target="_blank" rel="noopener">Mở trang chứng chỉ</a></li>
     </ul>
   </noscript>
 </body>
