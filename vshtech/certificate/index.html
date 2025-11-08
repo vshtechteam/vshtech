@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>eSign & chứng chỉ – VSH TECH</title>
+  <meta name="color-scheme" content="dark">
+  <style>
+    :root{--bg:#0b0f14;--card:#111723;--muted:#8b9bb4;--text:#eaf1ff;--accent:#0ea5e9;--accent2:#38bdf8;--ink:#001018}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{
+      margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;
+      background:radial-gradient(1100px 560px at 50% -10%,#172235 0%,var(--bg) 60%) fixed;color:var(--text)
+    }
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:28px}
+    .card{
+      width:100%;max-width:760px;border:1px solid rgba(255,255,255,.06);border-radius:16px;
+      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+      box-shadow:0 20px 60px rgba(0,0,0,.45);padding:26px 22px 22px
+    }
+    .brand{display:flex;align-items:center;gap:10px;opacity:.9;margin-bottom:6px}
+    .dot{width:10px;height:10px;border-radius:999px;background:var(--accent2);box-shadow:0 0 16px var(--accent2)}
+    h1{margin:6px 0 16px;font-size:22px}
+    h2{margin:0 0 6px;font-size:18px}
+    p{margin:10px 0;color:var(--muted)}
+    .blk{border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:16px;background:rgba(255,255,255,.02);margin-bottom:14px}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{appearance:none;border:0;border-radius:12px;padding:12px 14px;background:#1f2937;color:#dbe7ff;cursor:pointer}
+    .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--ink);font-weight:700}
+    .btn.ghost{background:#1a2433}
+    .divider{height:1px;background:rgba(255,255,255,.06);margin:18px 0}
+    .tiny{font-size:12px;opacity:.8}
+    .hint{font-size:14px;color:#a7b6cc;margin-top:8px}
+    .ok{display:none;margin-top:10px;color:#93e5ff}.ok.show{display:block}
+    a,button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main class="card" role="main">
+      <div class="brand"><span class="dot"></span><span class="muted">VSH TECH</span></div>
+      <h1>eSign & gói chứng chỉ (.zip)</h1>
+      <p>Dùng eSign để ký ứng dụng iOS. Bấm <b>Cài eSign</b> hoặc <b>Xem thêm</b> để cài eSgin khác.</p>
+
+      <!-- eSign only -->
+      <section class="blk">
+        <h2>eSign</h2>
+        <p class="tiny">Nếu iPhone bạn cài esgin đầu không được hãy thử“Xem thêm”.</p>
+        <div class="row">
+          <button class="btn primary" id="btn-esign">Cài eSign</button>
+          <button class="btn ghost" id="btn-esign-more">Xem thêm</button>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Certificate zip -->
+      <section class="blk">
+        <h2>Tải gói chứng chỉ (.zip)</h2>
+        <p>Sau khi có eSign, tải gói chứng chỉ để import.</p>
+        <div class="row">
+          <button class="btn" id="btn-cert">Tải chứng chỉ (.zip)</button>
+        </div>
+        <p class="hint" id="progress" hidden>Đang gửi tệp… Nếu chưa thấy gì, bấm lại hoặc dùng link trực tiếp bên dưới.</p>
+        <p class="ok" id="ok">Đã gửi lệnh tải. Kiểm tra mục tải của Safari.</p>
+        <p class="tiny">Link trực tiếp: <a id="direct-cert" href="/certificate/files/cert.zip">/certificate/files/cert.zip</a></p>
+      </section>
+
+      <div class="divider"></div>
+      <p class="tiny">Xong có thể quay lại <a href="/install/download/">trang tải cấu hình</a>.</p>
+    </main>
+  </div>
+
+<script>
+  // ===== CHỌN 1 TRONG 2 DÒNG BASE SAU =====
+  // Nếu build output = `certificate` (site root = /certificate):
+  const BASE = '';                // <-- dùng dòng này
+  // Nếu site root = repo root:
+  // const BASE = '/certificate'; // <-- hoặc dùng dòng này
+
+  // File bạn đã đặt sẵn
+  const LINK_CERT_ZIP  = `${BASE}/files/cert.zip`;
+  const LINK_OTA_PLIST = `${BASE}/plist/ok.plist`;
+
+  // App Store search (nút "Xem thêm")
+  const APPSTORE_SEARCH_HTTPS = 'https://apps.apple.com/vn/search?term=ESign';
+  const APPSTORE_SEARCH_ITMS  = 'itms-apps://apps.apple.com/vn/search?term=ESign';
+
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const openStoreSearch = () => location.assign(isIOS ? APPSTORE_SEARCH_ITMS : APPSTORE_SEARCH_HTTPS);
+
+  // Nút "Cài eSign" -> cài OTA bằng itms-services
+  const btnInstall = document.getElementById('btn-esign');
+  btnInstall?.addEventListener('click', () => {
+    const ota = `itms-services://?action=download-manifest&url=${location.origin}${LINK_OTA_PLIST}`;
+    if (!isIOS) alert('Hãy mở trang bằng Safari trên iPhone/iPad để cài đặt OTA.');
+    location.assign(ota);
+  });
+
+  // Nút "Xem thêm" -> mở App Store search
+  document.getElementById('btn-esign-more')?.addEventListener('click', openStoreSearch);
+
+  // Nút tải chứng chỉ .zip (giữ nguyên hành vi của bạn)
+  const btnCert = document.getElementById('btn-cert');
+  const tip     = document.getElementById('progress');
+  const ok      = document.getElementById('ok');
+  const direct  = document.getElementById('direct-cert');
+  direct.href = LINK_CERT_ZIP; direct.textContent = LINK_CERT_ZIP;
+
+  btnCert?.addEventListener('click', ()=>{
+    tip?.removeAttribute('hidden'); ok?.classList.remove('show');
+    const iframe = document.createElement('iframe');
+    iframe.style.display='none'; iframe.src = LINK_CERT_ZIP;
+    document.body.appendChild(iframe);
+    setTimeout(()=> ok?.classList.add('show'), 900);
+  });
+</script>
+
+  <noscript>
+    Trình duyệt đang tắt JavaScript.
+    <ul>
+      <li><a href="https://apps.apple.com/vn/search?term=ESign">Mở danh sách eSign trên App Store</a></li>
+      <li><a href="/certificate/files/cert.zip">Tải chứng chỉ (.zip)</a></li>
+    </ul>
+  </noscript>
+</body>
+</html>
