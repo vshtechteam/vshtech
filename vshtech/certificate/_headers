@@ -1,5 +1,8 @@
-/plist/*
+/certificate/files/*.zip
+  Content-Type: application/zip
+  Content-Disposition: attachment; filename="cert.zip"
+  Cache-Control: public, max-age=3600
+
+/certificate/plist/*.plist
   Content-Type: application/xml
-/esgin/ipa/*.ipa
-  Content-Type: application/octet-stream
-  Accept-Ranges: bytes
+  Cache-Control: public, max-age=3600
