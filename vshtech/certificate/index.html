@@ -6,7 +6,6 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>eSign & chứng chỉ – VSH TECH</title>
   <meta name="color-scheme" content="dark">
-  <!-- Màu UI & thanh địa chỉ -->
   <meta name="theme-color" content="#0b0f14">
   <style>
     /* iOS UX tweaks */
@@ -21,15 +20,15 @@
 
     *{box-sizing:border-box}
 
-    /* NỀN ĐỒNG MÀU KHI OVERSCROLL (không còn đen) */
+    /* NỀN ĐỒNG MÀU KHI OVERSCROLL */
     html{background-color:var(--bg)}
     body{
       margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;
       color:var(--text);
-      background-color:var(--bg); /* fallback */
+      background-color:var(--bg);
       position:relative;
     }
-    /* Lớp nền phủ cố định cả viewport, kể cả rubber-band */
+    /* Nền phủ cố định cả viewport */
     body::before{
       content:"";
       position:fixed; inset:0; z-index:-1;
@@ -37,7 +36,7 @@
       will-change:transform;
     }
 
-    /* ====== Thanh tiến trình cuộn (luôn trên đỉnh) ====== */
+    /* ===== Thanh tiến trình cuộn ===== */
     .scrollbar{
       position:fixed; top:0; left:0; right:0; height:4px; z-index:2000;
       background:rgba(255,255,255,.06);
@@ -49,7 +48,7 @@
       transition:width .1s linear;
     }
 
-    /* ====== Khối nội dung ====== */
+    /* ===== Khối nội dung ===== */
     .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:28px}
     .card{
       width:100%;max-width:760px;border:1px solid rgba(255,255,255,.06);border-radius:16px;
@@ -73,7 +72,7 @@
     .ok{display:none;margin-top:10px;color:#93e5ff}.ok.show{display:block}
     a,button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 
-    /* ==== eSign section – chuyên nghiệp ==== */
+    /* ==== eSign section ==== */
     .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
     .section-head .left{display:flex;align-items:center;gap:10px}
     .pill{padding:6px 10px;border:1px solid rgba(255,255,255,.06);border-radius:999px;background:rgba(255,255,255,.03);font-size:12px;color:#a8b3c7}
@@ -110,7 +109,7 @@
     .app-actions{margin-top:10px;display:flex;gap:8px}
     .btn.install{flex:1;text-align:center;border-radius:10px}
 
-    /* Toast overlay (không đổi layout) */
+    /* Toast overlay */
     .toast{
       position:fixed; left:50%; bottom:18px; transform:translateX(-50%) translateY(6px);
       background:#0f172a; border:1px solid rgba(255,255,255,.08); color:#dbe7ff;
@@ -122,7 +121,7 @@
 </head>
 <body>
 
-  <!-- Thanh tiến trình cuộn luôn hiển thị -->
+  <!-- Thanh tiến trình cuộn -->
   <div class="scrollbar" aria-hidden="true">
     <div id="scrollbarFill" class="fill"></div>
   </div>
@@ -165,7 +164,7 @@
 
       <div class="divider"></div>
 
-      <!-- Certificate: tải trực tiếp .zip (đúng như cũ) -->
+      <!-- Certificate: tải trực tiếp .zip -->
       <section class="blk">
         <h2>Tải gói chứng chỉ (.zip)</h2>
         <p>Sau khi có eSign, tải gói chứng chỉ để import.</p>
@@ -176,7 +175,6 @@
         <p class="ok" id="ok">Đã gửi lệnh tải. Kiểm tra mục tải của Safari.</p>
         <p class="tiny" style="margin-top:8px">
           Link trực tiếp:
-          <!-- đặt đúng cú pháp; text & href giống nhau -->
           <a id="direct-cert"
              href="https://www.vshtech.online/certificate/files/cert.zip"
              target="_self" rel="noopener">
@@ -194,12 +192,12 @@
 
   <script>
     /* ===================== CẤU HÌNH LINK ===================== */
-    // Tải trực tiếp .zip
-    const LINK_CERT_DIRECT = 'https://www.vshtech.online/certificate/files/cert.zip';
+    const WWW = 'https://www.vshtech.online';
+    const LINK_CERT_DIRECT = WWW + '/certificate/files/cert.zip';
 
-    /* (Tuỳ chọn) Ép về www nếu người dùng đang ở non-www để domain đồng nhất */
+    /* Ép về www nếu đang ở non-www để đồng nhất cookie/SSL */
     if (location.hostname === 'vshtech.online') {
-      location.replace('https://www.vshtech.online' + location.pathname + location.search + location.hash);
+      location.replace(WWW + location.pathname + location.search + location.hash);
     }
 
     /* ===== Thanh tiến trình cuộn ===== */
@@ -216,23 +214,23 @@
       update();
     })();
 
-    /* ===== DỮ LIỆU 15 ESign (giữ nguyên) ===== */
+    /* ===== DỮ LIỆU 15 ESign ===== */
     const MORE_ESIGN = [
-      { title: 'ESign #1',  note: 'Chứng chỉ: Viettel Group',  plist: 'https://vshtech.online/certificate/plist/esign-1.plist'  },
-      { title: 'ESign #2',  note: 'Chứng chỉ: FPT',            plist: 'https://vshtech.online/certificate/plist/esign-2.plist'  },
-      { title: 'ESign #3',  note: 'Chứng chỉ: MobiFone',       plist: 'https://vshtech.online/certificate/plist/esign-3.plist'  },
-      { title: 'ESign #4',  note: 'Chứng chỉ: VNPT',           plist: 'https://vshtech.online/certificate/plist/esign-4.plist'  },
-      { title: 'ESign #5',  note: 'Chứng chỉ: VNPAY',          plist: 'https://vshtech.online/certificate/plist/esign-5.plist'  },
-      { title: 'ESign #6',  note: 'Chứng chỉ: BIDV',           plist: 'https://vshtech.online/certificate/plist/esign-6.plist'  },
-      { title: 'ESign #7',  note: 'Chứng chỉ: ACB',            plist: 'https://vshtech.online/certificate/plist/esign-7.plist'  },
-      { title: 'ESign #8',  note: 'Chứng chỉ: Techcombank',    plist: 'https://vshtech.online/certificate/plist/esign-8.plist'  },
-      { title: 'ESign #9',  note: 'Chứng chỉ: MB',             plist: 'https://vshtech.online/certificate/plist/esign-9.plist'  },
-      { title: 'ESign #10', note: 'Chứng chỉ: Vietcombank',    plist: 'https://vshtech.online/certificate/plist/esign-10.plist' },
-      { title: 'ESign #11', note: 'Chứng chỉ: VPBank',         plist: 'https://vshtech.online/certificate/plist/esign-11.plist' },
-      { title: 'ESign #12', note: 'Chứng chỉ: Agribank',       plist: 'https://vshtech.online/certificate/plist/esign-12.plist' },
-      { title: 'ESign #13', note: 'Chứng chỉ: SHB',            plist: 'https://vshtech.online/certificate/plist/esign-13.plist' },
-      { title: 'ESign #14', note: 'Chứng chỉ: TPBank',         plist: 'https://vshtech.online/certificate/plist/esign-14.plist' },
-      { title: 'ESign #15', note: 'Chứng chỉ: OCB',            plist: 'https://vshtech.online/certificate/plist/esign-15.plist' }
+      { title:'ESign #1',  note:'Chứng chỉ: Viettel Group',  plist: WWW + '/certificate/plist/esign-1.plist'  },
+      { title:'ESign #2',  note:'Chứng chỉ: FPT',            plist: WWW + '/certificate/plist/esign-2.plist'  },
+      { title:'ESign #3',  note:'Chứng chỉ: MobiFone',       plist: WWW + '/certificate/plist/esign-3.plist'  },
+      { title:'ESign #4',  note:'Chứng chỉ: VNPT',           plist: WWW + '/certificate/plist/esign-4.plist'  },
+      { title:'ESign #5',  note:'Chứng chỉ: VNPAY',          plist: WWW + '/certificate/plist/esign-5.plist'  },
+      { title:'ESign #6',  note:'Chứng chỉ: BIDV',           plist: WWW + '/certificate/plist/esign-6.plist'  },
+      { title:'ESign #7',  note:'Chứng chỉ: ACB',            plist: WWW + '/certificate/plist/esign-7.plist'  },
+      { title:'ESign #8',  note:'Chứng chỉ: Techcombank',    plist: WWW + '/certificate/plist/esign-8.plist'  },
+      { title:'ESign #9',  note:'Chứng chỉ: MB',             plist: WWW + '/certificate/plist/esign-9.plist'  },
+      { title:'ESign #10', note:'Chứng chỉ: Vietcombank',    plist: WWW + '/certificate/plist/esign-10.plist' },
+      { title:'ESign #11', note:'Chứng chỉ: VPBank',         plist: WWW + '/certificate/plist/esign-11.plist' },
+      { title:'ESign #12', note:'Chứng chỉ: Agribank',       plist: WWW + '/certificate/plist/esign-12.plist' },
+      { title:'ESign #13', note:'Chứng chỉ: SHB',            plist: WWW + '/certificate/plist/esign-13.plist' },
+      { title:'ESign #14', note:'Chứng chỉ: TPBank',         plist: WWW + '/certificate/plist/esign-14.plist' },
+      { title:'ESign #15', note:'Chứng chỉ: OCB',            plist: WWW + '/certificate/plist/esign-15.plist' }
     ];
 
     /* ===== Render eSign cards & accordion ===== */
@@ -258,8 +256,9 @@
           const actions = document.createElement('div'); actions.className = 'app-actions';
           const install = document.createElement('a');
           install.className = 'btn install primary';
-          install.href = `itms-services://?action=download-manifest&url=${encodeURIComponent(plist)}`;
-          install.textContent = 'install';
+          install.href = 'itms-services://?action=download-manifest&url=' + encodeURIComponent(plist);
+          install.textContent = 'Install';  /* đổi nhãn nút */
+          install.rel = 'noopener';
 
           actions.appendChild(install);
 
@@ -295,7 +294,7 @@
       });
     })();
 
-    /* ===== Toast nhỏ (tuỳ chọn) ===== */
+    /* ===== Toast nhỏ ===== */
     function showToast(msg){
       const el = document.getElementById('toast');
       if (!el) return;
@@ -304,14 +303,13 @@
       setTimeout(()=> el.classList.remove('show'), 1400);
     }
 
-    /* ===== TẢI TRỰC TIẾP .ZIP – CHẮC CHẮN KHÔNG /%20target= HAY /tager ===== */
+    /* ===== Tải trực tiếp .ZIP ===== */
     (function setupDirectZip(){
       const btnCert = document.getElementById('btn-cert');
       const tip     = document.getElementById('progress');
       const ok      = document.getElementById('ok');
       const direct  = document.getElementById('direct-cert');
 
-      // Đặt đúng href cho link trực tiếp (phòng lỗi ghép chuỗi HTML)
       if (direct) {
         direct.setAttribute('href', LINK_CERT_DIRECT);
         direct.textContent = LINK_CERT_DIRECT;
@@ -319,20 +317,20 @@
         direct.setAttribute('rel', 'noopener');
       }
 
-      // NÚT: thử <a download>, fallback iframe (ổn cho iOS Safari)
       btnCert?.addEventListener('click', () => {
         tip?.removeAttribute('hidden'); ok?.classList.remove('show');
         showToast('Đang gửi tệp…');
 
-        // Cách 1: anchor download (một số trình duyệt hỗ trợ)
+        // Cách 1: anchor download
         const a = document.createElement('a');
         a.href = LINK_CERT_DIRECT;
-        a.download = 'cert.zip';  // gợi ý tên
+        a.download = 'cert.zip';
+        a.rel = 'noopener';
         a.style.display = 'none';
         document.body.appendChild(a);
         a.click();
 
-        // Cách 2 (fallback): iframe ẩn để kích hoạt tải trong Safari
+        // Cách 2: iframe ẩn (fallback Safari)
         setTimeout(() => {
           const iframe = document.createElement('iframe');
           iframe.style.display = 'none';
@@ -343,14 +341,13 @@
         setTimeout(()=> ok?.classList.add('show'), 900);
       });
 
-      // Bộ chặn an toàn: nếu bất kỳ <a> nào bị dính "%20target=" hoặc "/tager"
+      // Chặn các href bị lẫn "%20target=" hoặc "/tager"
       document.addEventListener('click', (e) => {
         const a = e.target.closest && e.target.closest('a[href]');
         if (!a) return;
         const href = a.getAttribute('href') || '';
         if (href.includes('%20target=') || /\/tager\/?$/.test(href)) {
           e.preventDefault();
-          // đi đúng file zip
           window.location.assign(LINK_CERT_DIRECT);
         }
       }, {passive:false});
