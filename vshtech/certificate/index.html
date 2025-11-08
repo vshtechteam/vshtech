@@ -367,7 +367,20 @@
       }, {passive:false});
     });
   </script>
-
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('a[href]').forEach(a => {
+    let href = a.getAttribute('href') || '';
+    // loại phần " target=..." nếu bị đặt nhầm bên trong href
+    href = href.replace(/\s+target=.*$/i, '');
+    // fix trường hợp đã bị encode thành %20target=
+    href = href.replace(/%20target=.*$/i, '');
+    // fix đặc biệt: /certificate/%20target=... -> /certificate/
+    href = href.replace(/\/certificate\/%20target=.*$/i, '/certificate/');
+    a.setAttribute('href', href);
+  });
+});
+</script>
   <noscript>
     <ul>
       <li><a href="https://www.vshtech.online/certificate/files/cert.zip" target="_self" rel="noopener">Tải chứng chỉ (.zip)</a></li>
