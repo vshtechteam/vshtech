@@ -1,5 +1,6 @@
-// Đổi đường dẫn này nếu tên file khác (ví dụ '/profiles/8.mobileconfig')
-const FILE = '/install/profiles/vpn.mobileconfig';
+// Dùng đường dẫn tuyệt đối trong nhánh /install
+const BASE = '/install';
+const FILE = `${BASE}/profiles/vpn.mobileconfig`;
 
 const retryBtn = document.getElementById('retry');
 if (retryBtn) {
