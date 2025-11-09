@@ -3,79 +3,88 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Web Bán File Tự Động - Demo</title>
-  <meta name="description" content="Demo web bán file tự động: đăng ký/đăng nhập, nạp tiền, mua & tải file.">
+  <title>Trang chủ — Hỗ Trợ Game</title>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/style.css">
   <script defer src="assets/js/app.js"></script>
 </head>
 <body data-page="home">
-  <div id="app-header"></div>
+  <header class="topbar">
+    <button class="icon-btn" id="btn-drawer" aria-label="Mở menu"><span class="i i-menu"></span></button>
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo.svg" alt="" class="brand-logo">
+      <div>
+        <strong class="brand-name">Hỗ Trợ Game</strong>
+        <div class="brand-sub">Bán file tự động</div>
+      </div>
+    </a>
+    <div class="usercta" id="user-cta"></div>
+  </header>
+
+  <aside id="drawer" class="drawer" aria-hidden="true">
+    <div class="drawer-pan" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="drawer-head">
+        <div class="brand-row">
+          <img src="assets/img/logo.svg" alt="" class="brand-logo">
+          <div>
+            <strong>Hỗ Trợ Game 🎮</strong>
+            <div class="muted">Tất cả công cụ & file</div>
+          </div>
+        </div>
+        <button class="icon-btn" id="btn-close-drawer" aria-label="Đóng menu"><span class="i i-x"></span></button>
+      </div>
+      <nav class="menu">
+        <a class="menu-item" href="index.html"><span class="i i-home"></span><span>Trang chủ</span></a>
+        <a class="menu-item" href="nap-tien.html"><span class="i i-bank"></span><span>Nạp tiền</span></a>
+
+        <div class="menu-accordion">
+          <button class="menu-item acc-btn" data-acc="game">
+            <span class="i i-tools"></span><span>Hỗ Trợ Game 🎮</span><span class="i i-chevron"></span>
+          </button>
+          <div class="acc-panel" id="acc-game">
+            <a class="menu-sub" href="imazing.html">iMazing</a>
+            <a class="menu-sub" href="android.html">File hỗ trợ Android</a>
+            <a class="menu-sub" href="ios.html">File hỗ trợ iOS</a>
+          </div>
+        </div>
+
+        <a class="menu-item" href="https://t.me/"><span class="i i-telegram"></span><span>Telegram Giao Lưu</span><span class="badge-new">NEW</span></a>
+        <div class="auth-actions" id="drawer-auth"></div>
+      </nav>
+    </div>
+  </aside>
+
   <main class="container">
+<section class="hero">
+  <h1>Kho <span class="grad">Hỗ Trợ Game 🎮</span></h1>
+  <p class="lead">Nạp tiền nhanh — Mua & tải ngay — Giao diện chuyên nghiệp</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="nap-tien.html">Nạp tiền</a>
+    <a class="btn btn-outline" href="imazing.html">iMazing</a>
+    <a class="btn btn-outline" href="android.html">Android</a>
+    <a class="btn btn-outline" href="ios.html">iOS</a>
+  </div>
+</section>
 
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Web Bán File Tự Động</h1>
-      <p>Đăng ký/đăng nhập an toàn · Nạp tiền · Mua & tải file tức thì</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="nap-tien.html">Nạp tiền</a>
-        <a class="btn btn-outline" href="#store">Xem file nổi bật</a>
-      </div>
-    </div>
-    <div class="hero-art" aria-hidden="true">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0%" stop-color="currentColor" stop-opacity="0.15"/>
-            <stop offset="100%" stop-color="currentColor" stop-opacity="0.05"/>
-          </linearGradient>
-        </defs>
-        <circle cx="100" cy="100" r="90" fill="url(#g1)"/>
-      </svg>
-    </div>
-  </section>
-
-  <section id="store" class="section">
-    <h2>File nổi bật</h2>
-    <div id="featured-grid" class="grid"></div>
-  </section>
-
-  <section class="section">
-    <h2>Tính năng chính</h2>
-    <div class="features">
-      <div class="card">
-        <h3>Đăng ký / Đăng nhập</h3>
-        <p>Hỗ trợ Email, SĐT, Google, Facebook (demo UI). Có 2FA mẫu.</p>
-      </div>
-      <div class="card">
-        <h3>Nạp tiền</h3>
-        <p>Thẻ cào & Banking (demo). Số dư lưu cục bộ để mô phỏng.</p>
-      </div>
-      <div class="card">
-        <h3>Mua & tải file</h3>
-        <p>Khấu trừ số dư, mở liên kết tải ngay. Quản lý đơn mua offline.</p>
-      </div>
-    </div>
-  </section>
+<section class="section">
+  <h2>File nổi bật</h2>
+  <div id="featured" class="grid"></div>
+</section>
   </main>
   <div id="modals-root"></div>
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div>
-          <h4>Web Bán File Tự Động — Demo</h4>
-          <p>Bản mẫu front-end: mua & tải file sau khi đăng nhập và nạp số dư.</p>
+          <h4>Hỗ Trợ Game 🎮</h4>
+          <p>Giao diện tối ưu mobile, sẵn sàng nối API thực tế.</p>
         </div>
         <div>
-          <h4>Bảo mật (định hướng)</h4>
-          <ul>
-            <li>Đăng nhập: Email/SĐT + mật khẩu, OAuth Google/Facebook (demo).</li>
-            <li>Mật khẩu: hash client (demo) — thực tế phải hash Argon2id trên server.</li>
-            <li>Chống CSRF/XSS, rate limit, 2FA, nhật ký bảo mật.</li>
-          </ul>
+          <h4>Liên hệ</h4>
+          <p>Telegram: <a href="https://t.me/">@yourchannel</a></p>
         </div>
       </div>
-      <p class="copyright">© 2025 Demo. Không dùng cho sản xuất.</p>
+      <p class="copyright">© 2025 Hỗ Trợ Game.</p>
     </div>
   </footer>
 </body>
