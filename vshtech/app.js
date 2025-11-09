@@ -131,7 +131,21 @@ const ROLES = [
       }catch{}
     };
   }
-
+  // ===== Contact button =====
+  const contactBtn = $("#contactBtn");
+  if (contactBtn) {
+    contactBtn.onclick = () => {
+      const url = (CONTACT_URL || "").trim();
+      if (!url) return;
+      // mailto: thì mở trực tiếp, còn lại mở tab mới
+      if (url.startsWith("mailto:")) {
+        location.href = url;
+      } else {
+        window.open(url, "_blank", "noopener");
+      }
+    };
+  }
+  
   // ===== Footer copy handle =====
   const y=$("#y"); if(y) y.textContent=new Date().getFullYear();
   const cp=$("#handleCopy"); if(cp){ cp.onclick=async()=>{try{await navigator.clipboard.writeText(cp.textContent||"@vshtech"); const t=cp.textContent; cp.textContent="Đã sao chép!"; setTimeout(()=>cp.textContent=t,1200);}catch{}}}
