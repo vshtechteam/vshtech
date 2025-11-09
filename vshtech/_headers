@@ -1,33 +1,16 @@
-/                # Trang chủ và các route "directory"
-  cache-control: no-cache, no-store, must-revalidate, s-maxage=0
-
-/*.html          # Tất cả trang HTML
-  cache-control: no-cache, no-store, must-revalidate, s-maxage=0
-
-/*.css           # Tất cả CSS (không cache để khỏi cần ?v=)
-  cache-control: no-cache, no-store, must-revalidate, s-maxage=0
-
-/*.js            # Tất cả JS (không cache để khỏi cần ?v=)
-  cache-control: no-cache, no-store, must-revalidate, s-maxage=0
-
-
-# ====== Các file tải về ======
+/*
+  Cache-Control: no-cache, no-store, must-revalidate, s-maxage=0
 
 /install/profiles/*.mobileconfig
-  content-type: application/x-apple-aspen-config
-  content-disposition: attachment; filename="vpn.mobileconfig"
-  cache-control: no-store, s-maxage=0
+  Content-Type: application/x-apple-aspen-config
+  Content-Disposition: attachment; filename="vpn.mobileconfig"
+  Cache-Control: no-store, s-maxage=0
 
 /certificate/files/*.zip
-  content-type: application/zip
-  content-disposition: attachment; filename="cert.zip"
-  cache-control: no-store, s-maxage=0
+  Content-Type: application/zip
+  Content-Disposition: attachment; filename="cert.zip"
+  Cache-Control: no-store, s-maxage=0
 
 /certificate/plist/*.plist
-  content-type: application/xml; charset=utf-8
-  cache-control: no-store, s-maxage=0
-
-/certificate/esgin/ipa/*.ipa
-  content-type: application/octet-stream
-  content-disposition: attachment
-  cache-control: no-store, s-maxage=0
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: no-store, s-maxage=0
