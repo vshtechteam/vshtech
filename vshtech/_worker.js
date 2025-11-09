@@ -3,7 +3,7 @@ export default {
     const url = new URL(request.url);
 
     // 👉 Nếu gọi trực tiếp favicon / apple icon thì trả ảnh logo
-    const LOGO = 'https://i.imgur.com/slbUBwc.png';
+    const LOGO = 'https://i.imgur.com/H5YAlSa.png';
     if (url.pathname === '/favicon.ico' || url.pathname === '/apple-touch-icon.png') {
       const img = await fetch(LOGO, { cf: { cacheEverything: true, cacheTtl: 86400 } });
       // Trả về dưới dạng PNG vẫn OK cho phần lớn client
