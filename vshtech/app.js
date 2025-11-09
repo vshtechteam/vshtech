@@ -3,7 +3,7 @@
 
 const AVATAR_URL = ""; // dán URL avatar của bạn
 const CONTACT_URL = "https://instabio.cc/vshtech";
-
+const BOT_LANDING_URL = "https://your-site.com/bots";
 const ROLES = [
   "Seller",
 
