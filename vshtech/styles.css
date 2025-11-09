@@ -1,7 +1,19 @@
+/* ===== Icon: Bot Telegram Tự Động Hóa ===== */
 .ico.bot{
-  background:radial-gradient(60% 60% at 30% 30%, #99f6e4, #14b8a6);
-.ico.bot{ background:#e6fffb }              /* fallback nhạt */
-.ico.bot svg{ stroke:#0f172a !important; }  /* vẽ robot màu đậm thay vì trắng */
+  /* nền teal để stroke trắng nổi bật */
+  background: radial-gradient(60% 60% at 30% 30%, #99f6e4, #14b8a6);
+}
+
+/* đảm bảo nét vẽ luôn rõ (kể cả khi CSS khác ghi đè) */
+.ico.bot svg{
+  stroke: #fff !important;
+  fill: none !important;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
 :root{
     --bg:#ffffff;
     --text:#0f172a;
