@@ -9,64 +9,66 @@
   <script defer src="assets/js/app.js"></script>
 </head>
 <body data-page="ios">
-  <header class="topbar">
-    <button class="icon-btn" id="btn-drawer" aria-label="Mở menu"><span class="i i-menu"></span></button>
-    <a class="brand" href="index.html">
-      <img src="assets/img/logo.svg" alt="" class="brand-logo">
-      <div>
-        <strong class="brand-name">Hỗ Trợ Game</strong>
-        <div class="brand-sub">Bán file tự động</div>
+  <header class="header">
+    <div class="top">
+      <button class="icon-btn" id="btn-drawer" aria-label="Menu"><span class="i i-menu"></span></button>
+      <a class="logo" href="index.html">
+        <img src="assets/img/logo.svg" alt="Logo">
+      </a>
+      <form class="search" role="search" onsubmit="return false;">
+        <input placeholder="Tìm file, công cụ..." aria-label="Tìm kiếm">
+        <button class="btn btn-primary"><span class="i i-search"></span></button>
+      </form>
+      <div class="quick">
+        <a class="quick-item" href="nap-tien.html"><span class="i i-wallet"></span><span>Nạp tiền</span></a>
+        <a class="quick-item" href="#" id="btn-login-top"><span class="i i-user"></span><span>Tài khoản</span></a>
       </div>
-    </a>
-    <div class="usercta" id="user-cta"></div>
+    </div>
+    <nav class="nav-cats">
+      <a href="imazing.html"><span class="i i-folder"></span> iMazing</a>
+      <a href="android.html"><span class="i i-android"></span> Android</a>
+      <a href="ios.html"><span class="i i-apple"></span> iOS</a>
+      <a href="nap-tien.html"><span class="i i-wallet"></span> Nạp tiền</a>
+      <a href="https://t.me/"><span class="i i-telegram"></span> Telegram</a>
+    </nav>
   </header>
 
   <aside id="drawer" class="drawer" aria-hidden="true">
-    <div class="drawer-pan" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="drawer-pan">
       <div class="drawer-head">
-        <div class="brand-row">
-          <img src="assets/img/logo.svg" alt="" class="brand-logo">
-          <div>
-            <strong>Hỗ Trợ Game 🎮</strong>
-            <div class="muted">Tất cả công cụ & file</div>
-          </div>
-        </div>
-        <button class="icon-btn" id="btn-close-drawer" aria-label="Đóng menu"><span class="i i-x"></span></button>
+        <strong>Danh mục</strong>
+        <button class="icon-btn" id="btn-close-drawer"><span class="i i-x"></span></button>
       </div>
-      <nav class="menu">
-        <a class="menu-item" href="index.html"><span class="i i-home"></span><span>Trang chủ</span></a>
-        <a class="menu-item" href="nap-tien.html"><span class="i i-bank"></span><span>Nạp tiền</span></a>
-
-        <div class="menu-accordion">
-          <button class="menu-item acc-btn" data-acc="game">
-            <span class="i i-tools"></span><span>Hỗ Trợ Game 🎮</span><span class="i i-chevron"></span>
-          </button>
-          <div class="acc-panel" id="acc-game">
-            <a class="menu-sub" href="imazing.html">iMazing</a>
-            <a class="menu-sub" href="android.html">File hỗ trợ Android</a>
-            <a class="menu-sub" href="ios.html">File hỗ trợ iOS</a>
-          </div>
-        </div>
-
-        <a class="menu-item" href="https://t.me/"><span class="i i-telegram"></span><span>Telegram Giao Lưu</span><span class="badge-new">NEW</span></a>
-        <div class="auth-actions" id="drawer-auth"></div>
-      </nav>
+      <div class="drawer-body">
+        <a class="drawer-item" href="index.html"><span class="i i-home"></span> Trang chủ</a>
+        <a class="drawer-item" href="imazing.html"><span class="i i-folder"></span> iMazing</a>
+        <a class="drawer-item" href="android.html"><span class="i i-android"></span> Android</a>
+        <a class="drawer-item" href="ios.html"><span class="i i-apple"></span> iOS</a>
+        <a class="drawer-item" href="nap-tien.html"><span class="i i-wallet"></span> Nạp tiền</a>
+        <a class="drawer-item" href="https://t.me/"><span class="i i-telegram"></span> Telegram</a>
+        <div id="drawer-auth"></div>
+      </div>
     </div>
   </aside>
 
   <main class="container">
 <section class="section">
-  <div class="section-head"><h2>File hỗ trợ iOS</h2><div class="muted">Profile, shortcut, tài liệu</div></div>
+  <div class="section-head">
+    <h2>File hỗ trợ iOS</h2>
+    <div class="muted">Profile, shortcut, tài liệu</div>
+  </div>
   <div id="grid-ios" class="grid"></div>
 </section>
   </main>
+
   <div id="modals-root"></div>
+
   <footer class="footer">
     <div class="container">
-      <div class="footer-grid">
+      <div class="foot-grid">
         <div>
           <h4>Hỗ Trợ Game 🎮</h4>
-          <p>Giao diện tối ưu mobile, sẵn sàng nối API thực tế.</p>
+          <p>Giao diện theo phong cách DTN, tối ưu di động, sẵn sàng nối API.</p>
         </div>
         <div>
           <h4>Liên hệ</h4>
@@ -76,5 +78,6 @@
       <p class="copyright">© 2025 Hỗ Trợ Game.</p>
     </div>
   </footer>
+
 </body>
 </html>
