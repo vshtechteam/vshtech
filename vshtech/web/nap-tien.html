@@ -3,56 +3,96 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Web Bán File Tự Động - Demo</title>
-  <meta name="description" content="Demo web bán file tự động: đăng ký/đăng nhập, nạp tiền, mua & tải file.">
+  <title>Nạp tiền — Hỗ Trợ Game</title>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/style.css">
   <script defer src="assets/js/app.js"></script>
 </head>
-<body data-page="topup">
-  <div id="app-header"></div>
-  <main class="container">
+<body data-page="nap-tien">
+  <header class="topbar">
+    <button class="icon-btn" id="btn-drawer" aria-label="Mở menu"><span class="i i-menu"></span></button>
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo.svg" alt="" class="brand-logo">
+      <div>
+        <strong class="brand-name">Hỗ Trợ Game</strong>
+        <div class="brand-sub">Bán file tự động</div>
+      </div>
+    </a>
+    <div class="usercta" id="user-cta"></div>
+  </header>
 
-  <section class="section">
-    <h2>Nạp tiền</h2>
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="card">Thẻ cào</button>
-      <button class="tab-btn" data-tab="bank">Banking</button>
+  <aside id="drawer" class="drawer" aria-hidden="true">
+    <div class="drawer-pan" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="drawer-head">
+        <div class="brand-row">
+          <img src="assets/img/logo.svg" alt="" class="brand-logo">
+          <div>
+            <strong>Hỗ Trợ Game 🎮</strong>
+            <div class="muted">Tất cả công cụ & file</div>
+          </div>
+        </div>
+        <button class="icon-btn" id="btn-close-drawer" aria-label="Đóng menu"><span class="i i-x"></span></button>
+      </div>
+      <nav class="menu">
+        <a class="menu-item" href="index.html"><span class="i i-home"></span><span>Trang chủ</span></a>
+        <a class="menu-item" href="nap-tien.html"><span class="i i-bank"></span><span>Nạp tiền</span></a>
+
+        <div class="menu-accordion">
+          <button class="menu-item acc-btn" data-acc="game">
+            <span class="i i-tools"></span><span>Hỗ Trợ Game 🎮</span><span class="i i-chevron"></span>
+          </button>
+          <div class="acc-panel" id="acc-game">
+            <a class="menu-sub" href="imazing.html">iMazing</a>
+            <a class="menu-sub" href="android.html">File hỗ trợ Android</a>
+            <a class="menu-sub" href="ios.html">File hỗ trợ iOS</a>
+          </div>
+        </div>
+
+        <a class="menu-item" href="https://t.me/"><span class="i i-telegram"></span><span>Telegram Giao Lưu</span><span class="badge-new">NEW</span></a>
+        <div class="auth-actions" id="drawer-auth"></div>
+      </nav>
     </div>
+  </aside>
 
-    <div class="tab-panel active" id="tab-card">
-      <form id="form-card" class="form">
-        <label>Nhà mạng
-          <select name="carrier" required>
-            <option value="viettel">Viettel</option>
-            <option value="vinaphone">VinaPhone</option>
-            <option value="mobifone">MobiFone</option>
-          </select>
-        </label>
+  <main class="container">
+<section class="section">
+  <h2>Nạp tiền</h2>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="card">Thẻ cào</button>
+    <button class="tab-btn" data-tab="bank">ATM + MOMO</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-card">
+    <form id="form-card" class="form">
+      <label>Nhà mạng
+        <select name="carrier" required>
+          <option value="viettel">Viettel</option>
+          <option value="vinaphone">VinaPhone</option>
+          <option value="mobifone">MobiFone</option>
+        </select>
+      </label>
+      <div class="row-2">
         <label>Mệnh giá (VND)
           <select name="amount" required>
-            <option>10000</option>
-            <option>20000</option>
-            <option>50000</option>
-            <option>100000</option>
-            <option>200000</option>
+            <option>10000</option><option>20000</option><option>50000</option><option>100000</option><option>200000</option>
           </select>
         </label>
         <label>Serial
-          <input type="text" name="serial" minlength="8" required placeholder="Nhập serial">
+          <input name="serial" minlength="8" required placeholder="Nhập serial">
         </label>
         <label>Mã thẻ
-          <input type="text" name="pin" minlength="8" required placeholder="Nhập mã thẻ">
+          <input name="pin" minlength="8" required placeholder="Nhập mã thẻ">
         </label>
-        <button type="submit" class="btn btn-primary">Nạp</button>
-      </form>
-      <p class="hint">* Demo: hệ thống sẽ xác nhận giả lập và cộng số dư nếu hợp lệ.</p>
-    </div>
+      </div>
+      <button class="btn btn-primary" type="submit">Nạp</button>
+    </form>
+  </div>
 
-    <div class="tab-panel" id="tab-bank">
-      <form id="form-bank" class="form">
+  <div class="tab-panel" id="tab-bank">
+    <form id="form-bank" class="form">
+      <div class="row-2">
         <label>Số tiền (VND)
-          <input type="number" name="amount" min="10000" step="1000" required placeholder="Ví dụ: 50000">
+          <input type="number" min="10000" step="1000" name="amount" required placeholder="Ví dụ 100000">
         </label>
         <label>Ngân hàng
           <select name="bank" required>
@@ -62,31 +102,27 @@
             <option value="tpb">TPBank</option>
           </select>
         </label>
-        <button type="submit" class="btn btn-primary">Tạo lệnh nạp</button>
-      </form>
-      <div id="banking-instruction" class="banking-box" hidden></div>
-      <p class="hint">* Demo: tạo "mã giao dịch" giả lập và cộng số dư sau khi bạn bấm Xác nhận đã chuyển.</p>
-    </div>
-  </section>
+      </div>
+      <button class="btn btn-primary" type="submit">Tạo lệnh</button>
+    </form>
+    <div id="banking" class="banking" hidden></div>
+  </div>
+</section>
   </main>
   <div id="modals-root"></div>
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div>
-          <h4>Web Bán File Tự Động — Demo</h4>
-          <p>Bản mẫu front-end: mua & tải file sau khi đăng nhập và nạp số dư.</p>
+          <h4>Hỗ Trợ Game 🎮</h4>
+          <p>Giao diện tối ưu mobile, sẵn sàng nối API thực tế.</p>
         </div>
         <div>
-          <h4>Bảo mật (định hướng)</h4>
-          <ul>
-            <li>Đăng nhập: Email/SĐT + mật khẩu, OAuth Google/Facebook (demo).</li>
-            <li>Mật khẩu: hash client (demo) — thực tế phải hash Argon2id trên server.</li>
-            <li>Chống CSRF/XSS, rate limit, 2FA, nhật ký bảo mật.</li>
-          </ul>
+          <h4>Liên hệ</h4>
+          <p>Telegram: <a href="https://t.me/">@yourchannel</a></p>
         </div>
       </div>
-      <p class="copyright">© 2025 Demo. Không dùng cho sản xuất.</p>
+      <p class="copyright">© 2025 Hỗ Trợ Game.</p>
     </div>
   </footer>
 </body>
