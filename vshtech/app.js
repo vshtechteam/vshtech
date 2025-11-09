@@ -138,7 +138,7 @@ const ROLES = [
   const contactBtn = $("#contactBtn");
   if (contactBtn) {
     contactBtn.onclick = () => {
-      const url = ( || "adminserverconfig@vshtech.online").trim();
+      const url = (CONTACT_URL || "").trim();
       if (!url) return;
       // mailto: thì mở trực tiếp, còn lại mở tab mới
       if (url.startsWith("mailto:")) {
