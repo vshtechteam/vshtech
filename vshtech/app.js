@@ -2,7 +2,7 @@
 /* ====== CẤU HÌNH NHANH ====== */
 
 const AVATAR_URL = ""; // dán URL avatar của bạn
-const CONTACT_URL = "mailto:adminserverconfig@vshtech.online";
+const CONTACT_URL = "https://instabio.cc/vshtech";
 
 const ROLES = [
   "Seller",
