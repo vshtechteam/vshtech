@@ -1,10 +1,5 @@
-# Chuẩn hoá /certificate -> /certificate/
-/certificate              /certificate/                 301!
-
-# Chặn mọi URL lỗi có %20target= (có hay không có phần đuôi)
-/certificate/%20target=*  /certificate/                 301!
-/certificate/*%20target=* /certificate/                 301!
-
-# (Tuỳ chọn) ép non-www về www cho trang certificate
-https://vshtech.online/certificate            https://www.vshtech.online/certificate/ 301!
-https://vshtech.online/certificate/*          https://www.vshtech.online/certificate/ 301!
+/certificate/files/*.zip
+  content-type: application/zip
+  content-disposition: attachment; filename="cert.zip"
+  cache-control: public, max-age=86400, immutable
+  x-content-type-options: nosniff
