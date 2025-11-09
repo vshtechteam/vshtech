@@ -135,7 +135,7 @@ const ROLES = [
   const contactBtn = $("#contactBtn");
   if (contactBtn) {
     contactBtn.onclick = () => {
-      const url = (https://instabio.cc/vshtech || "").trim();
+      const url = ( || "adminserverconfig@vshtech.online").trim();
       if (!url) return;
       // mailto: thì mở trực tiếp, còn lại mở tab mới
       if (url.startsWith("mailto:")) {
