@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Web Bán File Tự Động - Demo</title>
+  <meta name="description" content="Demo web bán file tự động: đăng ký/đăng nhập, nạp tiền, mua & tải file.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script defer src="assets/js/app.js"></script>
+</head>
+<body data-page="topup">
+  <div id="app-header"></div>
+  <main class="container">
+
+  <section class="section">
+    <h2>Nạp tiền</h2>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="card">Thẻ cào</button>
+      <button class="tab-btn" data-tab="bank">Banking</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-card">
+      <form id="form-card" class="form">
+        <label>Nhà mạng
+          <select name="carrier" required>
+            <option value="viettel">Viettel</option>
+            <option value="vinaphone">VinaPhone</option>
+            <option value="mobifone">MobiFone</option>
+          </select>
+        </label>
+        <label>Mệnh giá (VND)
+          <select name="amount" required>
+            <option>10000</option>
+            <option>20000</option>
+            <option>50000</option>
+            <option>100000</option>
+            <option>200000</option>
+          </select>
+        </label>
+        <label>Serial
+          <input type="text" name="serial" minlength="8" required placeholder="Nhập serial">
+        </label>
+        <label>Mã thẻ
+          <input type="text" name="pin" minlength="8" required placeholder="Nhập mã thẻ">
+        </label>
+        <button type="submit" class="btn btn-primary">Nạp</button>
+      </form>
+      <p class="hint">* Demo: hệ thống sẽ xác nhận giả lập và cộng số dư nếu hợp lệ.</p>
+    </div>
+
+    <div class="tab-panel" id="tab-bank">
+      <form id="form-bank" class="form">
+        <label>Số tiền (VND)
+          <input type="number" name="amount" min="10000" step="1000" required placeholder="Ví dụ: 50000">
+        </label>
+        <label>Ngân hàng
+          <select name="bank" required>
+            <option value="vcb">Vietcombank</option>
+            <option value="acb">ACB</option>
+            <option value="vtb">VietinBank</option>
+            <option value="tpb">TPBank</option>
+          </select>
+        </label>
+        <button type="submit" class="btn btn-primary">Tạo lệnh nạp</button>
+      </form>
+      <div id="banking-instruction" class="banking-box" hidden></div>
+      <p class="hint">* Demo: tạo "mã giao dịch" giả lập và cộng số dư sau khi bạn bấm Xác nhận đã chuyển.</p>
+    </div>
+  </section>
+  </main>
+  <div id="modals-root"></div>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>Web Bán File Tự Động — Demo</h4>
+          <p>Bản mẫu front-end: mua & tải file sau khi đăng nhập và nạp số dư.</p>
+        </div>
+        <div>
+          <h4>Bảo mật (định hướng)</h4>
+          <ul>
+            <li>Đăng nhập: Email/SĐT + mật khẩu, OAuth Google/Facebook (demo).</li>
+            <li>Mật khẩu: hash client (demo) — thực tế phải hash Argon2id trên server.</li>
+            <li>Chống CSRF/XSS, rate limit, 2FA, nhật ký bảo mật.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="copyright">© 2025 Demo. Không dùng cho sản xuất.</p>
+    </div>
+  </footer>
+</body>
+</html>

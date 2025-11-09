@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Web Bán File Tự Động - Demo</title>
+  <meta name="description" content="Demo web bán file tự động: đăng ký/đăng nhập, nạp tiền, mua & tải file.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script defer src="assets/js/app.js"></script>
+</head>
+<body data-page="imazing">
+  <div id="app-header"></div>
+  <main class="container">
+
+  <section class="section">
+    <h2>iMazing</h2>
+    <p>Tài nguyên & hồ sơ mẫu liên quan iMazing.</p>
+    <div id="imazing-grid" class="grid"></div>
+  </section>
+  </main>
+  <div id="modals-root"></div>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>Web Bán File Tự Động — Demo</h4>
+          <p>Bản mẫu front-end: mua & tải file sau khi đăng nhập và nạp số dư.</p>
+        </div>
+        <div>
+          <h4>Bảo mật (định hướng)</h4>
+          <ul>
+            <li>Đăng nhập: Email/SĐT + mật khẩu, OAuth Google/Facebook (demo).</li>
+            <li>Mật khẩu: hash client (demo) — thực tế phải hash Argon2id trên server.</li>
+            <li>Chống CSRF/XSS, rate limit, 2FA, nhật ký bảo mật.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="copyright">© 2025 Demo. Không dùng cho sản xuất.</p>
+    </div>
+  </footer>
+</body>
+</html>
