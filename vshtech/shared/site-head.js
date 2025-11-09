@@ -13,7 +13,7 @@
   add('link', { rel: 'icon', type: 'image/png', href: ICON });
 
   // iOS Add to Home Screen
-  add('link', { rel: 'apple-touch-icon', sizes: '180x180', href: ICON });
+  add('link', { rel: 'apple-touch-icon', sizes: '1024x1024', href: ICON });
 
   // (Tùy chọn) Màu thanh địa chỉ
   add('meta', { name: 'theme-color', content: '#0b1220' });
