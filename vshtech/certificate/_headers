@@ -1,8 +1,13 @@
-/certificate/files/*.zip
-  Content-Type: application/zip
-  Content-Disposition: attachment; filename="cert.zip"
-  Cache-Control: public, max-age=3600
+# Cho phép lấy file tĩnh mà KHÔNG đổi URL (dùng bởi iframe/itms-services)
+/certificate/files/*   /certificate/files/:splat   200
+/certificate/plist/*   /certificate/plist/:splat   200
 
-/certificate/plist/*.plist
-  Content-Type: application/xml
-  Cache-Control: public, max-age=3600
+# Chuẩn hoá: thêm dấu / nếu thiếu
+/certificate           /certificate/               301
+
+# Vá các biến thể gõ sai/ghép sai
+/certificate/%20target=*   /certificate/           301
+/certificate/ target=*     /certificate/           301
+
+# MỌI THỨ khác bên trong /certificate → gom về trang chính
+/certificate/*        /certificate/                301
