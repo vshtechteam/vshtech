@@ -1,4 +1,7 @@
-  :root{
+.ico.bot{
+  background:radial-gradient(60% 60% at 30% 30%, #99f6e4, #14b8a6);
+
+:root{
     --bg:#ffffff;
     --text:#0f172a;
     --muted:#64748b;
