@@ -148,6 +148,12 @@ const ROLES = [
       }
     };
   }
+// ===== Bot landing link =====
+const botLanding = document.getElementById("botLandingLink");
+if (botLanding && typeof BOT_LANDING_URL === "string" && BOT_LANDING_URL.trim()){
+  botLanding.href = BOT_LANDING_URL.trim(); // mở cùng tab (landing nội bộ)
+  // Nếu muốn mở tab mới: botLanding.target = "_blank"; botLanding.rel = "noopener";
+}
   
   // ===== Footer copy handle =====
   const y=$("#y"); if(y) y.textContent=new Date().getFullYear();
