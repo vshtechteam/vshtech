@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<style>
+  body { touch-action: manipulation; }
+  input, select, textarea { font-size:16px; }
+</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DEV CHI CUONG</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+  <canvas id="particles-canvas"></canvas>
+  <div class="container">
+    <header class="header">
+      <h1 class="title"><b>DEV CHI CUONG</b><span class="badge"><i class="fas fa-check"></i></span></h1>
+      <button class="special-menu-btn" id="special-menu-btn"><i class="fas fa-bolt"></i><span>Menu Đặc Biệt</span></button>
+    </header>
+
+    <div id="announce-bar" class="announce hidden">
+      <div class="announce-content">
+        <i class="fas fa-bullhorn"></i>
+        <span class="announce-title">Đã nâng cấp CHEATIOSVIP → DEV CHI CUONG</span>
+        <div class="announce-tags">
+          <span class="tag"><i class="fas fa-hand-sparkles"></i>LUX Touch+</span>
+          <span class="tag"><i class="fas fa-arrows-rotate"></i>DPI động</span>
+          <span class="tag"><i class="fas fa-floppy-disk"></i>Tự lưu cấu hình</span>
+          <span class="tag"><i class="fas fa-rocket"></i>Chế độ Pro</span>
+          <span class="tag"><i class="fas fa-shield-halved"></i>Bộ lọc rung</span>
+        </div>
+      </div>
+      <button class="announce-close" id="announce-close" aria-label="Đóng"><i class="fas fa-times"></i></button>
+    </div>
+
+    <main class="main-content">
+      <section class="section">
+        <h2 class="section-title"><i class="fas fa-cube section-icon"></i> CHỨC NĂNG</h2>
+
+        <div class="function-item">
+          <div class="function-content">
+            <div class="logo"><i class="fas fa-gears"></i></div>
+            <span class="function-text">Config Settings<span class="sub">Tối ưu hệ thống</span></span>
+          </div>
+          <div class="toggle-switch" data-function="config">
+            <input type="checkbox" id="config-toggle" class="toggle-input">
+            <label for="config-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+
+        <div class="function-item">
+          <div class="function-content">
+            <div class="logo"><i class="fas fa-star"></i></div>
+            <span class="function-text">Trợ Năng LUX<span class="sub">Độ mượt cảm ứng</span></span>
+          </div>
+          <div class="toggle-switch" data-function="lux">
+            <input type="checkbox" id="lux-toggle" class="toggle-input">
+            <label for="lux-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title"><i class="fas fa-cube section-icon"></i> LUX SENSI</h2>
+
+        <div class="sensi-item">
+          <div class="sensi-content">
+            <div class="sensi-icon"><i class="fas fa-mobile-alt"></i></div>
+            <div class="sensi-info"><span class="sensi-label">DEVICE:</span><span class="sensi-value">IPHONE</span></div>
+          </div>
+        </div>
+
+        <div class="sensi-item">
+          <div class="sensi-content">
+            <div class="sensi-icon"><i class="fas fa-palette"></i></div>
+            <div class="sensi-info">
+              <span class="sensi-label">Chế độ:</span>
+              <div class="dropdown">
+                <select id="mode-select" class="dropdown-select">
+                  <option value="muot-ma">Mượt Mà</option>
+                  <option value="cao-cap">Cao Cấp</option>
+                  <option value="tieu-chuan">Tiêu Chuẩn</option>
+                </select>
+                <i class="fas fa-chevron-down dropdown-arrow"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sensi-item">
+          <div class="sensi-content">
+            <div class="sensi-icon"><i class="fas fa-crosshairs"></i></div>
+            <div class="sensi-info">
+              <span class="sensi-label">DPI:</span>
+              <div class="dropdown">
+                <select id="dpi-select" class="dropdown-select">
+                  <option value="1.0">1.0x</option>
+                  <option value="1.5">1.5x</option>
+                  <option value="2.0">2.0x</option>
+                  <option value="2.5">2.5x</option>
+                  <option value="3.0">3.0x</option>
+                </select>
+                <i class="fas fa-chevron-down dropdown-arrow"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <button class="activate-btn" id="activate-btn"><i class="fas fa-power-off"></i> DARG SENSITIVITY</button>
+    </main>
+
+    <footer id="site-footer" class="footer"></footer>
+  </div>
+
+  <div id="special-menu" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <h3 id="modal-title"><i class="fas fa-bolt"></i> Menu Đặc Biệt</h3>
+        <button class="modal-close" id="modal-close" aria-label="Đóng"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-infobox" id="modal-infobox">
+        <i class="fas fa-circle-info"></i>
+        <span>Menu đặc biệt đã mở. Bạn có thể đóng thông báo này.</span>
+        <button class="infobox-close" id="infobox-close" aria-label="Đóng"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <ul class="feature-list">
+          <li class="feature"><div class="logo"><i class="fas fa-shield-halved"></i></div><label><input type="checkbox" id="f-anti-shake">Khử rung mục tiêu</label></li>
+          <li class="feature"><div class="logo"><i class="fas fa-bullseye"></i></div><label><input type="checkbox" id="f-aim-assist">Hỗ trợ căn chỉnh</label></li>
+          <li class="feature"><div class="logo"><i class="fas fa-hand-pointer"></i></div><label><input type="checkbox" id="f-touch-boost">Tăng tốc cảm ứng</label></li>
+          <li class="feature"><div class="logo"><i class="fas fa-rocket"></i></div><label><input type="checkbox" id="f-pro-mode">Kích hoạt Chế độ Pro</label></li>
+        </ul>
+      </div>
+      <div class="modal-actions">
+        <button id="modal-apply" class="btn-primary"><i class="fas fa-check"></i> Áp dụng</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="site-notice" class="notice-modal hidden" aria-hidden="true">
+    <div class="notice-backdrop" id="notice-backdrop"></div>
+    <div class="notice-card" role="dialog" aria-modal="true" aria-labelledby="notice-title">
+      <div class="notice-head">
+        <h4 id="notice-title" class="notice-title">DEV CHI CUONG <span class="verify"><i class="fas fa-check"></i></span></h4>
+        <button class="notice-close" id="notice-close"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="notice-body">
+        <p class="notice-lead">Các chức năng quan trọng đã sẵn sàng</p>
+        <ul class="notice-list" id="notice-list"></ul>
+        <div class="notice-actions">
+          <button class="btn-gold" id="notice-3h"><i class="fas fa-clock"></i> Đóng 3 giờ</button>
+          <button class="btn-red" id="notice-ok"><i class="fas fa-circle-check"></i> Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script src="app.js"></script>
+  
+
+</body>
+</html>
