@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<style>
-  body { touch-action: manipulation; }
-  input, select, textarea { font-size:16px; }
-</style>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <title>DEV CHI CUONG</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link rel="stylesheet" href="styles.css">
 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <canvas id="particles-canvas"></canvas>
+
   <div class="container">
     <header class="header">
-      <h1 class="title"><b>DEV CHI CUONG</b><span class="badge"><i class="fas fa-check"></i></span></h1>
-      <button class="special-menu-btn" id="special-menu-btn"><i class="fas fa-bolt"></i><span>Menu Đặc Biệt</span></button>
+      <h1 class="title">
+        <b>DEV CHI CUONG</b>
+        <span class="badge"><i class="fas fa-check"></i></span>
+      </h1>
+      <button class="special-menu-btn" id="special-menu-btn">
+        <i class="fas fa-bolt"></i><span>Menu Đặc Biệt</span>
+      </button>
     </header>
 
     <div id="announce-bar" class="announce hidden">
@@ -34,7 +38,9 @@
           <span class="tag"><i class="fas fa-shield-halved"></i>Bộ lọc rung</span>
         </div>
       </div>
-      <button class="announce-close" id="announce-close" aria-label="Đóng"><i class="fas fa-times"></i></button>
+      <button class="announce-close" id="announce-close" aria-label="Đóng">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
 
     <main class="main-content">
@@ -47,7 +53,7 @@
             <span class="function-text">Config Settings<span class="sub">Tối ưu hệ thống</span></span>
           </div>
           <div class="toggle-switch" data-function="config">
-            <input type="checkbox" id="config-toggle" class="toggle-input">
+            <input type="checkbox" id="config-toggle" class="toggle-input" />
             <label for="config-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
           </div>
         </div>
@@ -58,7 +64,7 @@
             <span class="function-text">Trợ Năng LUX<span class="sub">Độ mượt cảm ứng</span></span>
           </div>
           <div class="toggle-switch" data-function="lux">
-            <input type="checkbox" id="lux-toggle" class="toggle-input">
+            <input type="checkbox" id="lux-toggle" class="toggle-input" />
             <label for="lux-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
           </div>
         </div>
@@ -111,12 +117,15 @@
         </div>
       </section>
 
-      <button class="activate-btn" id="activate-btn"><i class="fas fa-power-off"></i> DARG SENSITIVITY</button>
+      <button class="activate-btn" id="activate-btn">
+        <i class="fas fa-power-off"></i> DARG SENSITIVITY
+      </button>
     </main>
 
     <footer id="site-footer" class="footer"></footer>
   </div>
 
+  <!-- Menu Đặc Biệt -->
   <div id="special-menu" class="modal hidden" aria-hidden="true">
     <div class="modal-backdrop" id="modal-backdrop"></div>
     <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -143,11 +152,14 @@
     </div>
   </div>
 
+  <!-- Thông báo mở menu -->
   <div id="site-notice" class="notice-modal hidden" aria-hidden="true">
     <div class="notice-backdrop" id="notice-backdrop"></div>
     <div class="notice-card" role="dialog" aria-modal="true" aria-labelledby="notice-title">
       <div class="notice-head">
-        <h4 id="notice-title" class="notice-title">DEV CHI CUONG <span class="verify"><i class="fas fa-check"></i></span></h4>
+        <h4 id="notice-title" class="notice-title">
+          DEV CHI CUONG <span class="verify"><i class="fas fa-check"></i></span>
+        </h4>
         <button class="notice-close" id="notice-close"><i class="fas fa-times"></i></button>
       </div>
       <div class="notice-body">
@@ -161,9 +173,7 @@
     </div>
   </div>
 
-
-<script src="app.js"></script>
-  
-
+  <!-- App JS -->
+  <script src="app.js"></script>
 </body>
 </html>
