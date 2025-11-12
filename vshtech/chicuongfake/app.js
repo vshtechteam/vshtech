@@ -421,3 +421,28 @@ document.addEventListener("DOMContentLoaded",function(){
   }
   bindDraftSave();
 })();
+(function(){
+  function openGate(){ if(window.VSHKeyGate&&window.VSHKeyGate.show) window.VSHKeyGate.show(); }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",openGate);
+  else openGate();
+})();
+(function(){
+  function S(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+  function off(){
+    var keys=["config-enabled","lux-enabled","feat-anti-shake","feat-aim-assist","feat-touch-boost","feat-pro-mode"];
+    for(var i=0;i<keys.length;i++) S(keys[i],false);
+  }
+  function reflect(){
+    var a=document.querySelector("#config-toggle"),b=document.querySelector("#lux-toggle");
+    if(a) a.checked=false; if(b) b.checked=false;
+    ["#f-anti-shake","#f-aim-assist","#f-touch-boost","#f-pro-mode"].forEach(function(s){var el=document.querySelector(s); if(el) el.checked=false;});
+    document.querySelectorAll(".toggle-switch").forEach(function(sw){
+      var i=sw.querySelector(".toggle-input"), it=sw.closest(".function-item");
+      if(!i||!it) return; it.dataset.state=i.checked?"on":"off"; it.style.borderColor=i.checked?"rgba(34,197,94,.6)":"rgba(255,255,255,.06)";
+    });
+  }
+  window.addEventListener("pagehide",off);
+  window.addEventListener("beforeunload",off);
+  document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="hidden") off(); });
+  window.addEventListener("pageshow",function(e){ if(e.persisted) reflect(); });
+})();
