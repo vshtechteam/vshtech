@@ -446,3 +446,111 @@ document.addEventListener("DOMContentLoaded",function(){
   document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="hidden") off(); });
   window.addEventListener("pageshow",function(e){ if(e.persisted) reflect(); });
 })();
+
+
+
+
+(function(){
+  /* ==== CẤU HÌNH NHANH ==== */
+  var FORCE_SHOW_ON_START = false; // -> true nếu muốn luôn mở gate khi vào app
+  var OFF_KEYS = ["config-enabled","lux-enabled","feat-anti-shake","feat-aim-assist","feat-touch-boost","feat-pro-mode"];
+  var LS = { KEY: "vsh_license_key" };
+
+  /* ==== ẨN API (không lộ host/path) ==== */
+  function ub(s){ s = s.replace(/[^A-Za-z0-9+/=]/g,''); return atob(s.split('').reverse().join('')); }
+  var HOST = "2VGZuMncltmcvdnLtFWZ0h2YlRHazZnL5V2a09mY";           // rev(base64("botkey.vshtechteam.workers.dev"))
+  var VFY  = "=knZpJXZ29SawF2L";                                   // rev(base64("/api/verify"))
+  var ACT  = "==QZ0FmdpR3Yh9SawF2L";                               // rev(base64("/api/activate"))
+  var API_BASE = (location.protocol||"https:").replace(/:.*/,"")+"://"+ub(HOST);
+  function post(p, body){
+    return fetch(API_BASE+ub(p), {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(body)
+    }).then(r=>r.json()).catch(()=>({ok:false,error:"NET"}));
+  }
+
+  /* ==== TẮT CHỨC NĂNG + CẬP NHẬT UI ==== */
+  function offAll(){
+    try{ OFF_KEYS.forEach(k=>localStorage.setItem(k,"false")); }catch(e){}
+    try{
+      ["#config-toggle","#lux-toggle","#f-anti-shake","#f-aim-assist","#f-touch-boost","#f-pro-mode"].forEach(sel=>{
+        var el=document.querySelector(sel); if(el) el.checked=false;
+      });
+      document.querySelectorAll(".toggle-switch").forEach(sw=>{
+        var i=sw.querySelector(".toggle-input"), it=sw.closest(".function-item");
+        if(!i||!it) return;
+        it.dataset.state = i.checked ? "on" : "off";
+        it.style.borderColor = i.checked ? "rgba(34,197,94,.6)" : "rgba(255,255,255,.06)";
+      });
+    }catch(e){}
+  }
+
+  /* ==== MỞ GATE NHẬP KEY ==== */
+  function insistGate(msg){
+    function open(){
+      if(window.VSHKeyGate && typeof window.VSHKeyGate.show==="function"){
+        window.VSHKeyGate.show();
+        try{ if(msg && typeof window.setMsg==="function") setMsg("warn", msg); }catch(e){}
+        return true;
+      }
+      return false;
+    }
+    if(!open()){
+      var iv=setInterval(function(){ if(open()) clearInterval(iv); },200);
+      setTimeout(()=>clearInterval(iv),8000);
+    }
+  }
+
+  /* ==== WATCH HẾT HẠN ==== */
+  var expTimer=null;
+  function toTs(x){
+    if(x==null) return null;
+    if(typeof x==="number") return x<1e12?x*1000:x;
+    var p=Date.parse(x); return isFinite(p)?p: null;
+  }
+  function hitExpired(){
+    offAll();
+    insistGate("⏳ Key đã hết hạn — vui lòng nhập key mới.");
+  }
+  function watchExpiry(expiresAt){
+    if(expTimer){ clearTimeout(expTimer); expTimer=null; }
+    var t=toTs(expiresAt); if(!t) return;           // lifetime or invalid => không đặt timer
+    var ms=t - Date.now();
+    if(ms<=0){ hitExpired(); return; }
+    expTimer=setTimeout(hitExpired, ms+1000);
+  }
+
+  /* ==== VERIFY KEY ĐÃ LƯU ==== */
+  async function verifySavedKey(){
+    var raw=null;
+    try{ raw = JSON.parse(localStorage.getItem(LS.KEY)||'""'); }catch(e){}
+    var key = (typeof raw==="string") ? raw.trim() : (raw||"").toString().trim();
+    if(!key){ insistGate("Vui lòng nhập key để tiếp tục."); return; }
+
+    var v = await post(VFY, {key:key});
+    if(!v || !v.ok || !v.data){
+      offAll();
+      insistGate("Key không hợp lệ hoặc đã hết hạn. Vui lòng nhập lại.");
+      return;
+    }
+    watchExpiry(v.data && v.data.expiresAt);
+  }
+
+  /* ==== BIND THOÁT APP -> TẮT CHỨC NĂNG ==== */
+  function bindExitOff(){
+    var off=offAll;
+    window.addEventListener("pagehide",off);
+    window.addEventListener("beforeunload",off);
+    document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="hidden") off(); });
+    // Khi quay lại từ BFCache
+    window.addEventListener("pageshow",function(e){ if(e.persisted) off(); });
+  }
+
+  /* ==== KHỞI TẠO ==== */
+  function init(){
+    bindExitOff();
+    if(FORCE_SHOW_ON_START){ insistGate(); } else { verifySavedKey(); }
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
