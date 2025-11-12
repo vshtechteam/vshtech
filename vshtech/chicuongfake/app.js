@@ -554,3 +554,65 @@ document.addEventListener("DOMContentLoaded",function(){
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();
+
+
+(function(){
+  var AC = window.AudioContext || window.webkitAudioContext;
+  if(!AC) return;
+
+  // Dùng 1 AudioContext duy nhất để tránh xung đột
+  var ctx = window.__ting_ctx || new AC(); window.__ting_ctx = ctx;
+  var VOL = 0.32; // chỉnh âm lượng tại đây (0.0 → 1.0)
+
+  function note(freq, t0, dur){
+    var o = ctx.createOscillator(), g = ctx.createGain(), t1 = t0 + dur;
+    o.type = "sine"; o.frequency.value = freq;
+    o.connect(g); g.connect(ctx.destination);
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(VOL, t0 + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    o.start(t0); o.stop(t1 + 0.02);
+  }
+  function chime(){
+    if(ctx.state === "suspended" && ctx.resume) ctx.resume();
+    var now = ctx.currentTime;
+    note(1568, now,      0.12);
+    note(1976, now+0.08, 0.12);
+  }
+
+  // Mở khoá audio cho iOS/Safari (cần 1 gesture)
+  function unlock(){ if(ctx.state==="suspended" && ctx.resume) ctx.resume();
+    document.removeEventListener("touchstart", unlock, true);
+    document.removeEventListener("click", unlock, true);
+  }
+  document.addEventListener("touchstart", unlock, true);
+  document.addEventListener("click", unlock, true);
+
+  // Gắn âm bằng cơ chế ủy quyền (không đè handler hiện có)
+  var clickSel = [
+    ".special-menu-btn",".btn-primary","#activate-btn","#modal-apply",
+    ".announce-close","#modal-close","#notice-ok","#notice-3h","#notice-close",
+    "#vgCheck","#vgActive","#vgPasteKey","#vgDelKey","#vgCopyDev","#vgReset",
+    "#btn-key-gate"
+  ];
+  var changeSel = [
+    "#config-toggle","#lux-toggle","#f-anti-shake","#f-aim-assist","#f-touch-boost","#f-pro-mode"
+  ];
+
+  document.addEventListener("click", function(e){
+    for(var i=0;i<clickSel.length;i++){
+      if(e.target.closest && e.target.closest(clickSel[i])){ chime(); break; }
+    }
+  }, {passive:true});
+
+  document.addEventListener("change", function(e){
+    var t = e.target;
+    for(var i=0;i<changeSel.length;i++){
+      if(t.matches && t.matches(changeSel[i])){ chime(); break; }
+    }
+  }, {passive:true});
+
+  // Cho phép tự gọi thử trong Console: playChime()
+  window.playChime = chime;
+})();
+
