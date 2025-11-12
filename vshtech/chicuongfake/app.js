@@ -360,25 +360,52 @@ document.addEventListener("DOMContentLoaded",function(){
   // expose
   window.VSHKeyGate={show,hide,reset(){ localStorage.removeItem(LS.KEY); show(); }};
 })();
+
+
+
 (function(){
-  function set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
-  function resetFunctionsOff(){
-    var keys=["config-enabled","lux-enabled","feat-anti-shake","feat-aim-assist","feat-touch-boost","feat-pro-mode"];
-    for(var i=0;i<keys.length;i++) set(keys[i],false);
+  function ensureKeyGateButton(){
+    var header=document.querySelector(".header");
+    if(!header) return;
+
+    // Tạo nhóm actions bên phải nếu chưa có
+    var actions=header.querySelector(".header-actions");
+    if(!actions){
+      actions=document.createElement("div");
+      actions.className="header-actions";
+      // Di chuyển nút "Menu Đặc Biệt" vào nhóm
+      var menuBtn=document.getElementById("special-menu-btn");
+      if(menuBtn) actions.appendChild(menuBtn);
+      header.appendChild(actions);
+    }
+
+    // Nếu đã có nút Nhập Key thì thôi
+    if(document.getElementById("btn-key-gate")) return;
+
+    // Tạo nút Nhập Key
+    var keyBtn=document.createElement("button");
+    keyBtn.id="btn-key-gate";
+    keyBtn.className="special-menu-btn";
+    keyBtn.innerHTML='<i class="fas fa-key"></i><span>Nhập Key</span>';
+    keyBtn.addEventListener("click",function(){
+      if(window.VSHKeyGate && typeof window.VSHKeyGate.show==="function"){
+        window.VSHKeyGate.show();
+      }else{
+        alert("Module Key chưa sẵn sàng. Kiểm tra app.js (phần SCR API KEY GATE).");
+      }
+    },{passive:true});
+    actions.appendChild(keyBtn);
   }
-  function reflectNow(){
-    var a=document.querySelector("#config-toggle"),b=document.querySelector("#lux-toggle");
-    if(a) a.checked=false; if(b) b.checked=false;
-    ["#f-anti-shake","#f-aim-assist","#f-touch-boost","#f-pro-mode"].forEach(function(sel){var el=document.querySelector(sel); if(el) el.checked=false;});
-    document.querySelectorAll(".toggle-switch").forEach(function(sw){
-      var input=sw.querySelector(".toggle-input"), item=sw.closest(".function-item");
-      if(!input||!item) return;
-      item.dataset.state=input.checked?"on":"off";
-      item.style.borderColor=input.checked?"rgba(34,197,94,.6)":"rgba(255,255,255,.06)";
-    });
-  }
-  window.addEventListener("pagehide",function(){resetFunctionsOff()});
-  window.addEventListener("beforeunload",function(){resetFunctionsOff()});
-  document.addEventListener("visibilitychange",function(){if(document.visibilityState==="hidden"){resetFunctionsOff()}});
-  window.addEventListener("pageshow",function(e){if(e.persisted){reflectNow()}});
+
+  // Phím tắt Ctrl/⌘ + K để mở gate
+  window.addEventListener("keydown",function(e){
+    var k=(e.key||"").toLowerCase();
+    if((e.ctrlKey||e.metaKey) && k==="k"){
+      e.preventDefault();
+      if(window.VSHKeyGate && window.VSHKeyGate.show) window.VSHKeyGate.show();
+    }
+  });
+
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",ensureKeyGateButton);
+  else ensureKeyGateButton();
 })();
