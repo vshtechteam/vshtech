@@ -360,3 +360,25 @@ document.addEventListener("DOMContentLoaded",function(){
   // expose
   window.VSHKeyGate={show,hide,reset(){ localStorage.removeItem(LS.KEY); show(); }};
 })();
+(function(){
+  function set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+  function resetFunctionsOff(){
+    var keys=["config-enabled","lux-enabled","feat-anti-shake","feat-aim-assist","feat-touch-boost","feat-pro-mode"];
+    for(var i=0;i<keys.length;i++) set(keys[i],false);
+  }
+  function reflectNow(){
+    var a=document.querySelector("#config-toggle"),b=document.querySelector("#lux-toggle");
+    if(a) a.checked=false; if(b) b.checked=false;
+    ["#f-anti-shake","#f-aim-assist","#f-touch-boost","#f-pro-mode"].forEach(function(sel){var el=document.querySelector(sel); if(el) el.checked=false;});
+    document.querySelectorAll(".toggle-switch").forEach(function(sw){
+      var input=sw.querySelector(".toggle-input"), item=sw.closest(".function-item");
+      if(!input||!item) return;
+      item.dataset.state=input.checked?"on":"off";
+      item.style.borderColor=input.checked?"rgba(34,197,94,.6)":"rgba(255,255,255,.06)";
+    });
+  }
+  window.addEventListener("pagehide",function(){resetFunctionsOff()});
+  window.addEventListener("beforeunload",function(){resetFunctionsOff()});
+  document.addEventListener("visibilitychange",function(){if(document.visibilityState==="hidden"){resetFunctionsOff()}});
+  window.addEventListener("pageshow",function(e){if(e.persisted){reflectNow()}});
+})();
