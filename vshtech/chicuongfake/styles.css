@@ -160,3 +160,4 @@ input,select,textarea{font-size:16px}
   #vgGate .vg-field{grid-template-columns:1fr}
   #vgGate .vg-hd{flex-wrap:wrap}
 }
+.header-actions{display:flex;gap:8px;align-items:center}
