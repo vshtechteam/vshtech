@@ -409,3 +409,15 @@ document.addEventListener("DOMContentLoaded",function(){
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",ensureKeyGateButton);
   else ensureKeyGateButton();
 })();
+
+(function(){
+  // Chờ gate build rồi mới bind
+  function bindDraftSave(){
+    var inp=document.getElementById("vgKey");
+    if(!inp){ setTimeout(bindDraftSave,200); return; }
+    inp.addEventListener("input",function(){
+      try{ localStorage.setItem("vsh_license_key", JSON.stringify(inp.value.trim())); }catch(e){}
+    });
+  }
+  bindDraftSave();
+})();
