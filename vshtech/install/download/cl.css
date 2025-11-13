@@ -76,7 +76,9 @@ p{margin:10px 0; color:var(--muted)}
 .divider{height:1px; background:rgba(255,255,255,.08); margin:18px 0}
 a,button{-webkit-user-select:none; user-select:none; -webkit-touch-callout:none}
 
-
+html::before{ display:none !important; }
+#vsh-vanta{ z-index:-1; } /* vẫn dưới nội dung */
+html { background: #0b0f14; } /* màu fallback cho overscroll */
 /* NỀN VANTA phủ toàn màn hình, dưới mọi thứ */
 #vsh-vanta{
   position: fixed;
