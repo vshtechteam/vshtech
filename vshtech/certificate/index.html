@@ -8,25 +8,25 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#0f0f1a">
   <style>
-    /* Font mềm hơn một chút (fallback nếu không tải được vẫn dùng system) */
+    
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
 
-    /* iOS UX tweaks */
+    
     html, body { height:100%; -webkit-text-size-adjust:100%; }
     body { touch-action: manipulation; min-height:100dvh; }
     input, select, textarea { font-size:16px; }
 
     :root{
-      /* Tông đen xanh + accent xanh dương/cyan kiểu demo */
+      
       --bg:#0f0f1a;
       --bg2:#101426;
-      --card:rgba(255,255,255,.045);     /* glass layer */
-      --cardLine:rgba(255,255,255,.14);  /* border nhấn */
+      --card:rgba(255,255,255,.045);     
+      --cardLine:rgba(255,255,255,.14);  
       --muted:#9fb0cc;
       --text:#eaf1ff;
       --ink:#001018;
-      --accent:#3a86ff;   /* xanh dương */
-      --accent2:#22d3ee;  /* cyan */
+      --accent:#3a86ff;   
+      --accent2:#22d3ee;  
       --glow:rgba(34,211,238,.18);
       --glow2:rgba(58,134,255,.16);
       --line:rgba(255,255,255,.08);
@@ -34,7 +34,7 @@
 
     *{box-sizing:border-box}
 
-    /* ===== NỀN ===== */
+    
     html{background-color:var(--bg)}
     body{
       margin:0;
@@ -44,7 +44,7 @@
       position:relative;
       overflow-x:hidden;
     }
-    /* noise + viền sáng rất nhẹ */
+    
     body::before{
       content:"";
       position:fixed; inset:-1px; z-index:-1;
@@ -63,7 +63,7 @@
       pointer-events:none;
     }
 
-    /* ===== Thanh tiến trình cuộn ===== */
+   
     .scrollbar{
       position:fixed; top:0; left:0; right:0; height:4px; z-index:2000;
       background:rgba(255,255,255,.06);
@@ -76,7 +76,7 @@
       transition:width .1s linear;
     }
 
-    /* ===== Khối nội dung ===== */
+    
     .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:28px}
     .card{
       width:100%;max-width:780px;
@@ -137,7 +137,7 @@
     .ok{display:none;margin-top:10px;color:#93e5ff}.ok.show{display:block}
     a,button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 
-    /* ==== eSign section ==== */
+    
     .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
     .section-head .left{display:flex;align-items:center;gap:10px}
     .pill{
@@ -146,7 +146,7 @@
       font-size:12px;color:#cfe6ff; box-shadow:0 0 12px var(--glow) inset
     }
 
-    /* Accordion */
+ 
     .acc{
       border:1px solid var(--line);border-radius:14px;
       background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.02));
@@ -161,7 +161,7 @@
     .acc-bd{max-height:0;overflow:hidden;transition:max-height .22s ease}
     .acc-inner{padding:12px 14px 14px}
 
-    /* Grid apps */
+    
     .apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:8px}
     .app-card{
       border:1px solid rgba(255,255,255,.1);
@@ -189,7 +189,7 @@
     .app-actions{margin-top:10px;display:flex;gap:8px}
     .btn.install{flex:1;text-align:center;border-radius:10px}
 
-    /* Toast overlay */
+    
     .toast{
       position:fixed; left:50%; bottom:18px; transform:translateX(-50%) translateY(6px);
       background:rgba(9,14,28,.92); border:1px solid rgba(255,255,255,.12); color:#dbe7ff;
@@ -201,7 +201,7 @@
 </head>
 <body>
 
-  <!-- Thanh tiến trình cuộn -->
+ 
   <div class="scrollbar" aria-hidden="true">
     <div id="scrollbarFill" class="fill"></div>
   </div>
@@ -212,7 +212,7 @@
       <h1>eSign & gói chứng chỉ (.zip)</h1>
       <p>Mở danh sách dưới đây để chọn bản eSign theo chứng chỉ.</p>
 
-      <!-- eSign -->
+      
       <section class="blk" id="esign-sec">
         <div class="section-head">
           <div class="left">
@@ -222,7 +222,7 @@
         </div>
         <p class="tiny" style="margin-top:6px">Bấm để mở danh sách 15 bản eSign. Dưới mỗi bản có chỗ ghi tên chứng chỉ.</p>
 
-        <!-- Accordion -->
+        
         <div class="acc" id="acc-more" aria-expanded="false">
           <div class="acc-hd" id="btn-esign-more" role="button" aria-controls="acc-body" aria-expanded="false">
             <div style="display:flex;align-items:center;gap:10px">
@@ -244,7 +244,7 @@
 
       <div class="divider"></div>
 
-      <!-- Certificate: tải trực tiếp .zip -->
+      
       <section class="blk">
         <h2>Tải gói chứng chỉ (.zip)</h2>
         <p>Sau khi có eSign, tải gói chứng chỉ để import.</p>
@@ -271,11 +271,11 @@
   <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <script>
-    /* ===================== CẤU HÌNH LINK ===================== */
+    
     const WWW = 'https://www.vshtech.online';
     const LINK_CERT_DIRECT = WWW + '/certificate/files/cert.zip';
 
-    /* --- Fix URL sai: /certificate/%20target= -> /certificate/ --- */
+    
     (function fixBadCertificatePath(){
       const p = location.pathname || '';
       if (/^\/certificate\/%20target=/i.test(p) || /^\/certificate\/\s*target=/i.test(decodeURIComponent(p))) {
@@ -283,12 +283,12 @@
       }
     })();
 
-    /* Ép về www nếu đang ở non-www để đồng nhất cookie/SSL */
+    
     if (location.hostname === 'vshtech.online') {
       location.replace(WWW + location.pathname + location.search + location.hash);
     }
 
-    /* ===== Thanh tiến trình cuộn ===== */
+    
     (function progressBar(){
       const fill = document.getElementById('scrollbarFill');
       function update(){
@@ -302,7 +302,7 @@
       update();
     })();
 
-    /* ===== DỮ LIỆU 15 ESign ===== */
+    
     const MORE_ESIGN = [
       { title:'ESign #1',  note:'Chứng chỉ: Viettel Group',  plist: WWW + '/certificate/plist/esign-1.plist'  },
       { title:'ESign #2',  note:'Chứng chỉ: FPT',            plist: WWW + '/certificate/plist/esign-2.plist'  },
@@ -321,7 +321,7 @@
       { title:'ESign #15', note:'Chứng chỉ: OCB',            plist: WWW + '/certificate/plist/esign-15.plist' }
     ];
 
-    /* ===== Render eSign cards & accordion ===== */
+    
     (function setupAccordion(){
       const acc  = document.getElementById('acc-more');
       const hd   = document.getElementById('btn-esign-more');
@@ -382,7 +382,7 @@
       });
     })();
 
-    /* ===== Toast nhỏ ===== */
+    
     function showToast(msg){
       const el = document.getElementById('toast');
       if (!el) return;
@@ -391,7 +391,7 @@
       setTimeout(()=> el.classList.remove('show'), 1400);
     }
 
-    /* ===== Tải trực tiếp .ZIP ===== */
+   
     (function setupDirectZip(){
       const btnCert = document.getElementById('btn-cert');
       const tip     = document.getElementById('progress');
@@ -409,7 +409,7 @@
         tip?.removeAttribute('hidden'); ok?.classList.remove('show');
         showToast('Đang gửi tệp…');
 
-        // Cách 1: anchor download
+       
         const a = document.createElement('a');
         a.href = LINK_CERT_DIRECT;
         a.download = 'cert.zip';
@@ -418,7 +418,7 @@
         document.body.appendChild(a);
         a.click();
 
-        // Cách 2: iframe ẩn (fallback Safari)
+        
         setTimeout(() => {
           const iframe = document.createElement('iframe');
           iframe.style.display = 'none';
@@ -429,21 +429,21 @@
         setTimeout(()=> ok?.classList.add('show'), 900);
       });
 
-      // Áo giáp: nếu có link nào bị dính "%20target=" thì sửa ngay
+      
       document.addEventListener('click', (e) => {
         const a = e.target.closest && e.target.closest('a[href]');
         if (!a) return;
         let href = a.getAttribute('href') || '';
         if (href.includes('%20target=')) {
           e.preventDefault();
-          // sửa về đúng /certificate/
+         
           if (/^\/certificate\/%20target=/i.test(href)) location.assign('/certificate/');
           else location.assign(LINK_CERT_DIRECT);
         }
       }, {passive:false});
     })();
 
-    // Ngăn nhấn-giữ mở menu trên iOS cho các nút
+   
     ['contextmenu','touchstart'].forEach(evt=>{
       document.addEventListener(evt, e=>{
         const onBtn = e.target.closest && e.target.closest('.btn'); if(!onBtn) return;
