@@ -10,18 +10,27 @@ body{
   background: radial-gradient(1200px 620px at 50% -12%, #1a2442 0%, var(--bg) 58%) fixed;
   overflow-x:hidden;
 }
-body::before{
-  content:""; position:fixed; inset:-1px; z-index:-1;
+/* Nền gốc cho vùng overscroll (trên/dưới) */
+html { background: var(--bg); }
+body { background: transparent; }
+
+/* Phủ gradient cố định toàn màn hình, nằm dưới mọi thứ */
+html::before{
+  content:"";
+  position:fixed; inset:0; z-index:-1;
   background:
+    radial-gradient(1200px 620px at 50% -12%, #1a2442 0%, var(--bg) 58%),
     radial-gradient(800px 280px at 10% -60px, rgba(34,211,238,.08), transparent 60%),
     radial-gradient(900px 280px at 90% -60px, rgba(58,134,255,.08), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.0));
+    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
   pointer-events:none;
 }
-body::after{
-  content:""; position:fixed; inset:0; z-index:-1;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%23ffffff' fill-opacity='.04'%3E%3Ccircle cx='1' cy='1' r='1'/%3E%3C/g%3E%3C/svg%3E");
-  opacity:.45; mix-blend-mode:overlay; pointer-events:none;
+
+/* Đảm bảo trang ít nhất cao bằng viewport */
+html, body { height:100%; }
+body { min-height:100vh; }
+@supports (height: 100dvh) {
+  body { min-height:100dvh; }
 }
 
 /* progress bar */
