@@ -1,7 +1,7 @@
 
-/* ====== CẤU HÌNH NHANH ====== */
 
-const AVATAR_URL = ""; // dán URL avatar của bạn
+
+const AVATAR_URL = ""; 
 const CONTACT_URL = "https://instabio.cc/vshtech";
 const BOT_LANDING_URL = "https://www.vshtech.online/bot/";
 const ROLES = [
@@ -21,18 +21,18 @@ const ROLES = [
 
 ];
 
-/* ====== CODE CHẠY ====== */
+
 (function(){
   const $=(q,c=document)=>c.querySelector(q);
 
-  // Avatar
+
   if(AVATAR_URL){ const im=$("#avatar"); if(im) im.src=AVATAR_URL; }
 
-  // ===== Rotator — caret bám theo chữ, vào/ra mượt, LUÔN THẲNG HÀNG =====
+  
   const rot=$("#rotator"), lead=$("#lead");
   function setBaselineFix(){
     if(!rot || !lead) return;
-    // đo bottom của lead và rotator để tính chênh lệch baseline theo PX
+    
     const lb=lead.getBoundingClientRect().bottom;
     const rb=rot.getBoundingClientRect().bottom;
     const delta = Math.round((lb-rb)*100)/100; // px
@@ -41,7 +41,7 @@ const ROLES = [
 
   if(rot && ROLES.length){
     rot.innerHTML="";
-    // đo bề rộng theo từ dài nhất (kèm dấu chấm + caret) để không giật layout
+   
     const longest=(ROLES.reduce((a,b)=>a.length>b.length?a:b,"")+".");
     const meas=document.createElement("span");
     meas.style.cssText="position:absolute;visibility:hidden;white-space:nowrap;";
@@ -52,8 +52,8 @@ const ROLES = [
     meas.remove();
 
     const frames=[];
-    const charDelay=55;   // ms
-    const baseHold=1100;  // ms
+    const charDelay=55;   
+    const baseHold=1100;  
     ROLES.forEach(text=>{
       const f=document.createElement("span"); f.className="frame";
       [...text+"."].forEach((ch,j)=>{
@@ -74,18 +74,18 @@ const ROLES = [
       cur.querySelectorAll(".char").forEach((s,j)=>s.style.transitionDelay=(j*charDelay)+"ms");
       const c=cur.querySelector(".caret"); if(c) c.style.transitionDelay=(cur.querySelectorAll(".char").length-1)*charDelay+"ms";
       cur.classList.remove("out"); cur.classList.add("in");
-      // căn baseline mỗi lần đổi chữ để đảm bảo thẳng tuyệt đối
+      
       requestAnimationFrame(setBaselineFix);
       const wait=baseHold + cur.querySelectorAll(".char").length*charDelay + 60;
       setTimeout(play,wait);
     };
     play();
-    // căn lại baseline khi load/resize
+   
     addEventListener("load", setBaselineFix);
     addEventListener("resize", setBaselineFix);
   }
 
-  // ===== Reveal + stagger =====
+  
   const REVEALS=[...document.querySelectorAll(".reveal")];
   if("IntersectionObserver" in window){
     const io=new IntersectionObserver(entries=>{
@@ -102,7 +102,7 @@ const ROLES = [
     REVEALS.forEach(el=>el.classList.add("visible"));
   }
 
-  // ===== Skills progress animation =====
+  
   const skills=[...document.querySelectorAll(".skill")];
   skills.forEach(s=>{
     const v=Number(s.dataset.value||0);
@@ -115,12 +115,12 @@ const ROLES = [
     skills.forEach(s=>io2.observe(s));
   }else{ skills.forEach(s=>s.classList.add('active')); }
 
-  // ===== Scroll progress =====
+
   const bar=$("#progress");
   const set=()=>{const d=document.documentElement; bar.style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight||1))*100+"%";}
   addEventListener("scroll",set,{passive:true}); set();
 
-  // ===== Share / copy =====
+  
   const share=$("#shareBtn");
   if(share){
     share.onclick=async()=>{
@@ -134,13 +134,13 @@ const ROLES = [
       }catch{}
     };
   }
-  // ===== Contact button =====
+  
   const contactBtn = $("#contactBtn");
   if (contactBtn) {
     contactBtn.onclick = () => {
       const url = (CONTACT_URL || "").trim();
       if (!url) return;
-      // mailto: thì mở trực tiếp, còn lại mở tab mới
+      
       if (url.startsWith("mailto:")) {
         location.href = url;
       } else {
@@ -148,14 +148,13 @@ const ROLES = [
       }
     };
   }
-// ===== Bot landing link =====
+
 const botLanding = document.getElementById("botLandingLink");
 if (botLanding && typeof BOT_LANDING_URL === "string" && BOT_LANDING_URL.trim()){
-  botLanding.href = BOT_LANDING_URL.trim(); // mở cùng tab (landing nội bộ)
-  // Nếu muốn mở tab mới: botLanding.target = "_blank"; botLanding.rel = "noopener";
+  botLanding.href = BOT_LANDING_URL.trim(); 
 }
   
-  // ===== Footer copy handle =====
+  
   const y=$("#y"); if(y) y.textContent=new Date().getFullYear();
   const cp=$("#handleCopy"); if(cp){ cp.onclick=async()=>{try{await navigator.clipboard.writeText(cp.textContent||"@vshtech"); const t=cp.textContent; cp.textContent="Đã sao chép!"; setTimeout(()=>cp.textContent=t,1200);}catch{}}}
 })();
