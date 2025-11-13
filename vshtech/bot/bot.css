@@ -1,12 +1,12 @@
 :root{
-  --bg:#0b1220;          /* xanh than đậm */
+  --bg:#0b1220;          
   --card:#111b2f;
-  --ink:#eaf1ff;         /* chữ sáng */
+  --ink:#eaf1ff;        
   --muted:#9fb0cc;
   --line:rgba(255,255,255,.08);
-  --accent:#22c55e;      /* xanh lá hiệu ứng */
+  --accent:#22c55e;      
   --accent-2:#34d399;
-  --blue:#3b82f6;        /* xanh meta cho tick */
+  --blue:#3b82f6;        
 }
 
 *{box-sizing:border-box}
@@ -16,7 +16,7 @@ body{
   background: radial-gradient(1100px 560px at 50% -10%, #14223b 0%, var(--bg) 60%) fixed;
 }
 
-/* ------- Khung tối gọn gàng ------- */
+
 .wrap{max-width:1100px; margin:24px auto; padding:0 18px}
 .panel{
   background: linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
@@ -26,7 +26,7 @@ body{
   padding:22px 18px;
 }
 
-/* ------- Header / Brand ------- */
+
 .hero{display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap}
 .brandTitle{
   display:flex;align-items:center;gap:8px;
@@ -49,7 +49,7 @@ body{
 }
 .sub{margin:0; color:var(--muted); font-size:14px}
 
-/* ------- Lưới bot ------- */
+
 .grid{margin-top:18px; display:grid; grid-template-columns:repeat(12,1fr); gap:14px}
 .bot{
   grid-column:span 12;
@@ -61,7 +61,7 @@ body{
   box-shadow:0 12px 34px rgba(0,0,0,.35);
   position:relative;
 }
-.bot::after{ /* viền phát sáng xanh lá nhẹ */
+.bot::after{ 
   content:""; position:absolute; inset:0; border-radius:16px; pointer-events:none;
   box-shadow:0 0 0 1px rgba(34,197,94,.12), 0 0 32px rgba(34,197,94,.12) inset;
 }
@@ -92,7 +92,7 @@ body{
 .btn:active{transform:translateY(1px)}
 @media (min-width:720px){ .bot{grid-column:span 6} }
 
-/* ===== Modal Thông báo (kiểu mã trước) ===== */
+
 .modal-backdrop{
   position:fixed; inset:0; z-index:60;
   display:none; align-items:center; justify-content:center;
