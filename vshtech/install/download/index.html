@@ -2,13 +2,17 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Cài đặt cấu hình iOS – VSH TECH</title>
   <meta name="color-scheme" content="dark">
-  <link rel="stylesheet" href="/install/download/cl.css?v=6">
-<script src="/install/download/cf.js?v=6" defer></script>
+  <meta name="theme-color" content="#0f0f1a">
+  <link rel="stylesheet" href="./cl.css">
+  <script src="./cf.js" defer></script>
 </head>
 <body>
+  <!-- Thanh tiến trình cuộn -->
+  <div class="scrollbar" aria-hidden="true"><div id="scrollFill" class="fill"></div></div>
+
   <div class="wrap">
     <main class="card" role="main">
       <div class="brand"><span class="dot"></span><span class="muted">VSH TECH</span></div>
@@ -20,17 +24,16 @@
         <li><span class="idx">2</span><span>Vào <b>Cài đặt</b> (sẽ hiện mục <b>Hồ sơ đã tải về</b> ở đầu) → Cài đặt.</span></li>
       </ul>
 
-      <button id="installBtn" class="btn">Cài đặt cấu hình ngay</button>
-      <p id="progress" class="hint" hidden>Đang gửi file tới iPhone… Nếu chưa thấy gì sau ~2 giây, hãy mở thủ công mục <b>Hồ sơ đã tải về</b> trong Cài đặt.</p>
+      <button id="installBtn" class="btn primary">Cài đặt cấu hình ngay</button>
+      <p id="progress" class="hint" hidden>Đang gửi file tới iPhone… Nếu chưa thấy gì sau ~2 giây, mở <b>Hồ sơ đã tải về</b> trong Cài đặt.</p>
 
       <div class="divider"></div>
-      <p class="tiny">Mẹo: Nếu bạn “nhấn giữ” lâu trên nút, Safari có thể hiện menu tải về. Hãy <b>chỉ chạm 1 lần</b> để mở trình cài đặt cấu hình.</p>
+      <p class="tiny">Mẹo: Nếu “nhấn giữ” lâu trên nút, Safari có thể hiện menu tải về. Hãy <b>chỉ chạm 1 lần</b> để mở trình cài đặt cấu hình.</p>
     </main>
   </div>
 
-<noscript>
-  Trình duyệt đang tắt JavaScript.
-  <a href="/install/profiles/vpn.mobileconfig">Bấm để tải trực tiếp</a>.
-</noscript>
+  <noscript>
+    Trình duyệt đang tắt JavaScript. <a href="/install/profiles/vpn.mobileconfig">Bấm để tải trực tiếp cấu hình</a>.
+  </noscript>
 </body>
 </html>
