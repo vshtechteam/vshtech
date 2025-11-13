@@ -1,8 +1,32 @@
 <!doctype html>
 <html lang="vi">
 <head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+ <!-- trong <head> (hoặc cuối body), đảm bảo đã có) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+<script>
+let VSH_VANTA=null;
+window.addEventListener('DOMContentLoaded', ()=>{
+  VSH_VANTA = VANTA.GLOBE({
+    el: "#vsh-vanta",
+    mouseControls:true, touchControls:true, gyroControls:false,
+    minHeight:200.00, minWidth:200.00, scale:1.00, scaleMobile:1.00,
+    color: 0x3a86ff,         // lưới
+    backgroundColor: 0x0b0f14,
+    size: 1.00
+  });
+
+  // drift chậm
+  let t=0; (function drift(){
+    t += 0.003;   // chậm hơn/nhanh hơn tùy chỉnh
+    window.dispatchEvent(new MouseEvent('mousemove',{
+      clientX: innerWidth/2 + Math.sin(t)*60,
+      clientY: innerHeight/2 + Math.cos(t)*40
+    }));
+    requestAnimationFrame(drift);
+  })();
+});
+</script>
   <meta name="theme-color" content="#0f0f1a">
 <meta name="color-scheme" content="dark">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
