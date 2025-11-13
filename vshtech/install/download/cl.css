@@ -62,3 +62,22 @@ p{margin:10px 0; color:var(--muted)}
 .tiny{font-size:12px; opacity:.8}
 .divider{height:1px; background:rgba(255,255,255,.08); margin:18px 0}
 a,button{-webkit-user-select:none; user-select:none; -webkit-touch-callout:none}
+
+
+/* NỀN VANTA phủ toàn màn hình, dưới mọi thứ */
+#vsh-vanta{
+  position: fixed;
+  inset: 0;
+  z-index: -2;             /* nằm sau nội dung */
+  pointer-events: none;    /* không chặn thao tác */
+}
+
+/* Giảm độ đậm của lớp phủ để thấy quả cầu bên dưới */
+body::before{
+  content:"";
+  position:fixed; inset:0; z-index:-1;
+  background: radial-gradient(1100px 560px at 50% -10%,
+              rgba(23,34,53,.55) 0%,
+              rgba(11,15,20,.85) 60%); /* thêm alpha */
+  will-change: transform;
+}
