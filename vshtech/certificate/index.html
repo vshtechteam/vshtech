@@ -6,68 +6,133 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>eSign & chứng chỉ – VSH TECH</title>
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#0b0f14">
+  <meta name="theme-color" content="#0f0f1a">
   <style>
+    /* Font mềm hơn một chút (fallback nếu không tải được vẫn dùng system) */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
     /* iOS UX tweaks */
     html, body { height:100%; -webkit-text-size-adjust:100%; }
     body { touch-action: manipulation; min-height:100dvh; }
     input, select, textarea { font-size:16px; }
 
     :root{
-      --bg:#0b0f14; --card:#111723; --muted:#8b9bb4; --text:#eaf1ff;
-      --accent:#0ea5e9; --accent2:#38bdf8; --ink:#001018;
+      /* Tông đen xanh + accent xanh dương/cyan kiểu demo */
+      --bg:#0f0f1a;
+      --bg2:#101426;
+      --card:rgba(255,255,255,.045);     /* glass layer */
+      --cardLine:rgba(255,255,255,.14);  /* border nhấn */
+      --muted:#9fb0cc;
+      --text:#eaf1ff;
+      --ink:#001018;
+      --accent:#3a86ff;   /* xanh dương */
+      --accent2:#22d3ee;  /* cyan */
+      --glow:rgba(34,211,238,.18);
+      --glow2:rgba(58,134,255,.16);
+      --line:rgba(255,255,255,.08);
     }
 
     *{box-sizing:border-box}
 
-    /* NỀN ĐỒNG MÀU KHI OVERSCROLL */
+    /* ===== NỀN ===== */
     html{background-color:var(--bg)}
     body{
-      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;
+      margin:0;
       color:var(--text);
-      background-color:var(--bg);
+      font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;
+      background: radial-gradient(1200px 620px at 50% -12%, #1a2442 0%, var(--bg) 58%) fixed;
       position:relative;
+      overflow-x:hidden;
     }
-    /* Nền phủ cố định cả viewport */
+    /* noise + viền sáng rất nhẹ */
     body::before{
       content:"";
+      position:fixed; inset:-1px; z-index:-1;
+      background:
+        radial-gradient(800px 280px at 10% -60px, rgba(34,211,238,.08), transparent 60%),
+        radial-gradient(900px 280px at 90% -60px, rgba(58,134,255,.08), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.0));
+      pointer-events:none;
+    }
+    body::after{
+      content:"";
       position:fixed; inset:0; z-index:-1;
-      background: radial-gradient(1100px 560px at 50% -10%, #172235 0%, var(--bg) 60%);
-      will-change:transform;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cdefs/%3E%3Cg fill='%23ffffff' fill-opacity='.04'%3E%3Ccircle cx='1' cy='1' r='1'/%3E%3C/g%3E%3C/svg%3E");
+      opacity:.45;
+      mix-blend-mode:overlay;
+      pointer-events:none;
     }
 
     /* ===== Thanh tiến trình cuộn ===== */
     .scrollbar{
       position:fixed; top:0; left:0; right:0; height:4px; z-index:2000;
       background:rgba(255,255,255,.06);
-      box-shadow:0 0 0 1px rgba(0,0,0,.2) inset, 0 2px 8px rgba(0,0,0,.25);
+      box-shadow:0 0 0 1px rgba(0,0,0,.2) inset, 0 2px 10px rgba(0,0,0,.28);
     }
     .scrollbar > .fill{
       height:100%; width:0%;
       background:linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow:0 0 14px var(--glow2);
       transition:width .1s linear;
     }
 
     /* ===== Khối nội dung ===== */
     .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:28px}
     .card{
-      width:100%;max-width:760px;border:1px solid rgba(255,255,255,.06);border-radius:16px;
-      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
-      box-shadow:0 20px 60px rgba(0,0,0,.45);padding:26px 22px 22px
+      width:100%;max-width:780px;
+      border:1px solid var(--cardLine);
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      backdrop-filter: blur(10px) saturate(150%);
+      -webkit-backdrop-filter: blur(10px) saturate(150%);
+      box-shadow:
+        0 22px 70px rgba(0,0,0,.55),
+        0 0 0 1px rgba(255,255,255,.05) inset,
+        0 0 40px var(--glow) inset;
+      padding:26px 22px 22px;
     }
-    .brand{display:flex;align-items:center;gap:10px;opacity:.9;margin-bottom:6px}
-    .dot{width:10px;height:10px;border-radius:999px;background:var(--accent2);box-shadow:0 0 16px var(--accent2)}
-    h1{margin:6px 0 16px;font-size:22px}
+
+    .brand{display:flex;align-items:center;gap:10px;opacity:.95;margin-bottom:6px}
+    .dot{
+      width:10px;height:10px;border-radius:999px;background:var(--accent2);
+      box-shadow:0 0 18px var(--accent2), 0 0 0 2px rgba(0,0,0,.3) inset
+    }
+
+    h1{margin:6px 0 16px;font-size:22px;letter-spacing:.2px}
     h2{margin:0 0 6px;font-size:18px}
     p{margin:10px 0;color:var(--muted)}
-    .blk{border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:16px;background:rgba(255,255,255,.02);margin-bottom:14px}
+
+    .blk{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow:0 10px 34px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.03) inset, 0 0 24px var(--glow) inset;
+      margin-bottom:14px
+    }
+
     .row{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{appearance:none;border:0;border-radius:12px;padding:12px 14px;background:#1f2937;color:#dbe7ff;cursor:pointer; text-decoration:none; display:inline-block}
-    .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--ink);font-weight:700}
-    .btn.ghost{background:#1a2433}
+
+    .btn{
+      appearance:none;border:0;border-radius:12px;padding:12px 14px;
+      background:rgba(17,24,39,.8);
+      color:#dbe7ff;cursor:pointer; text-decoration:none; display:inline-block;
+      border:1px solid rgba(255,255,255,.12);
+      transition:transform .08s ease, filter .2s ease, box-shadow .2s ease;
+      box-shadow:0 8px 24px rgba(0,0,0,.35);
+    }
+    .btn.primary{
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      color:var(--ink);font-weight:800;
+      box-shadow:0 12px 32px rgba(58,134,255,.35), 0 0 0 1px rgba(0,0,0,.25) inset;
+    }
+    .btn.ghost{background:#162035}
     .btn.min{padding:8px 10px;border-radius:10px;font-size:13px}
+    .btn:hover{filter:saturate(1.06)}
+    .btn:active{transform:translateY(1px)}
+
     .divider{height:1px;background:rgba(255,255,255,.06);margin:18px 0}
-    .tiny{font-size:12px;opacity:.8}
+    .tiny{font-size:12px;opacity:.85}
     .hint{font-size:14px;color:#a7b6cc;margin-top:8px}
     .ok{display:none;margin-top:10px;color:#93e5ff}.ok.show{display:block}
     a,button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
@@ -75,12 +140,22 @@
     /* ==== eSign section ==== */
     .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
     .section-head .left{display:flex;align-items:center;gap:10px}
-    .pill{padding:6px 10px;border:1px solid rgba(255,255,255,.06);border-radius:999px;background:rgba(255,255,255,.03);font-size:12px;color:#a8b3c7}
+    .pill{
+      padding:6px 10px;border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;background:rgba(255,255,255,.06);
+      font-size:12px;color:#cfe6ff; box-shadow:0 0 12px var(--glow) inset
+    }
 
     /* Accordion */
-    .acc{border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.02);overflow:hidden}
-    .acc-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer}
-    .acc-hd:hover{background:rgba(255,255,255,.02)}
+    .acc{
+      border:1px solid var(--line);border-radius:14px;
+      background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.02));
+      overflow:hidden; box-shadow:0 10px 28px rgba(0,0,0,.35), 0 0 26px var(--glow) inset
+    }
+    .acc-hd{
+      display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer
+    }
+    .acc-hd:hover{background:rgba(255,255,255,.03)}
     .chev{transition:transform .18s ease}
     .acc[aria-expanded="true"] .chev{transform:rotate(90deg)}
     .acc-bd{max-height:0;overflow:hidden;transition:max-height .22s ease}
@@ -89,31 +164,36 @@
     /* Grid apps */
     .apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:8px}
     .app-card{
-      border:1px solid rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.1);
       border-radius:12px;
-      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));
-      box-shadow:0 8px 24px rgba(0,0,0,.25);
+      background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.025));
+      backdrop-filter: blur(6px) saturate(140%);
+      box-shadow:0 8px 26px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.03) inset, 0 0 26px var(--glow2) inset;
       padding:12px;
-      transition:transform .12s ease,border-color .12s ease;
+      transition:transform .12s ease,border-color .12s ease, box-shadow .12s ease;
     }
-    .app-card:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.12)}
+    .app-card:hover{
+      transform:translateY(-2px);
+      border-color:rgba(255,255,255,.22);
+      box-shadow:0 14px 34px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.06) inset, 0 0 40px var(--glow2) inset;
+    }
     .app-head{display:flex;align-items:center;gap:10px}
     .app-icon{
       width:34px;height:34px;border-radius:8px;
       background:linear-gradient(135deg,var(--accent),var(--accent2));
-      box-shadow:0 2px 10px rgba(0,0,0,.3);
-      display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink)
+      box-shadow:0 2px 12px rgba(0,0,0,.35), 0 0 0 1px rgba(0,0,0,.25) inset;
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--ink)
     }
-    .app-title{font-weight:700}
-    .app-note{margin-top:4px;font-size:12px;color:var(--muted);min-height:14px}
+    .app-title{font-weight:800}
+    .app-note{margin-top:4px;font-size:12px;color:#b6c7e2;min-height:14px}
     .app-actions{margin-top:10px;display:flex;gap:8px}
     .btn.install{flex:1;text-align:center;border-radius:10px}
 
     /* Toast overlay */
     .toast{
       position:fixed; left:50%; bottom:18px; transform:translateX(-50%) translateY(6px);
-      background:#0f172a; border:1px solid rgba(255,255,255,.08); color:#dbe7ff;
-      padding:10px 12px; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.35);
+      background:rgba(9,14,28,.92); border:1px solid rgba(255,255,255,.12); color:#dbe7ff;
+      padding:10px 12px; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.45), 0 0 18px var(--glow2);
       opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease; z-index:1999; font-size:14px
     }
     .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
