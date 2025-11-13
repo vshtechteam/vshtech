@@ -1,7 +1,7 @@
-/* ================== CẤU HÌNH BOTS ================== */
-const ZALO_ADMIN = 'https://zalo.me/0382304188'; // 👉 thay bằng Zalo của bạn
 
-// Thay avatar bằng URL của bạn
+const ZALO_ADMIN = 'https://zalo.me/0382304188'; 
+
+
 const BOTS = [
   {
     name: 'Bot Ký Xác Minh Cấu Hình Theo Tên',
@@ -53,7 +53,7 @@ const BOTS = [
   }
 ];
 
-/* ============ RENDER GRID ============ */
+
 (function renderBots(){
   const grid = document.getElementById('botGrid');
   BOTS.forEach(b=>{
@@ -87,7 +87,7 @@ const BOTS = [
   });
 })();
 
-/* ============ MODAL THÔNG BÁO (kiểu mã trước) ============ */
+
 (function modalNotice(){
   const MODAL_ID   = 'vshModal';
   const KEY_UNTIL  = 'vsh_modal_hide_until';
@@ -102,7 +102,7 @@ const BOTS = [
   function open(){ const el = $('#'+MODAL_ID); if (el) el.style.display = 'flex'; }
   function hide(){ const el = $('#'+MODAL_ID); if (el) el.style.display = 'none'; }
 
-  // Chỉ mở nếu chưa đóng 3h và chưa đóng trong phiên
+  
   if (!(until > now) && !closedSession) open();
 
   $('#vshClose3h')?.addEventListener('click', ()=>{
