@@ -1,0 +1,606 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSHTECH Media - Dịch vụ mạng xã hội chuyên nghiệp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <canvas id="code-canvas" aria-hidden="true"></canvas>
+    <div class="grid-overlay" aria-hidden="true"></div>
+    <div class="page-wrapper">
+        <header class="site-header">
+            <div class="brand">
+                <div class="brand-text">
+                    <p class="brand-name">VSHTECH.ONLINE</p>
+                    <p class="brand-desc">Digital Social Lab · Studio coder tone</p>
+                </div>
+            </div>
+            <nav class="site-nav">
+                <a href="#mxh-services">Dịch vụ MXH</a>
+                <a href="#support-training">Đào tạo</a>
+                <a href="#training">Khóa học</a>
+                <a href="#pricing">Bảng giá</a>
+                <a href="#lien-he">Liên hệ</a>
+            </nav>
+        </header>
+        <main>
+            <section id="mxh-services" class="mxh-services top" data-reveal>
+                <header>
+                    <p class="gradient-banner">Dịch Vụ MXH VSHTECH Media</p>
+                    
+                    <p>Khám phá các khóa học chuyên sâu giúp bạn có được nhiều kiến thức bổ ích về mạng xã hội, kiếm tiền online và tiếp thị số.</p>
+                </header>
+                <div class="feature-grid">
+                    <article class="feature-card" data-aos="fade-up">
+                        <div class="feature-icon gradient-indigo">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M2 8h20" />
+                                <path d="M18 16h.01" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3>Creative Lab</h3>
+                            <p>Studio tone neon, tạo nội dung động và template livestream chuyên nghiệp.</p>
+                        </div>
+                    </article>
+                    <article class="feature-card" data-aos="fade-up" data-aos-delay="50">
+                        <div class="feature-icon gradient-cyan">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z" />
+                                <path d="M16 9H8" />
+                                <path d="M13 13H8" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3>Automation Intelligence</h3>
+                            <p>Tự động comment, inbox và review nội dung với điểm số cảm xúc theo thời gian thực.</p>
+                        </div>
+                    </article>
+                    <article class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="feature-icon gradient-amber">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 3h18v4H3z" />
+                                <path d="M3 11h18v4H3z" />
+                                <path d="M3 19h18v2H3z" />
+                                <path d="M8 7v4" />
+                                <path d="M16 15v4" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3>Insights &amp; Forecast</h3>
+                            <p>Dashboard realtime, mô phỏng tương tác và cảnh báo khủng hoảng chủ động.</p>
+                        </div>
+                    </article>
+                </div>
+                <div id="support-training" class="training-offer glass-card" data-reveal>
+                    <header class="training-intro">
+                        <p class="eyebrow">SUPPORT GAME</p>
+                        <h3 class="gradient-text">Đào Tạo Học Viên Làm File Hỗ Trợ iOS &amp; ADR</h3>
+                
+                    </header>
+                    <div class="training-grid">
+                        <article class="training-plan" data-aos="fade-up">
+                            <div>
+                                <h4>Sign File iOS</h4>
+                                <p class="plan-desc">Quy trình sign file sạch, tối ưu Iphone.</p>
+                            </div>
+                            <div class="plan-prices">
+                                <div><span>Cơ bản</span><strong>0đ</strong></div>
+                                <div><span>Nâng cao</span><strong>0đ</strong></div>
+                            </div>
+                            <ul class="training-list">
+                                <li><span class="check"></span>Chuẩn hóa bundle &amp; entitlements</li>
+                                <li><span class="check"></span>Setup provisioning, TestFlight</li>
+                                <li><span class="check"></span>Checklist gửi Apple Store</li>
+                            </ul>
+                        </article>
+                        <article class="training-plan" data-aos="fade-up" data-aos-delay="80">
+                            <div>
+                                <h4>Sign File ADR</h4>
+                                <p class="plan-desc">Tối ưu Android.</p>
+                            </div>
+                            <div class="plan-prices">
+                                <div><span>Cơ bản</span><strong>0đ</strong></div>
+                                <div><span>Nâng cao</span><strong>0đ</strong></div>
+                            </div>
+                            <ul class="training-list">
+                                <li><span class="check"></span>Build variant, shrink resource</li>
+                                <li><span class="check"></span>Play Integrity &amp; signing v2/v3</li>
+                                <li><span class="check"></span>Checklist publish Google Play</li>
+                            </ul>
+                        </article>
+                        <article class="training-plan highlight" data-aos="fade-up" data-aos-delay="120">
+                            <div class="badge">Full khóa</div>
+                            <div>
+                                <h4>Combo iOS &amp; ADR</h4>
+                                <p class="plan-desc">Toàn bộ nội dung + coaching 1:1.</p>
+                            </div>
+                            <div class="plan-prices">
+                                <div><span>Full khóa</span><strong>0đ</strong></div>
+                            </div>
+                            <ul class="training-list">
+                                <li><span class="check"></span>Template repo tối ưu đa nền tảng</li>
+                                <li><span class="check"></span>Quy trình sign tự động hóa</li>
+                                <li><span class="check"></span>Hỗ trợ unlock, gửi store 30 ngày</li>
+                            </ul>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-24 relative" data-aos="fade-up">
+                <div class="absolute -top-32 left-0 w-full h-32 bg-gradient-to-b from-transparent to-black opacity-30"></div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <div class="mb-16 service-heading">
+                        <h2 class="text-4xl font-bold mb-4 gradient-text text-center">VỀ DỊCH VỤ CỦA CHÚNG TÔI</h2>
+                        <p class="text-xl text-gray-300 max-w-3xl mx-auto text-center">Khám phá những tính năng sáng tạo nhất giúp chúng tôi khác biệt so với đối thủ cạnh tranh.</p>
+                    </div>
+                    <div class="service-grid" data-aos="fade-up">
+                        <article class="service-block">
+                            <div class="service-icon gradient-shadow" aria-hidden="true">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                            </div>
+                            <h3>Đáng Tin Cậy Từ Cộng Đồng</h3>
+                            <p>Hơn 10.000+ khách hàng tin tưởng, báo cáo realtime và quy trình bảo mật đa lớp.</p>
+                        </article>
+                        <article class="service-block">
+                            <div class="service-icon gradient-shadow" aria-hidden="true">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="8"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <line x1="12" y1="2" x2="12" y2="4"/>
+                                    <line x1="12" y1="20" x2="12" y2="22"/>
+                                    <line x1="2" y1="12" x2="4" y2="12"/>
+                                    <line x1="20" y1="12" x2="22" y2="12"/>
+                                </svg>
+                            </div>
+                            <h3>Hiệu Quả Cá Nhân</h3>
+                            <p>Success manager riêng, dashboard action và gợi ý hành động ngay tức thì.</p>
+                        </article>
+                        <article class="service-block">
+                            <div class="service-icon gradient-shadow" aria-hidden="true">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                            </div>
+                            <h3>Không Chờ Đợi Lâu</h3>
+                            <p>Phản hồi 30 phút, triển khai ngay và đội ngũ làm việc 24/7.</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-24" data-aos="fade-up" id="training">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <div class="mb-10 service-heading">
+                        <h2 class="text-4xl font-bold mb-4 gradient-text">KHÓA HỌC CHUYÊN SÂU</h2>
+                        <p class="text-xl text-gray-300 max-w-3xl mx-auto">Nâng cao kiến thức với các khóa học chất lượng<br>từ chuyên gia.</p>
+                    </div>
+                    <div class="course-grid">
+                        <article class="course-card">
+                            <div class="course-header gradient-purple"><h3>DV Facebook</h3></div>
+                            <div class="course-body">
+                                <p class="course-price">Cơ bản 3.500.000đ · Nâng cao 5.500.000đ</p>
+                                <ul>
+                                    <li>Toàn bộ kiến thức dịch vụ</li>
+                                    <li>Cách vận hành hiệu quả</li>
+                                    <li>Tool hỗ trợ miễn phí</li>
+                                    <li>Dạy kèm 1:1 trên Google Meet</li>
+                                </ul>
+                            </div>
+                        </article>
+                        <article class="course-card">
+                            <div class="course-header gradient-pink"><h3>DV TikTok</h3></div>
+                            <div class="course-body">
+                                <p class="course-price">Cơ bản 3.500.000đ · Nâng cao 5.500.000đ</p>
+                                <ul>
+                                    <li>Kiến thức dịch vụ TikTok</li>
+                                    <li>Cải thiện tương tác &amp; setup</li>
+                                    <li>Các trick viral</li>
+                                    <li>Hỗ trợ live stream</li>
+                                </ul>
+                            </div>
+                        </article>
+                        <article class="course-card">
+                            <div class="course-header gradient-indigo"><h3>Ads &amp; Strategy</h3></div>
+                            <div class="course-body">
+                                <p class="course-price">Cơ bản 8.800.000đ · Nâng cao 12.800.000đ</p>
+                                <ul>
+                                    <li>Chiến lược quảng cáo</li>
+                                    <li>Tối ưu ngân sách &amp; ROAS</li>
+                                    <li>Group hỗ trợ riêng</li>
+                                    <li>Content &amp; creative tư duy</li>
+                                </ul>
+                            </div>
+                        </article>
+                        <article class="course-card">
+                            <div class="course-header gradient-cyan"><h3>Thiết kế LandingPage</h3></div>
+                            <div class="course-body">
+                                <p class="course-price">4.500.000đ trọn gói</p>
+                                <ul>
+                                    <li>Content + layout chuẩn conversion</li>
+                                    <li>Tối ưu tốc độ &amp; SEO</li>
+                                    <li>Hỗ trợ 1:1 trên Google Meet</li>
+                                    <li>Backups &amp; guide sử dụng</li>
+                                </ul>
+                            </div>
+                        </article>
+                        <article class="course-card">
+                            <div class="course-header gradient-amber"><h3>Full Khóa Học DVMXH</h3></div>
+                            <div class="course-body">
+                                <p class="course-price">19.000.000đ trọn gói</p>
+                                <ul>
+                                    <li>Tất cả khóa học DV MXH &amp; Ads</li>
+                                    <li>Giảm giá 40% so với mua lẻ</li>
+                                    <li>Group VIP + cập nhật trọn đời</li>
+                                    <li>Hỗ trợ 1:1 + ưu tiên Google Meet</li>
+                                </ul>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-16" data-aos="fade-up" id="pricing">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <div class="mb-8 service-heading">
+                        <h2 class="text-4xl font-bold mb-4 gradient-text">DỊCH VỤ MXH VSH TECH MEDIA</h2>
+                        <p class="text-xl text-gray-300 max-w-4xl mx-auto">Hệ sinh thái Dame/Unlock được xây dựng trên nền tảng kỹ thuật cùng quy trình chuyên nghiệp.</p>
+                    </div>
+                    <div class="pricing-feature-grid">
+                        <article class="pricing-feature glass-card" id="dame-account" data-aos="fade-up">
+                            <div class="feature-header">
+                                <div>
+                                    <p class="eyebrow">Combo chuyên sâu</p>
+                                    <h3>Dame Account</h3>
+                                </div>
+                            </div>
+                            <p class="feature-desc">Full danh mục Dame đa nền tảng kèm chính sách bảo mật riêng và hỗ trợ theo phiên bản.</p>
+                            <div class="pricing-list two-column">
+                                <div class="price-row"><span>Dame Tài Khoản Facebook TCN Thường</span><strong>1.500.000đ</strong></div>
+                                <div class="price-row"><span>Dame Tài Khoản Facebook Chuyên Nghiệp</span><strong>2.500.000đ</strong></div>
+                                <div class="price-row"><span>Dame Tài Khoản Facebook Locked</span><strong>2.500.000đ</strong></div>
+                                <div class="price-row"><span>Dame Tài Khoản Facebook Không AVT</span><strong>2.300.000đ</strong></div>
+                                <div class="price-row"><span>Dame Fanpage Facebook</span><strong>550.000đ - 3.000.000đ</strong></div>
+                                <div class="price-row"><span>Dame Group Facebook</span><strong>3.000.000đ - 10.000.000đ</strong></div>
+                                <div class="price-row"><span>Dame Tài Khoản TikTok</span><strong>4.000.000đ - 30.000.000đ</strong></div>
+                                <div class="price-row"><span>Dame Video TikTok</span><strong>3.000.000đ - 6.000.000đ</strong></div>
+                                <div class="price-row"><span>Dame Tài Khoản Instagram</span><strong>1.500.000đ - 4.000.000đ</strong></div>
+                                <div class="price-row"><span>Dame Tài Khoản Youtube</span><strong>6.000.000đ - 30.000.000đ</strong></div>
+                                <div class="price-row"><span>Dame Video Youtube</span><strong>2.000.000đ - 5.000.000đ</strong></div>
+                                <div class="price-row"><span>Dame Tài Khoản Threads</span><strong>2.500.000đ - 8.000.000đ</strong></div>
+                            </div>
+                        </article>
+                        <article class="pricing-feature glass-card" id="unlock" data-aos="fade-up" data-aos-delay="100">
+                            <div class="feature-header">
+                                <div>
+                                    <p class="eyebrow">Quy trình 24/7</p>
+                                    <h3>Unlock &amp; Kháng Nghị</h3>
+                                </div>
+                            </div>
+                            <p class="feature-desc">Chuyên gia hỗ trợ mở khóa, bảo vệ tài khoản và xử lý khiếu nại đa nền tảng.</p>
+                            <div class="pricing-list two-column">
+                                <div class="price-row"><span>Mở Khóa Facebook 956 Chính Chủ</span><strong>650.000đ</strong></div>
+                                <div class="price-row"><span>Mở Khóa Facebook 956 Không Chính Chủ</span><strong>2.500.000đ</strong></div>
+                                <div class="price-row"><span>Mở Khóa Facebook 282 Lần Đầu (Có LK Mail)</span><strong>650.000đ</strong></div>
+                                <div class="price-row"><span>Mở Khóa Facebook 282 Lần Đầu (Không Mail)</span><strong>950.000đ</strong></div>
+                                <div class="price-row"><span>Mở Khóa Facebook 282 Lần 2 Trở Lên</span><strong>2.500.000đ</strong></div>
+                                <div class="price-row"><span>Vượt Mã 2 Yếu Tố Chính Chủ (2FA)</span><strong>650.000đ</strong></div>
+                                <div class="price-row"><span>Vượt Mã 2 Yếu Tố Không Chính Chủ</span><strong>1.900.000đ</strong></div>
+                                <div class="price-row"><span>Mở Khóa FAQ Vô Hiệu Hóa</span><strong>4.000.000đ - 15.000.000đ</strong></div>
+                                <div class="price-row"><span>Kháng Vi Phạm Facebook</span><strong>1.000.000đ - 4.000.000đ</strong></div>
+                                <div class="price-row"><span>Lấy Lại Facebook Bị Hack</span><strong>850.000đ</strong></div>
+                                <div class="price-row"><span>Verify Tài Khoản Facebook</span><strong>2.000.000đ - 7.000.000đ</strong></div>
+                                <div class="price-row"><span>Mở Khóa TikTok Cấm Vĩnh Viễn</span><strong>3.000.000đ - 9.000.000đ</strong></div>
+                                <div class="price-row"><span>Mở Khóa TikTok Die Bản Quyền</span><strong>40.000.000đ - 90.000.000đ</strong></div>
+                                <div class="price-row"><span>Mở Khóa TikTok Die 13T</span><strong>650.000đ - 1.900.000đ</strong></div>
+                                <div class="price-row"><span>Khiếu Nại Video TikTok</span><strong>2.000.000đ - 4.000.000đ</strong></div>
+                                <div class="price-row"><span>Khiếu Nại Live TikTok</span><strong>2.000.000đ - 4.000.000đ</strong></div>
+                                <div class="price-row"><span>Bảo Kê TikTok</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Mở Khóa Tài Khoản Instagram</span><strong>1.000.000đ - 8.500.000đ</strong></div>
+                                <div class="price-row"><span>Kháng Nghị Video Youtube</span><strong>3.000.000đ - 5.000.000đ</strong></div>
+                                <div class="price-row"><span>Kháng Nghị Bài Viết Instagram</span><strong>900.000đ - 2.000.000đ</strong></div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="pricing-grid">
+                        <div class="glass-card pricing-card" data-aos="fade-up" data-aos-delay="50">
+                            <h3 class="text-2xl font-bold mb-6 gradient-text text-center">DỊCH VỤ TICK XANH</h3>
+                            <div class="price-list">
+                                <div class="price-row"><span>Lên Tick Xanh Profile Facebook KBH</span><strong>999.000đ</strong></div>
+                                <div class="price-row"><span>Lên Tick Xanh Profile Facebook BH</span><strong>1.850.000đ</strong></div>
+                                <div class="price-row"><span>Lên Tick Xanh Facebook Chính Chủ KBH</span><strong>3.600.000đ</strong></div>
+                                <div class="price-row"><span>Lên Tick Xanh Facebook Chính Chủ BH</span><strong>6.500.000đ</strong></div>
+                                <div class="price-row"><span>Lên Tick Xanh Instagram KBH</span><strong>1.300.000đ</strong></div>
+                                <div class="price-row"><span>Lên Tick Xanh Instagram BH</span><strong>2.850.000đ</strong></div>
+                                <div class="price-row"><span>Lên Tick Xanh Instagram Chính Chủ KBH</span><strong>4.600.000đ</strong></div>
+                                <div class="price-row"><span>Lên Tick Xanh Instagram Chính Chủ BH</span><strong>7.500.000đ</strong></div>
+                            </div>
+                        </div>
+                        <div class="glass-card pricing-card" data-aos="fade-up" data-aos-delay="80">
+                            <h3 class="text-2xl font-bold mb-6 gradient-text text-center">DỊCH VỤ TĂNG TƯƠNG TÁC</h3>
+                            <h4 class="table-subtitle">Facebook</h4>
+                            <div class="price-list">
+                                <div class="price-row"><span>Tăng Like</span><strong>180.000 / 1.000 tương tác</strong></div>
+                                <div class="price-row"><span>Tăng Follow</span><strong>180.000 / 1.000 tương tác</strong></div>
+                                <div class="price-row"><span>Tăng Mắt Live</span><strong>380.000 / 1.000 tương tác</strong></div>
+                                <div class="price-row"><span>Tăng Đánh Giá Fanpage</span><strong>280.000 / 1.000 tương tác</strong></div>
+                                <div class="price-row"><span>Tăng View Story</span><strong>100.000 / 1.000 tương tác</strong></div>
+                                <div class="price-row"><span>Tăng Tương Tác Toàn Diện</span><strong>7.800.000 / trọn gói</strong></div>
+                            </div>
+                            <h4 class="table-subtitle">TikTok</h4>
+                            <div class="price-list">
+                                <div class="price-row"><span>Tăng Tim</span><strong>180.000 / 1.000 tương tác</strong></div>
+                                <div class="price-row"><span>Tăng Follow</span><strong>180.000 / 1.000 tương tác</strong></div>
+                                <div class="price-row"><span>Tăng Mắt Live</span><strong>380.000 / 1.000 tương tác</strong></div>
+                                <div class="price-row"><span>Tăng View</span><strong>100.000 / 1.000 tương tác</strong></div>
+                            </div>
+                            <h4 class="table-subtitle">Instagram</h4>
+                            <div class="price-list">
+                                <div class="price-row"><span>Tăng Tim</span><strong>180.000 / 1.000 tương tác</strong></div>
+                                <div class="price-row"><span>Tăng Follow</span><strong>180.000 / 1.000 tương tác</strong></div>
+                                <div class="price-row"><span>Tăng Mắt Live</span><strong>380.000 / 1.000 tương tác</strong></div>
+                                <div class="price-row"><span>Tăng View</span><strong>100.000 / 1.000 tương tác</strong></div>
+                            </div>
+                            <h4 class="table-subtitle">Khác</h4>
+                            <div class="price-list">
+                                <div class="price-row"><span>Tăng Follow Shopee</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Tăng Tim Shopee</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Tăng Mắt Live Shopee</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Tăng Đánh Giá Google Maps</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Xác Minh Google Maps</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Dịch Vụ Telegram</span><strong>Thương lượng</strong></div>
+                            </div>
+                        </div>
+                        <div class="glass-card pricing-card" data-aos="fade-up" data-aos-delay="100">
+                            <h3 class="text-2xl font-bold mb-6 gradient-text text-center">DỊCH VỤ QUẢNG CÁO</h3>
+                            <div class="price-list">
+                                <div class="price-row"><span>Chạy Quảng Cáo Facebook</span><strong>Min 1.000.000 / ngày</strong></div>
+                                <div class="price-row"><span>Chạy Quảng Cáo TikTok</span><strong>Min 1.000.000 / ngày</strong></div>
+                                <div class="price-row"><span>Chạy Quảng Cáo Instagram</span><strong>Min 1.000.000 / ngày</strong></div>
+                                <div class="price-row"><span>Chạy Quảng Cáo Google</span><strong>Min 5.000.000 / ngày</strong></div>
+                                <div class="price-row"><span>Chạy Quảng Cáo Threads</span><strong>Min 3.000.000 / ngày</strong></div>
+                                <div class="price-row"><span>Chạy Quảng Cáo Douyin</span><strong>Min 5.000.000 / ngày</strong></div>
+                            </div>
+                        </div>
+                        <div class="glass-card pricing-card" data-aos="fade-up" data-aos-delay="120">
+                            <h3 class="text-2xl font-bold mb-6 gradient-text text-center">GMAIL &amp; EMAIL SERVICE</h3>
+                            <div class="price-list">
+                                <div class="price-row"><span>Back Gmail CC</span><strong>5.000.000đ - 10.000.000đ</strong></div>
+                                <div class="price-row"><span>Change Gmail</span><strong>3.000.000đ</strong></div>
+                                <div class="price-row"><span>Unlock Gmail</span><strong>5.000.000đ - 25.000.000đ</strong></div>
+                                <div class="price-row"><span>Disable Gmail</span><strong>20.000.000đ</strong></div>
+                            </div>
+                        </div>
+                        <div class="glass-card pricing-card" data-aos="fade-up" data-aos-delay="140">
+                            <h3 class="text-2xl font-bold mb-6 gradient-text text-center">VIA, CLONE, VPN &amp; TÀI NGUYÊN</h3>
+                            <div class="price-list">
+                                <div class="price-row"><span>Via Tick Chuyên Dame</span><strong>999.000đ</strong></div>
+                                <div class="price-row"><span>Via Meta Up Tick + Proxy Private</span><strong>350.000đ</strong></div>
+                                <div class="price-row"><span>Nord VPN</span><strong>480.000đ</strong></div>
+                                <div class="price-row"><span>HMA VPN</span><strong>200.000đ</strong></div>
+                                <div class="price-row"><span>HaToKi-BlackGPT</span><strong>999.000đ</strong></div>
+                                <div class="price-row"><span>Group Zalo Full Member</span><strong>999.000đ</strong></div>
+                                <div class="price-row"><span>Clone New Zalo</span><strong>50.000đ</strong></div>
+                                <div class="price-row"><span>Clone TikTok</span><strong>25.000đ</strong></div>
+                                <div class="price-row"><span>Clone/Via Facebook</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Tool + TUT Auto Dame FB</span><strong>1.750.000đ</strong></div>
+                            </div>
+                        </div>
+                        <div class="glass-card pricing-card" data-aos="fade-up" data-aos-delay="160">
+                            <h3 class="text-2xl font-bold mb-6 gradient-text text-center">TUT, SOURCE CODE &amp; TOOL</h3>
+                            <div class="price-list">
+                                <div class="price-row"><span>TUT Pay TikTok Giá Rẻ</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>TUT + Tool Dame FB</span><strong>1.750.000đ</strong></div>
+                                <div class="price-row"><span>TUT Unlock 282</span><strong>1.500.000đ</strong></div>
+                                <div class="price-row"><span>TUT Unlock 956</span><strong>1.500.000đ</strong></div>
+                                <div class="price-row"><span>TUT Lách Vi Phạm MXH</span><strong>1.999.000đ</strong></div>
+                                <div class="price-row"><span>TUT Lên Tick Xanh FB</span><strong>1.999.000đ</strong></div>
+                                <div class="price-row"><span>TUT Dame Instagram</span><strong>1.750.000đ</strong></div>
+                                <div class="price-row"><span>TUT Change Name + DOB</span><strong>777.000đ</strong></div>
+                                <div class="price-row"><span>TUT Back Acc</span><strong>550.000đ</strong></div>
+                                <div class="price-row"><span>TUT Gỡ Blacklist MXH</span><strong>999.000đ</strong></div>
+                                <div class="price-row"><span>Khai Thác Lỗ Hổng Website</span><strong>15.000.000đ</strong></div>
+                                <div class="price-row"><span>Build Website Tài Nguyên ADS</span><strong>5.000.000đ</strong></div>
+                                <div class="price-row"><span>Build Website Sell Account Game</span><strong>6.000.000đ</strong></div>
+                                <div class="price-row"><span>Build Website Gạch Card</span><strong>9.000.000đ</strong></div>
+                                <div class="price-row"><span>Build Website Bio</span><strong>1.500.000đ</strong></div>
+                                <div class="price-row"><span>Build Website Bảo Hiểm MMO</span><strong>2.500.000đ</strong></div>
+                                <div class="price-row"><span>Build Website Shop Tạp Hóa MMO</span><strong>15.000.000đ</strong></div>
+                                <div class="price-row"><span>Build Website Bán Hàng</span><strong>3.500.000đ - 15.000.000đ</strong></div>
+                                <div class="price-row"><span>Tool Spam CMT Live TikTok</span><strong>2.999.000đ</strong></div>
+                                <div class="price-row"><span>Tool Upload Video TikTok</span><strong>3.999.000đ</strong></div>
+                                <div class="price-row"><span>Tool Tải Video Hàng Loạt MXH</span><strong>3.500.000đ</strong></div>
+                                <div class="price-row"><span>Tool Find Keyword TXT</span><strong>5.500.000đ</strong></div>
+                                <div class="price-row"><span>Tool Quản Lý Chrome UA &amp; Proxy</span><strong>3.500.000đ</strong></div>
+                            </div>
+                        </div>
+                        <div class="glass-card pricing-card" data-aos="fade-up" data-aos-delay="180">
+                            <h3 class="text-2xl font-bold mb-6 gradient-text text-center">AUTO &amp; TOOL AUTOMATION</h3>
+                            <div class="price-list">
+                                <div class="price-row"><span>Auto Lọc Friend</span><strong>1.500.000đ</strong></div>
+                                <div class="price-row"><span>Auto Add Friend</span><strong>1.500.000đ</strong></div>
+                                <div class="price-row"><span>Auto Tương Tác Friend</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Auto Marketing Profile</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Tool Social Media Automation</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Tool Cải Thiện Tương Tác</span><strong>Thương lượng</strong></div>
+                            </div>
+                        </div>
+                        <div class="glass-card pricing-card" data-aos="fade-up" data-aos-delay="200">
+                            <h3 class="text-2xl font-bold mb-6 gradient-text text-center">DỊCH VỤ THIẾT KẾ &amp; PHẦN MỀM</h3>
+                            <div class="price-list">
+                                <div class="price-row"><span>Thiết Kế Website</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Lập Trình Tool &amp; Phần Mềm</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Thiết Kế Logo Thương Hiệu</span><strong>999.000đ</strong></div>
+                                <div class="price-row"><span>Thiết Kế Landing Page</span><strong>3.500.000đ</strong></div>
+                                <div class="price-row"><span>Setup Anti-DDoS Website</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Tăng Traffic</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Setup Hệ Thống Tương Tác Real</span><strong>55.000.000đ</strong></div>
+                                <div class="price-row"><span>Cải Thiện Tương Tác MXH</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Soạn Content Bán Hàng</span><strong>Thương lượng</strong></div>
+                                <div class="price-row"><span>Lên Kịch Bản Tương Tác</span><strong>4.500.000đ</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-buttons-grid" data-aos="fade-up" data-aos-delay="220">
+                        <a href="https://zalo.me/0382304188" class="order-btn zalo">
+                            <i data-feather="message-circle" class="w-5 h-5"></i>
+                            <span>Chat Zalo</span>
+                        </a>
+                        <a href="https://t.me/cskh_vshtech" class="order-btn telegram">
+                            <i data-feather="send" class="w-5 h-5"></i>
+                            <span>Telegram CSKH</span>
+                        </a>
+                        <a href="mailto:hello@vshtech.online" class="order-btn email">
+                            <i data-feather="mail" class="w-5 h-5"></i>
+                            <span>Gửi Email</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="benefits" data-reveal>
+                <header>
+                    <p class="eyebrow">Lợi ích khi hợp tác</p>
+                    <h2>Hiệu suất cao hơn, phản hồi nhanh hơn, quy trình chuẩn Dev</h2>
+                </header>
+                <div class="benefit-grid">
+                    <article class="benefit-card">
+                        <h3>Quy trình DevOps</h3>
+                        <p>Automation pipelines &amp; dashboard tập trung giúp bạn kiểm soát mọi chiến dịch.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <h3>Đội ngũ coder</h3>
+                        <p>Kết hợp designer và engineer để tạo media chuẩn codec và gradient.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <h3>Support 24/7</h3>
+                        <p>Dedicated success manager theo dõi và can thiệp trong 30 phút.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section id="lien-he" class="contact" data-reveal>
+                <div class="contact-grid">
+                    <div class="contact-hero">
+                        <span class="contact-tag">Priority Support · 24/7</span>
+                        <h2 class="gradient-text">Luôn sẵn sàng đồng hành cùng bạn</h2>
+                        <p>Gửi yêu cầu hoặc chat trực tiếp để được thiết kế giải pháp trong 15 phút, có biên nhận rõ ràng và bảo mật tuyệt đối.</p>
+                        <div class="contact-highlights">
+                            <article>
+                                <strong>&lt;15'</strong>
+                                <span>Thời gian phản hồi</span>
+                            </article>
+                            <article>
+                                <strong>+1200</strong>
+                                <span>Dự án hỗ trợ</span>
+                            </article>
+                            <article>
+                                <strong>ISO 27001</strong>
+                                <span>Chuẩn bảo mật</span>
+                            </article>
+                        </div>
+                        <div class="contact-actions">
+                            <a data-cta class="btn primary" href="https://zalo.me/0382304188" target="_blank" rel="noopener">Chat qua Zalo</a>
+                            <a class="btn ghost" href="mailto:hello@vshtech.online">Email dự án</a>
+                        </div>
+                        <p class="contact-note">Tư vấn nhanh, ký NDA trước khi bàn giao, chịu trách nhiệm đến khi hoàn thành.</p>
+                    </div>
+                    <div class="contact-panel">
+                        <div class="contact-card stats">
+                            <p class="card-label">Thông số dịch vụ</p>
+                            <ul>
+                                <li><span>Bảo mật</span><strong>ISO/IEC 27001</strong></li>
+                                <li><span>Môi trường</span><strong>Hybrid Cloud</strong></li>
+                                <li><span>Giờ làm việc</span><strong>24/7</strong></li>
+                                <li><span>Trực tiếp</span><strong>TP. Hồ Chí Minh</strong></li>
+                            </ul>
+                        </div>
+                        <div class="contact-card availability">
+                            <p class="card-label">Kênh hỗ trợ</p>
+                            <div class="availability-grid">
+                                <div>
+                                    <span>Zalo CSKH</span>
+                                    <strong>0382.304.188</strong>
+                                    <p>Phản hồi realtime &amp; báo cáo hằng ngày.</p>
+                                </div>
+                                <div>
+                                    <span>Telegram</span>
+                                    <strong>@cskh_vshtech</strong>
+                                    <p>Team kỹ thuật trực 24/7, có log ghi nhận.</p>
+                                </div>
+                                <div>
+                                    <span>Email</span>
+                                    <strong>hello@vshtech.online</strong>
+                                    <p>Checklist bàn giao &amp; tài liệu bảo mật.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-footer">
+                    <div class="footer-copy">
+                        <p class="eyebrow">Cam kết</p>
+                        <h3>Tập trung vào chất lượng – chúng tôi xử lý phần còn lại.</h3>
+                        <p>Đội ngũ coder, designer và success manager phối hợp trực chiến để đảm bảo tiến độ và chất lượng.</p>
+                    </div>
+                    <div class="contact-channels">
+                        <a href="https://zalo.me/0382304188" class="channel-card">
+                            <div class="channel-icon gradient-blue" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span>Zalo</span>
+                                <strong>Chat CSKH</strong>
+                            </div>
+                            <span class="channel-arrow">→</span>
+                        </a>
+                        <a href="https://t.me/cskh_vshtech" class="channel-card">
+                            <div class="channel-icon gradient-cyan" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="22" y1="2" x2="11" y2="13" />
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span>Telegram</span>
+                                <strong>Tech Team</strong>
+                            </div>
+                            <span class="channel-arrow">→</span>
+                        </a>
+                        <a href="mailto:hello@vshtech.online" class="channel-card">
+                            <div class="channel-icon gradient-rose" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                    <polyline points="22,6 12,13 2,6" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span>Email</span>
+                                <strong>Trình bày dự án</strong>
+                            </div>
+                            <span class="channel-arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>© <span id="year"></span> VSHTECH.ONLINE · Crafted for Social Media Excellence</p>
+            <a href="https://zalo.me/0382304188" target="_blank" rel="noopener">Liên hệ nhanh</a>
+        </footer>
+    </div>
+    <script src="assets/js/main.js" defer></script>
+</body>
+</html>
