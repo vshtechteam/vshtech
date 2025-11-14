@@ -1,74 +1,70 @@
-
-const BASE = '/install';
+﻿const BASE = '/install';
 const FILE = `${BASE}/profiles/vpn.mobileconfig`;
 
-
-(function(){
-  const f = document.getElementById('scrollFill');
-  const upd = ()=> {
-    const y = window.scrollY||0, dh = document.documentElement.scrollHeight - innerHeight;
-    f.style.width = (dh>0 ? Math.min(100, Math.max(0, y/dh*100)) : 0) + '%';
+(function initProgress(){
+  const fill = document.getElementById('scrollFill');
+  const update = ()=>{
+    if(!fill) return;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const pct = max>0 ? Math.min(100, Math.max(0, (scrollY||0)/max*100)) : 0;
+    fill.style.width = pct + '%';
   };
-  addEventListener('scroll', upd, {passive:true});
-  addEventListener('resize', upd);
-  upd();
+  addEventListener('scroll', update, {passive:true});
+  addEventListener('resize', update);
+  update();
 })();
 
+const installBtn = document.getElementById('installBtn');
+const progressMsg = document.getElementById('progress');
 
-['contextmenu','touchstart'].forEach(evt=>{
-  document.addEventListener(evt, e=>{
-    const isBtn = e.target.closest && e.target.closest('#installBtn'); if(!isBtn) return;
-    if(evt==='touchstart'){
-      let t; const cancel=()=>{clearTimeout(t);removeEventListener('touchend',cancel,{passive:true});removeEventListener('touchmove',cancel,{passive:true});};
-      t=setTimeout(()=>{e.preventDefault();},400);
-      addEventListener('touchend',cancel,{passive:true});
-      addEventListener('touchmove',cancel,{passive:true});
-    }
-    if(evt==='contextmenu') e.preventDefault();
-  }, {passive:false});
-});
+if(installBtn){
+  ['contextmenu','touchstart'].forEach(evt=>{
+    installBtn.addEventListener(evt, e=>{
+      if(evt==='contextmenu') e.preventDefault();
+      if(evt==='touchstart'){
+        let timer;
+        const cancel = ()=>{clearTimeout(timer);removeEventListener('touchend',cancel,{passive:true});removeEventListener('touchmove',cancel,{passive:true});};
+        timer = setTimeout(()=>e.preventDefault(),350);
+        addEventListener('touchend',cancel,{passive:true});
+        addEventListener('touchmove',cancel,{passive:true});
+      }
+    }, {passive:false});
+  });
 
+  installBtn.addEventListener('click', ()=>{
+    installBtn.classList.add('is-loading');
+    installBtn.setAttribute('disabled','disabled');
+    const strong = installBtn.querySelector('strong');
+    if(strong) strong.textContent = '\u0110ang g\u1EEDi c\u1EA5u h\u00ECnh\u2026';
+    if(progressMsg) progressMsg.removeAttribute('hidden');
 
-document.getElementById('installBtn')?.addEventListener('click', ()=>{
-  document.getElementById('progress')?.removeAttribute('hidden');
-  
-  location.assign(FILE);
-  
-  setTimeout(()=> location.assign(`${BASE}/thanks/`), 1600);
-});
+    location.assign(FILE);
+    setTimeout(()=> location.assign(`${BASE}/thanks/`), 1800);
+  });
+}
 
-
-  let VSH_VANTA = null;
-  window.addEventListener('DOMContentLoaded', () => {
+let VSH_VANTA = null;
+window.addEventListener('DOMContentLoaded', () => {
+  try{
     VSH_VANTA = VANTA.GLOBE({
-      el: "#vsh-vanta",
-      mouseControls: true,    
-      touchControls: true,     
+      el: '#vsh-vanta',
+      mouseControls: true,
+      touchControls: true,
       gyroControls: false,
-      minHeight: 200.00,
-      minWidth: 200.00,
-      scale: 1.00,
-      scaleMobile: 1.00,
-      color: 0x3a86ff,        
-      backgroundColor: 0x0b0f14, 
-      size: 1.00
+      minHeight: 200,
+      minWidth: 200,
+      scale: 1,
+      scaleMobile: 1,
+      color: 0x4da3ff,
+      color2: 0x47f1c1,
+      size: 1.2,
+      backgroundColor: 0x03060c
     });
+  }catch(err){
+    console.warn('Vanta init failed', err);
+  }
+});
 
-    
-    let t = 0;
-    (function drift(){
-      t += 0.004; 
-      
-      window.dispatchEvent(new MouseEvent('mousemove', {
-        clientX: innerWidth/2 + Math.sin(t)*60,
-        clientY: innerHeight/2 + Math.cos(t)*40
-      }));
-      requestAnimationFrame(drift);
-    })();
-  });
-
- 
-  window.addEventListener('beforeunload', () => {
-    try { VSH_VANTA && VSH_VANTA.destroy(); } catch(e){}
-  });
-
+window.addEventListener('beforeunload', () => {
+  try{ VSH_VANTA && VSH_VANTA.destroy(); }catch(e){/* noop */}
+});
