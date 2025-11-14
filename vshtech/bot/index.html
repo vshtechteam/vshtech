@@ -3,13 +3,13 @@
 <head>
   <meta name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<style>
-  body { touch-action: manipulation; }
-  input, select, textarea { font-size:16px; }
-</style>
+  <style>
+    body { touch-action: manipulation; }
+    input, select, textarea { font-size:16px; }
+  </style>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>VSH TECH – Bộ sưu tập Bot</title>
+  <title>VSH TECH - Bot Studio</title>
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#0b1220">
   <link rel="stylesheet" href="./bot.css">
@@ -19,17 +19,60 @@
 
 <div class="wrap">
   <div class="panel">
-  
     <section class="hero">
-      <h1 class="brandTitle">
-        <span class="greenDot" aria-hidden="true"></span>
-        VSH TECH
-        <span class="metaTick" title="Đã xác minh" aria-label="Đã xác minh"></span>
-      </h1>
-      <p class="sub">Bộ sưu tập bot chuyên nghiệp – tự động hoá, bảo mật, triển khai nhanh.</p>
+      <div class="hero-copy">
+        <p class="pill">Studio Tự Động</p>
+        <h1 class="brandTitle">
+          <span class="greenDot" aria-hidden="true"></span>
+          VSH TECH Automations
+          <span class="metaTick" title="Đã xác minh" aria-label="Đã xác minh"></span>
+        </h1>
+        <p class="sub">
+          Bot siêu tốc, hiệu ứng mượt, tích hợp realtime và bảo mật tự động. Chuẩn hoá toàn bộ hành trình khách hàng chỉ trong vài giây.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://zalo.me/0382304188" target="_blank" rel="noopener">
+            Nhận tư vấn
+          </a>
+          <button class="btn btn-ghost" type="button" data-scroll="#botGrid">
+            Xem danh sách bot
+          </button>
+        </div>
+        <ul class="hero-metrics" aria-label="Số liệu năng lực">
+          <li>
+            <span class="metric-value">50+</span>
+            <span class="metric-label">Bot đang hoạt động</span>
+          </li>
+          <li>
+            <span class="metric-value">0.2s</span>
+            <span class="metric-label">Độ trễ trung bình</span>
+          </li>
+          <li>
+            <span class="metric-value">24/7</span>
+            <span class="metric-label">Vận hành &amp; hỗ trợ</span>
+          </li>
+        </ul>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-orb hero-orb-lg"></div>
+        <div class="hero-orb hero-orb-md"></div>
+        <div class="hero-orb hero-orb-sm"></div>
+        <div class="hero-gridlines">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
     </section>
 
-   
+    <section class="grid-intro">
+      <div>
+        <p class="eyebrow">Danh mục bot</p>
+        <h2>Chọn giải pháp phù hợp nhất</h2>
+      </div>
+      <p>
+        Mỗi bot đều được tối ưu về trải nghiệm, có sẵn hiệu ứng tương tác, công cụ giám sát và báo cáo riêng.
+      </p>
+    </section>
+
     <section class="grid" id="botGrid"></section>
   </div>
 </div>
@@ -37,19 +80,28 @@
 
 <div id="vshModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="vshTitle">
   <div class="modal">
-    <button class="closeX" id="vshCloseX" aria-label="Đóng">×</button>
+    <div class="modal-aura" aria-hidden="true"></div>
+    <button class="closeX" id="vshCloseX" aria-label="Đóng">&times;</button>
     <div class="head">
       <div class="badge">VSH&nbsp;TECH</div>
-      <div class="tick" aria-hidden="true">✓</div>
+      <div class="tick" aria-hidden="true">&#10003;</div>
     </div>
-    <h3 id="vshTitle" class="title">vshtech.online</h3>
-    <div class="body">
-      Hệ thống bot của <b>VSH&nbsp;TECH</b> – tự động hoá nhanh, ổn định, bảo mật.<br>
-      Nhấn <b>Liên Hệ Admin</b> để chat qua Zalo.
+    <p class="modal-pretitle">Thông báo dành riêng cho bạn</p>
+    <h3 id="vshTitle" class="title">Trung tâm vận hành bot</h3>
+    <p class="modal-lede">
+      Mỗi quy trình được mã hoá, ghi log và cảnh báo realtime cho đội ngũ kỹ thuật.
+    </p>
+    <div class="body" data-modal-message>
+      Cảm ơn bạn đã ghé thăm VSH TECH. Hãy kết nối ngay để kích hoạt bot phù hợp với ngành của bạn.
+    </div>
+    <div class="modal-foot" aria-label="Thông tin bảo mật">
+      <span class="modal-chip">Bảo mật đa tầng</span>
+      <span class="modal-chip">Hỗ trợ 24/7</span>
+      <span class="modal-chip">Kích hoạt trong 5 phút</span>
     </div>
     <div class="actions">
-      <button id="vshClose3h" class="btn-amber">Đóng 3 giờ</button>
-      <button id="vshClose"   class="btn-red">Đóng</button>
+      <button id="vshClose3h" class="btn-amber">Nhắc lại sau</button>
+      <button id="vshClose"   class="btn-red">Đóng ngay</button>
     </div>
   </div>
 </div>
