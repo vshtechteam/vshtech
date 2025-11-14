@@ -194,7 +194,8 @@
 
     .hero-visual{
       position:relative;
-      min-height:320px;
+      min-height:420px;
+      padding:10px 0 40px;
     }
     .floating-card{
       position:absolute;
@@ -220,12 +221,13 @@
     }
     .floating-card.mini{
       top:auto;
-      bottom:-30px;
-      left:-20px;
-      right:auto;
+      bottom:16px;
+      left:auto;
+      right:20px;
       padding:16px 18px;
       max-width:220px;
       animation-duration:10s;
+      transform:translateY(0);
     }
     .floating-card.mini span{font-size:.8rem;color:var(--muted);display:block}
     .floating-card.mini strong{font-size:1.1rem;margin-top:4px;display:block}
@@ -391,6 +393,18 @@
       gap:14px;
       background:rgba(255,255,255,.03);
       backdrop-filter:blur(12px);
+    }
+    .link-line > div{flex:1;min-width:0}
+    .link-line a{
+      color:var(--accent2);
+      font-weight:600;
+      font-size:.92rem;
+      text-decoration:none;
+      word-break:break-all;
+      overflow-wrap:anywhere;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
     }
     .link-line svg{opacity:.6}
     .hint,.ok{color:var(--muted);font-size:.92rem;margin:0 0 6px}
