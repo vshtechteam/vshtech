@@ -1,21 +1,24 @@
-// progress bar
-(function(){
-  const f = document.getElementById('scrollFill');
-  const upd = ()=> {
-    const y = window.scrollY||0, dh = document.documentElement.scrollHeight - innerHeight;
-    f.style.width = (dh>0 ? Math.min(100, Math.max(0, y/dh*100)) : 0) + '%';
+﻿(function initProgress(){
+  const fill = document.getElementById('scrollFill');
+  const update = ()=>{
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const pct = max>0 ? Math.min(100, Math.max(0, (scrollY||0)/max*100)) : 0;
+    if(fill) fill.style.width = pct + '%';
   };
-  addEventListener('scroll', upd, {passive:true});
-  addEventListener('resize', upd);
-  upd();
+  addEventListener('scroll', update, {passive:true});
+  addEventListener('resize', update);
+  update();
 })();
 
-// Gửi lại hồ sơ
 const FILE = '/install/profiles/vpn.mobileconfig';
-document.getElementById('retry')?.addEventListener('click', ()=>{
-  location.assign(FILE);
-  setTimeout(()=> location.reload(), 600);
-});
-window.__vshVanta = window.__vshVanta || null;
+const retryBtn = document.getElementById('retry');
 
-  
+if(retryBtn){
+  retryBtn.addEventListener('click', ()=>{
+    retryBtn.classList.add('is-loading');
+    retryBtn.setAttribute('disabled','disabled');
+    retryBtn.textContent = '\u0110ang g\u1EEDi l\u1EA1i\u2026';
+    location.assign(FILE);
+    setTimeout(()=> location.reload(), 900);
+  });
+}

@@ -1,38 +1,76 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="vi">
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>Đã gửi cấu hình – VSH TECH</title>
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#0f0f1a">
+  <meta name="theme-color" content="#04060b">
+  <title>Đã gửi cấu hình — VSH TECH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./hex.css">
   <script src="./occ.js" defer></script>
 </head>
 <body>
+  <div class="aurora aurora-a" aria-hidden="true"></div>
+  <div class="aurora aurora-b" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="grid" aria-hidden="true"></div>
 
-  <!-- progress -->
   <div class="scrollbar" aria-hidden="true"><div id="scrollFill" class="fill"></div></div>
 
   <div class="wrap">
-    <main class="card" role="main" aria-labelledby="t">
-      <div class="ok"><i></i><span>Yêu cầu cài đặt đã được gửi tới iPhone</span></div>
-      <h1 id="t">Hoàn tất cài đặt cấu hình vào Hồ sơ</h1>
+    <main class="shell" role="main" aria-labelledby="title">
+      <section class="hero">
+        <div class="badge">Hoàn tất bước Safari</div>
+        <h1 id="title">Hồ sơ đã ở trong Cài đặt</h1>
+        <p>Chỉ còn vài chạm nữa để kích hoạt cấu hình VSH TECH. Làm theo lộ trình dưới đây để xác minh và áp dụng.</p>
 
-      <p>Làm theo các bước dưới đây trong <b>Cài đặt</b> để hoàn tất cài đặt tệp <b>.mobileconfig</b>:</p>
-      <ul class="steps">
-        <li><span class="idx">1</span><span>Mở <b>Cài đặt</b> và chạm mục <b>Hồ sơ đã tải về</b> (xuất hiện ở đầu).</span></li>
-        <li><span class="idx">2</span><span>Chọn hồ sơ cấu hình <b>.mobileconfig</b> → <b>Cài đặt</b>.</span></li>
-        <li><span class="idx">3</span><span>Nhập mã mật khẩu (nếu được yêu cầu) → <b>Cài đặt</b> để xác nhận.</span></li>
-      </ul>
+        <div class="status-card">
+          <div class="checkmark" aria-hidden="true"></div>
+          <div>
+            <strong>Đã gửi thành công</strong>
+            <span>Safari đã lưu tệp .mobileconfig trên thiết bị của bạn.</span>
+          </div>
+        </div>
+      </section>
 
-      <div class="row">
-        <a class="btn" href="/install/download/">Quay lại trang tải</a>
-        <button class="btn primary" id="retry">Gửi lại hồ sơ</button>
-      </div>
+      <section class="panel steps">
+        <p class="panel-label">Hoàn thiện trong Cài đặt</p>
+        <ol class="timeline">
+          <li>
+            <span class="idx">1</span>
+            <div>
+              <h2>Mở Cài đặt ▶ Hồ sơ đã tải về</h2>
+              <p>Vị trí nằm ngay đầu danh sách Cài đặt. Nếu chưa thấy mục này, đợi vài giây hoặc nhấn <b>Gửi lại hồ sơ</b>.</p>
+            </div>
+          </li>
+          <li>
+            <span class="idx">2</span>
+            <div>
+              <h2>Chọn cấu hình VSH TECH</h2>
+              <p>Nhấn <b>Cài đặt</b>, nhập mã mở khóa (nếu được yêu cầu), sau đó tiếp tục với nút Cài đặt lần nữa.</p>
+            </div>
+          </li>
+          <li>
+            <span class="idx">3</span>
+            <div>
+              <h2>Xác minh</h2>
+              <p>Khi trạng thái “Đã xác minh” xuất hiện, nhấn <b>Hoàn tất</b>.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
 
-      <p class="tiny" style="margin-top:14px">Nếu chưa thấy mục “Hồ sơ đã tải về”, đợi vài giây hoặc bấm <b>Gửi lại hồ sơ</b>.</p>
+      <section class="panel actions">
+        <p class="panel-label">Tùy chọn</p>
+        <div class="action-grid">
+          <button class="btn ghost" onclick="location.href='/install/download/'">Quay lại trang tải</button>
+          <button class="btn primary" id="retry">Gửi lại hồ sơ</button>
+        </div>
+        <p class="tiny">Mẹo: Nếu Safari không mở hộp thoại trong 3 giây, đóng tab hiện tại rồi mở lại liên kết từ VSH TECH để lấy phiên mới.</p>
+      </section>
     </main>
   </div>
 </body>
