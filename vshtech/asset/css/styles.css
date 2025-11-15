@@ -1600,36 +1600,47 @@ body, button, input, textarea {
 
 .contact-footer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
-    border-radius: 26px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1.6rem;
+    border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(3, 7, 18, 0.9);
+    background: rgba(3, 7, 18, 0.92);
 }
 
 .footer-copy h3 {
-    font-size: 1.8rem;
-    margin-top: 0.5rem;
+    font-size: clamp(1.35rem, 4vw, 1.7rem);
+    margin-top: 0.35rem;
+}
+
+.footer-copy p {
+    font-size: 0.95rem;
+    color: var(--fg-muted);
 }
 
 .contact-channels {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.2rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
 }
 
 .channel-card {
     display: flex;
     align-items: center;
-    gap: 0.9rem;
-    padding: 0.95rem 1.25rem;
+    gap: 0.75rem;
+    padding: 0.85rem 1.05rem;
     border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(10, 15, 30, 0.95);
     text-decoration: none;
     color: var(--fg-primary);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    min-width: 0;
+}
+
+.channel-card > div {
+    flex: 1;
+    min-width: 0;
 }
 
 .channel-card:hover {
@@ -1686,6 +1697,26 @@ body, button, input, textarea {
 
 .channel-card:hover .channel-arrow {
     transform: translateX(4px);
+}
+
+@media (max-width: 560px) {
+    .contact-channels {
+        grid-template-columns: 1fr;
+    }
+    .channel-card {
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+    .channel-arrow {
+        width: 100%;
+        text-align: right;
+    margin-left: 0;
+    margin-top: 0.35rem;
+  }
+  .contact-footer {
+    padding: 1.25rem;
+    gap: 1.1rem;
+  }
 }
 
 footer {
