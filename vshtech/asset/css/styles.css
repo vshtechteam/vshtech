@@ -1620,16 +1620,16 @@ body, button, input, textarea {
 
 .contact-channels {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 0.85rem;
 }
 
 .channel-card {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.85rem 1.05rem;
-    border-radius: 18px;
+    gap: 0.65rem;
+    padding: 0.7rem 0.95rem;
+    border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(10, 15, 30, 0.95);
     text-decoration: none;
@@ -1641,6 +1641,7 @@ body, button, input, textarea {
 .channel-card > div {
     flex: 1;
     min-width: 0;
+    line-height: 1.2;
 }
 
 .channel-card:hover {
@@ -1650,26 +1651,26 @@ body, button, input, textarea {
 }
 
 .channel-card span {
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     color: var(--fg-muted);
 }
 
 .channel-card strong {
     display: block;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
 }
 
 .channel-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
     display: grid;
     place-items: center;
     flex-shrink: 0;
 }
 
 .channel-icon svg {
-    width: 18px;
+    width: 16px;
     height: 18px;
     color: #050914;
     stroke: currentColor;
@@ -1689,7 +1690,7 @@ body, button, input, textarea {
 
 .channel-arrow {
     margin-left: auto;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--fg-muted);
     transition: transform 0.3s ease;
     flex-shrink: 0;
