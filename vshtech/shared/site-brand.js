@@ -1,7 +1,7 @@
 // vshtech/shared/site-brand.js
 (function () {
   // === cấu hình nhanh ===
-  const LOGO = '/shared/IMG_4623.png';  // ảnh bạn vừa up
+  const LOGO = '/shared/vshtech-logo.png';
   const BRAND = 'VSH TECH';
   const HOME  = '/';
 
