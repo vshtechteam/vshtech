@@ -13,6 +13,8 @@ const ROLES = [
 
 (function () {
   const $ = (q, c = document) => c.querySelector(q);
+  const rootEl = document.documentElement;
+  const bodyEl = document.body;
 
   if (AVATAR_URL) {
     const im = $("#avatar");
@@ -133,11 +135,25 @@ const ROLES = [
   }
 
   const bar = $("#progress");
+  let scrollGlowTimer = null;
   if (bar) {
     const set = () => {
       const d = document.documentElement;
       const ratio = d.scrollTop / ((d.scrollHeight - d.clientHeight) || 1);
       bar.style.width = ratio * 100 + "%";
+      if (rootEl) {
+        rootEl.style.setProperty(
+          "--scroll-aurora-offset",
+          ((ratio * 140) - 70).toFixed(2) + "px"
+        );
+        rootEl.style.setProperty("--page-flow-y", ((ratio * 240) - 120).toFixed(2) + "px");
+        rootEl.style.setProperty("--page-flow-hue", (200 + ratio * 150).toFixed(1) + "deg");
+      }
+      if (bodyEl) {
+        bodyEl.classList.add("scrolled");
+        if (scrollGlowTimer) clearTimeout(scrollGlowTimer);
+        scrollGlowTimer = setTimeout(() => bodyEl.classList.remove("scrolled"), 260);
+      }
     };
     addEventListener("scroll", set, { passive: true });
     set();
@@ -185,6 +201,30 @@ const ROLES = [
   if (mediaLink && typeof MEDIA_SERVICE_URL === "string" && MEDIA_SERVICE_URL.trim()) {
     mediaLink.href = MEDIA_SERVICE_URL.trim();
   }
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      const key = (event.key || "").toUpperCase();
+      const blockKey =
+        key === "F12" ||
+        (event.ctrlKey && event.shiftKey && ["I", "C", "J"].includes(key)) ||
+        (event.ctrlKey && key === "U");
+      if (blockKey) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    },
+    true
+  );
+
+  document.addEventListener(
+    "contextmenu",
+    (event) => {
+      event.preventDefault();
+    },
+    true
+  );
 
   const tiltCards = [...document.querySelectorAll("[data-tilt]")];
   if (tiltCards.length) {
