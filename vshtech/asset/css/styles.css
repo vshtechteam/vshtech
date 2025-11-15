@@ -1710,13 +1710,16 @@ body, button, input, textarea {
 @media (max-width: 560px) {
     .contact-channels {
         flex-direction: column;
-        width: 100%;
+        width: min(100%, 360px);
+        margin: 0 auto;
+        align-items: center;
     }
     .channel-card {
         flex-wrap: wrap;
         align-items: flex-start;
-        padding: 0.55rem 0.75rem;
-        max-width: 100%;
+        padding: 0.5rem 0.7rem;
+        max-width: 320px;
+        width: 100%;
     }
     .channel-arrow {
         width: 100%;
