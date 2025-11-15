@@ -5,5 +5,5 @@ https://www.vshtech.online/*  https://vshtech.online/:splat  301
 /certificate/tager /certificate/ 301
 /certificate/tager/* /certificate/ 301
 
-/favicon.ico              /shared/IMG_4623.png    200
-/apple-touch-icon.png     /shared/IMG_4623.png    200
+/favicon.ico              /shared/vshtech-logo.png    200
+/apple-touch-icon.png     /shared/vshtech-logo.png    200
