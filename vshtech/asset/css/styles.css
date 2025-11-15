@@ -892,16 +892,16 @@ body, button, input, textarea {
 
 .training-plan .badge {
     position: absolute;
-    top: 1.25rem;
-    right: 1.25rem;
-    padding: 0.3rem 0.9rem;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.2rem 0.65rem;
     border-radius: 999px;
     background: linear-gradient(120deg, #ffc700, #ff7da8);
     color: #050506;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
 }
 
 .service-grid {
