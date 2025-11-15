@@ -1621,10 +1621,10 @@ body, button, input, textarea {
 }
 
 .contact-channels {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 0.85rem;
-    width: min(100%, 820px);
+    width: min(100%, 520px);
     margin: 0 auto;
 }
 
@@ -1708,8 +1708,7 @@ body, button, input, textarea {
 
 @media (max-width: 560px) {
     .contact-channels {
-        grid-template-columns: 1fr;
-        width: 100%;
+        width: min(100%, 360px);
     }
     .channel-card {
         flex-wrap: wrap;
