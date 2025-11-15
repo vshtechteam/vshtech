@@ -1,6 +1,7 @@
 const AVATAR_URL = "";
 const CONTACT_URL = "https://instabio.cc/vshtech";
 const BOT_LANDING_URL = "https://www.vshtech.online/bot/";
+const MEDIA_SERVICE_URL = "https://vshtech.online/asset/";
 const ROLES = [
   "Digital Seller",
   "Hệ sinh thái cấu hình",
@@ -178,6 +179,11 @@ const ROLES = [
   const botLanding = document.getElementById("botLandingLink");
   if (botLanding && typeof BOT_LANDING_URL === "string" && BOT_LANDING_URL.trim()) {
     botLanding.href = BOT_LANDING_URL.trim();
+  }
+
+  const mediaLink = document.getElementById("mediaServiceLink");
+  if (mediaLink && typeof MEDIA_SERVICE_URL === "string" && MEDIA_SERVICE_URL.trim()) {
+    mediaLink.href = MEDIA_SERVICE_URL.trim();
   }
 
   const tiltCards = [...document.querySelectorAll("[data-tilt]")];

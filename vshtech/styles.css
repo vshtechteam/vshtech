@@ -408,6 +408,7 @@ button{font:inherit}
 [data-tone="ocean"] .tile-icon{background:linear-gradient(135deg,#60a5fa,#2563eb)}
 [data-tone="aqua"] .tile-icon{background:linear-gradient(135deg,#7dd3fc,#0ea5e9)}
 [data-tone="teal"] .tile-icon{background:linear-gradient(135deg,#5eead4,#14b8a6)}
+[data-tone="fuchsia"] .tile-icon{background:linear-gradient(135deg,#f472b6,#db2777)}
 [data-tone="purple"] .tile-icon{background:linear-gradient(135deg,#c084fc,#6366f1)}
 [data-tone="violet"] .tile-icon{background:linear-gradient(135deg,#a78bfa,#7c3aed)}
 [data-tone="blue"] .tile-icon{background:linear-gradient(135deg,#93c5fd,#1d4ed8)}
