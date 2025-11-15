@@ -1619,11 +1619,12 @@ body, button, input, textarea {
 }
 
 .contact-channels {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.75rem;
     width: min(100%, 640px);
     margin: 0 auto;
+    justify-content: center;
 }
 
 .channel-card {
@@ -1638,6 +1639,8 @@ body, button, input, textarea {
     color: var(--fg-primary);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     min-width: 0;
+    flex: 1 1 200px;
+    max-width: 220px;
 }
 
 .channel-card > div {
@@ -1706,12 +1709,14 @@ body, button, input, textarea {
 
 @media (max-width: 560px) {
     .contact-channels {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        width: 100%;
     }
     .channel-card {
         flex-wrap: wrap;
         align-items: flex-start;
         padding: 0.55rem 0.75rem;
+        max-width: 100%;
     }
     .channel-arrow {
         width: 100%;
