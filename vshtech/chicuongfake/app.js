@@ -462,3 +462,119 @@ document.addEventListener("DOMContentLoaded",function(){
   window.playChime = chime;
 })();
 
+
+<script>
+/* Cổng mật khẩu cực đơn giản – KHÔNG an toàn cho sản phẩm thật.
+   Mật khẩu: 111
+   Mẹo: thay sessionStorage -> localStorage nếu muốn khỏi hỏi lại giữa các trang/lần tải. */
+(function () {
+  // 1) Ẩn trang thật sớm
+  var gateStyle = document.createElement('style');
+  gateStyle.setAttribute('data-password-gate', '');
+  gateStyle.textContent = 'html{visibility:hidden!important}';
+  (document.head || document.documentElement).appendChild(gateStyle);
+
+  // 2) Nếu đã mở khoá trong tab này, hiện luôn
+  try {
+    if (sessionStorage.getItem('pw_ok') === '1') {
+      gateStyle.remove();
+      return;
+    }
+  } catch (e) {}
+
+  // 3) Hỏi mật khẩu (tối đa 3 lần)
+  var ok = false;
+  for (var i = 0; i < 3; i++) {
+    var v = window.prompt('Nhập mật khẩu để vào:');
+    if (v === null) break;            // bấm Hủy
+    if (v === '111') { ok = true; break; }
+    alert('Sai mật khẩu, thử lại!');
+  }
+
+  if (ok) {
+    try { sessionStorage.setItem('pw_ok', '1'); } catch (e) {}
+    gateStyle.remove();               // hiện lại trang
+  } else {
+    // 4) Từ chối truy cập & chặn tải tiếp
+    document.open();
+    document.write('<!doctype html><meta charset="utf-8"><title>Từ chối truy cập</title><style>body{font-family:system-ui;padding:40px;text-align:center}</style><h1>Không có quyền truy cập</h1><p>Mật khẩu không đúng.</p>');
+    document.close();
+  }
+})();
+<script>
+/* Cổng mật khẩu cực đơn giản – KHÔNG an toàn cho sản phẩm thật.
+   Mật khẩu: 111
+   Mẹo: thay sessionStorage -> localStorage nếu muốn khỏi hỏi lại giữa các trang/lần tải. */
+(function () {
+  // 1) Ẩn trang thật sớm
+  var gateStyle = document.createElement('style');
+  gateStyle.setAttribute('data-password-gate', '');
+  gateStyle.textContent = 'html{visibility:hidden!important}';
+  (document.head || document.documentElement).appendChild(gateStyle);
+
+  // 2) Nếu đã mở khoá trong tab này, hiện luôn
+  try {
+    if (sessionStorage.getItem('pw_ok') === '1') {
+      gateStyle.remove();
+      return;
+    }
+  } catch (e) {}
+
+  // 3) Hỏi mật khẩu (tối đa 3 lần)
+  var ok = false;
+  for (var i = 0; i < 3; i++) {
+    var v = window.prompt('Nhập mật khẩu để vào:');
+    if (v === null) break;            // bấm Hủy
+    if (v === '111') { ok = true; break; }
+    alert('Sai mật khẩu, thử lại!');
+  }
+
+  if (ok) {
+    try { sessionStorage.setItem('pw_ok', '1'); } catch (e) {}
+    gateStyle.remove();               // hiện lại trang
+  } else {
+    // 4) Từ chối truy cập & chặn tải tiếp
+    document.open();
+    document.write('<!doctype html><meta charset="utf-8"><title>Từ chối truy cập</title><style>body{font-family:system-ui;padding:40px;text-align:center}</style><h1>Không có quyền truy cập</h1><p>Mật khẩu không đúng.</p>');
+    document.close();
+  }
+})();
+
+
+/* Cổng mật khẩu cực đơn giản – KHÔNG an toàn cho sản phẩm thật.
+   Mật khẩu: 111
+   Mẹo: thay sessionStorage -> localStorage nếu muốn khỏi hỏi lại giữa các trang/lần tải. */
+(function () {
+  // 1) Ẩn trang thật sớm
+  var gateStyle = document.createElement('style');
+  gateStyle.setAttribute('data-password-gate', '');
+  gateStyle.textContent = 'html{visibility:hidden!important}';
+  (document.head || document.documentElement).appendChild(gateStyle);
+
+  // 2) Nếu đã mở khoá trong tab này, hiện luôn
+  try {
+    if (sessionStorage.getItem('pw_ok') === '1') {
+      gateStyle.remove();
+      return;
+    }
+  } catch (e) {}
+
+  // 3) Hỏi mật khẩu (tối đa 3 lần)
+  var ok = false;
+  for (var i = 0; i < 3; i++) {
+    var v = window.prompt('Nhập mật khẩu để vào:');
+    if (v === null) break;            // bấm Hủy
+    if (v === '111') { ok = true; break; }
+    alert('Sai mật khẩu, thử lại!');
+  }
+
+  if (ok) {
+    try { sessionStorage.setItem('pw_ok', '1'); } catch (e) {}
+    gateStyle.remove();               // hiện lại trang
+  } else {
+    // 4) Từ chối truy cập & chặn tải tiếp
+    document.open();
+    document.write('<!doctype html><meta charset="utf-8"><title>Từ chối truy cập</title><style>body{font-family:system-ui;padding:40px;text-align:center}</style><h1>Không có quyền truy cập</h1><p>Mật khẩu không đúng.</p>');
+    document.close();
+  }
+})();
