@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trình ký IPA</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>Chuẩn bị ký ứng dụng iOS</h1>
+        <p>Tải tệp chứng chỉ, cấu hình và điền mật khẩu để bắt đầu quy trình ký.</p>
+      </header>
+
+      <form class="card" id="signing-form">
+        <section class="input-block">
+          <div class="step-label">Bước 1</div>
+          <div class="field">
+            <label for="p12-file">Chọn tệp chứng chỉ (.p12)</label>
+            <input type="file" id="p12-file" accept=".p12" required />
+            <p class="hint">Đảm bảo đây là chứng chỉ hợp lệ dùng cho ứng dụng.</p>
+          </div>
+        </section>
+
+        <section class="input-block">
+          <div class="step-label">Bước 2</div>
+          <div class="field">
+            <label for="p12-pass">Nhập mật khẩu tệp .p12</label>
+            <div class="password-wrapper">
+              <input type="password" id="p12-pass" placeholder="••••••••" required />
+              <button type="button" class="toggle-pass" aria-label="Ẩn/hiện mật khẩu"></button>
+            </div>
+            <p class="hint">Mật khẩu này sẽ không được lưu trữ trên máy chủ.</p>
+          </div>
+        </section>
+
+        <section class="input-block">
+          <div class="step-label">Bước 3</div>
+          <div class="field">
+            <label for="mobileprovision-file">Chọn hồ sơ cấu hình (.mobileprovision)</label>
+            <input type="file" id="mobileprovision-file" accept=".mobileprovision" required />
+            <p class="hint">Hồ sơ provisioning phải khớp với chứng chỉ đã tải lên.</p>
+          </div>
+        </section>
+
+        <section class="input-block">
+          <div class="step-label">Bước 4</div>
+          <div class="field">
+            <label>Chọn nguồn tệp IPA cần ký</label>
+            <div class="ipa-source-options">
+              <label class="ipa-option">
+                <input type="radio" name="ipa-source" value="upload" checked />
+                <div>
+                  <strong>IPA của bạn</strong>
+                  <span>Tải trực tiếp từ máy để ký.</span>
+                </div>
+              </label>
+              <label class="ipa-option">
+                <input type="radio" name="ipa-source" value="panel" />
+                <div>
+                  <strong>PANEL IOS V1</strong>
+                  <span>Sử dụng build có sẵn trong panel.</span>
+                </div>
+              </label>
+            </div>
+
+            <div id="ipa-upload-block">
+              <label for="ipa-file" class="sr-only">Tệp IPA cần ký</label>
+              <input type="file" id="ipa-file" accept=".ipa" required />
+              <p class="hint">Chỉ nhận tệp .ipa hợp lệ.</p>
+            </div>
+
+            <div id="ipa-panel-info" class="ipa-panel-info" hidden>
+              <p>
+                Bạn đã chọn ký trực tiếp gói <strong>PANELIOSV1.IPA</strong> từ kho thư viện nội bộ.
+                Sau khi các tệp chứng chỉ hợp lệ, bản IPA này sẽ tự động tải xuống.
+              </p>
+              <p class="hint">Đảm bảo tài khoản của bạn có quyền sử dụng panel này.</p>
+            </div>
+          </div>
+        </section>
+
+        <div class="actions">
+          <button type="submit">Bắt đầu ký ứng dụng</button>
+        </div>
+      </form>
+
+      <a id="panel-download" href="ipas/paneliosv1.ipa" download hidden>paneliosv1</a>
+
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
