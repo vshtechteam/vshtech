@@ -660,15 +660,26 @@ body.mod-still .code-column {
 
 .aimlock-switch {
   position: relative;
-  width: 82px;
+  width: 84px;
   height: 34px;
+  border: none;
   border-radius: 999px;
-  border: 1px solid rgba(148, 163, 184, 0.5);
-  background: rgba(148, 163, 184, 0.15);
   cursor: pointer;
   padding: 0;
   overflow: hidden;
-  transition: background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+  background: rgba(148, 163, 184, 0.12);
+  transition: background 200ms ease, box-shadow 200ms ease;
+}
+
+.aimlock-switch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(148, 163, 184, 0.25));
+  opacity: 0.9;
+  transition: border-color 200ms ease, opacity 200ms ease;
 }
 
 .aimlock-switch .thumb {
@@ -678,23 +689,28 @@ body.mod-still .code-column {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: #f8fafc;
+  background: radial-gradient(circle, #fff, #cfd8ff);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
   display: grid;
   place-items: center;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: #0f172a;
   transition: transform 250ms ease, box-shadow 250ms ease;
 }
 
 .aimlock-switch.on {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.7), rgba(14, 165, 233, 0.85));
-  border-color: rgba(59, 130, 246, 0.9);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.78), rgba(14, 165, 233, 0.88));
   box-shadow: 0 0 18px rgba(59, 130, 246, 0.4);
 }
 
+.aimlock-switch.on::before {
+  border-color: rgba(59, 130, 246, 0.9);
+  opacity: 1;
+}
+
 .aimlock-switch.on .thumb {
-  transform: translateX(48px);
+  transform: translateX(52px);
   box-shadow: 0 6px 18px rgba(14, 165, 233, 0.55);
 }
 
@@ -743,8 +759,8 @@ body.mod-still .code-column {
     gap: 0.35rem;
   }
 
-.status-toggle .aimlock-switch {
-    width: 62px;
+  .status-toggle .aimlock-switch {
+    width: 60px;
     height: 26px;
   }
 
@@ -756,6 +772,6 @@ body.mod-still .code-column {
   }
 
   .status-toggle .aimlock-switch.on .thumb {
-    transform: translateX(34px);
+    transform: translateX(36px);
   }
 }
