@@ -660,8 +660,8 @@ body.mod-still .code-column {
 
 .aimlock-switch {
   position: relative;
-  width: 84px;
-  height: 36px;
+  width: 82px;
+  height: 34px;
   border-radius: 999px;
   border: 1px solid rgba(148, 163, 184, 0.5);
   background: rgba(148, 163, 184, 0.15);
@@ -673,8 +673,8 @@ body.mod-still .code-column {
 
 .aimlock-switch .thumb {
   position: absolute;
-  top: 4px;
-  left: 4px;
+  top: 2px;
+  left: 2px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -694,7 +694,7 @@ body.mod-still .code-column {
 }
 
 .aimlock-switch.on .thumb {
-  transform: translateX(46px);
+  transform: translateX(48px);
   box-shadow: 0 6px 18px rgba(14, 165, 233, 0.55);
 }
 
@@ -743,17 +743,19 @@ body.mod-still .code-column {
     gap: 0.35rem;
   }
 
-  .status-toggle .aimlock-switch {
-    width: 64px;
-    height: 28px;
+.status-toggle .aimlock-switch {
+    width: 62px;
+    height: 26px;
   }
 
   .status-toggle .aimlock-switch .thumb {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
+    top: 2px;
+    left: 2px;
   }
 
   .status-toggle .aimlock-switch.on .thumb {
-    transform: translateX(36px);
+    transform: translateX(34px);
   }
 }
