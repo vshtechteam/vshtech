@@ -737,11 +737,17 @@ body.mod-still .code-column {
 
   .status-toggle {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 0.6rem;
   }
 
   .status-toggle .aimlock-switch {
     width: 78px;
     height: 34px;
+    margin-left: auto;
+  }
+
+  .status-pill {
+    flex-shrink: 0;
   }
 }
