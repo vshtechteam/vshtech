@@ -109,12 +109,12 @@
 
         <div class="vg-bd">
           <div>
-            <div class="vg-label">Ma Kich Hoat</div>
+            <div class="vg-label">Mã Kích Hoạt</div>
             <div class="vg-field">
               <input id="vgKey" class="vg-input" type="text" placeholder="VSHTECH-XXXX-XXXX-XXXX" autocomplete="one-time-code" inputmode="latin">
               <button class="vg-icon" id="vgPasteKey" title="Dan">
                 <svg viewBox="0 0 24 24" fill="none"><path d="M8 4h8v4h4v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4h4Z" stroke="currentColor" stroke-width="1.6"/><path d="M9 2h6v3a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1V2Z" stroke="currentColor" stroke-width="1.6"/></svg>
-                <span>Dan</span>
+                <span>Dán</span>
               </button>
               <button class="vg-icon" id="vgDelKey" title="Delete">
                 <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13" stroke="currentColor" stroke-width="1.6"/><path d="M10 11v7M14 11v7" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -124,29 +124,29 @@
           </div>
 
           <div style="margin-top:12px">
-            <div class="vg-label">Ma Thiet Bi</div>
+            <div class="vg-label">Mã Thiết Bị</div>
             <div class="vg-field">
               <input id="vgDev" class="vg-input" type="text" readonly>
               <button class="vg-icon" id="vgCopyDev" title="Sao chep">
                 <svg viewBox="0 0 24 24" fill="none"><path d="M9 9h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6"/><path d="M7 15H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.6"/></svg>
-                <span>Sao chep</span>
+                <span>Sao Chép</span>
               </button>
             </div>
           </div>
 
           <div class="vg-actions">
-            <button class="vg-btn vg-btn--pri" id="vgCheck">Kiem tra</button>
-            <button class="vg-btn vg-btn--pri" id="vgActive">Kich hoat (1 thiet bi)</button>
+            <button class="vg-btn vg-btn--pri" id="vgCheck">Kiểm Tra</button>
+            <button class="vg-btn vg-btn--pri" id="vgActive">Kích Hoạt [ 1 Thiết Bị ]</button>
           </div>
 
-          <div class="vg-msg" id="vgMsg">San sang.</div>
+          <div class="vg-msg" id="vgMsg">Sẵn Sàng.</div>
           <details id="vgDtl" hidden>
             <summary>Chi tiet ky thuat</summary>
             <pre class="vg-pre" id="vgRaw"></pre>
           </details>
 
           <div class="vg-foot">
-            <span id="vgSta">Chua kich hoat</span>
+            <span id="vgSta">Chưa Kích Hoạt</span>
             <span></span>
           </div>
         </div>
@@ -223,7 +223,7 @@
   async function onCheck() {
     const key = document.querySelector('#vgKey').value.trim();
     if (!key) return setMsg('warn', 'Vui long nhap Ma Kich Hoat.');
-    setMsg('', 'Dang kiem tra�');
+    setMsg('', 'Dang kiem tra');
     const j = await post('/api/verify', { key });
     if (j.ok) {
       localStorage.setItem(LS.KEY, key);
@@ -243,7 +243,7 @@
   async function onActivate() {
     const key = document.querySelector('#vgKey').value.trim();
     if (!key) return setMsg('warn', 'Vui long nhap Ma Kich Hoat.');
-    setMsg('', 'Dang kich hoat�');
+    setMsg('', 'Dang kich hoat');
     const j = await post('/api/activate', { key, deviceId });
     if (j.ok) {
       localStorage.setItem(LS.KEY, key);
@@ -326,3 +326,4 @@
     },
   };
 })();
+
