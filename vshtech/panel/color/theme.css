@@ -722,4 +722,26 @@ body.mod-still .code-column {
   .panel-placeholder {
     padding: 1.2rem;
   }
+
+  .feature-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .feature-title {
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    text-align: left;
+  }
+
+  .status-toggle {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .status-toggle .aimlock-switch {
+    width: 78px;
+    height: 34px;
+  }
 }
