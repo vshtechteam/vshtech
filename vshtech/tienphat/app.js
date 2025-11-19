@@ -663,40 +663,6 @@ $('#btnActivate').addEventListener('click', async ()=>{
 
 })(window);
 
-// ============ FATX007 FIX — Exclusive binding cho Skill tiles ============
-(function(){
-  // 1) Thay thế node skill grid để "gột" sạch mọi listener cũ (nếu có)
-  const oldGrid = document.getElementById('skillGrid') || document.querySelector('.skill-grid');
-  let root = document;
-  if (oldGrid) {
-    const clone = oldGrid.cloneNode(true);
-    oldGrid.parentNode.replaceChild(clone, oldGrid);
-    root = clone; // từ giờ bind vào clone sạch
-  }
-
-  // 2) Chặn mọi handler khác bằng CAPTURE + stopImmediatePropagation
-  document.addEventListener('click', function(e){
-    const tile = e.target.closest('.skill-tile[data-key]');
-    if(!tile) return;
-    // chặn toàn bộ handler khác (kể cả handler cũ của bạn)
-    e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
-
-    const key = tile.dataset.key;
-    const willTurnOn = !tile.classList.contains('active'); // đồng bộ theo .active
-    // chỉ SkillEngine xử lý bật/tắt
-    if (typeof SkillEngine?.runWithProgress === 'function') {
-      SkillEngine.runWithProgress(key, willTurnOn);
-    } else if (typeof SkillEngine?.set === 'function') {
-      SkillEngine.set(key, willTurnOn);
-    }
-  }, /* capture */ true);
-
-  // 3) Đồng bộ class dùng .active (nếu trước đây bạn dùng .fatx007-active)
-  document.querySelectorAll('.skill-tile.fatx007-active').forEach(t=>{
-    t.classList.remove('fatx007-active');
-  });
-})();
-
 /* Tắt vĩnh viễn auto-clear */
 try{
   localStorage.setItem('fatx007:autoClearOnRoute','0');   // hoặc removeItem cũng được
@@ -1087,4 +1053,5 @@ try{
     Loader.start(10000);
   }
 })();
+
 
