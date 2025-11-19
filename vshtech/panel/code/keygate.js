@@ -103,7 +103,7 @@
         <div class="vg-hd">
           <div class="vg-brand">${BRAND_TITLE}</div>
           <div class="vg-hd-rt">
-            <button class="vg-btn vg-btn--ghost" id="vgReset" title="Nhap lai">Nhap lai</button>
+            <button class="vg-btn vg-btn--ghost" id="vgReset" title="Nhap lai">Nhập lại</button>
           </div>
         </div>
 
@@ -326,4 +326,5 @@
     },
   };
 })();
+
 
