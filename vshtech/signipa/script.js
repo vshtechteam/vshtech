@@ -7,6 +7,10 @@ const ipaUploadBlock = document.getElementById("ipa-upload-block");
 const ipaFileInput = document.getElementById("ipa-file");
 const ipaPanelInfo = document.getElementById("ipa-panel-info");
 const panelDownloadLink = document.getElementById("panel-download");
+const installAction = document.getElementById("install-action");
+const installButton = document.getElementById("install-button");
+const installNote = document.getElementById("install-note");
+let uploadInstallUrl;
 
 toggleButton.addEventListener("click", () => {
   const visible = passwordInput.type === "text";
@@ -29,6 +33,7 @@ function handleIpaSourceChange() {
     ipaFileInput.required = false;
     ipaPanelInfo.hidden = false;
   }
+  resetInstallAction();
 }
 
 handleIpaSourceChange();
@@ -55,12 +60,48 @@ form.addEventListener("submit", (event) => {
   const ipaName = ipaSource === "upload" ? ipaFile.name : "paneliosv1.ipa";
   showStatus(`Đã sẵn sàng ký ứng dụng "${ipaName}" với chứng chỉ ${p12File.name}.`);
 
-  if (ipaSource === "panel" && panelDownloadLink) {
-    setTimeout(() => panelDownloadLink.click(), 300);
+  if (ipaSource === "panel") {
+    configurePanelInstall();
+  } else if (ipaFile) {
+    configureUploadInstall(ipaFile);
   }
 });
 
 function showStatus(message, state = "success") {
   statusBox.textContent = message;
   statusBox.dataset.state = state;
+}
+
+function configurePanelInstall() {
+  if (!panelDownloadLink) return;
+  installButton.disabled = false;
+  installButton.textContent = "Install PANEL IOS V1";
+  installButton.onclick = () => panelDownloadLink.click();
+  installNote.textContent =
+    "Thiết bị iOS sẽ cài đặt trực tiếp từ nguồn PANEL IOS V1 sau khi xác nhận.";
+  installAction.hidden = false;
+}
+
+function configureUploadInstall(file) {
+  if (uploadInstallUrl) {
+    URL.revokeObjectURL(uploadInstallUrl);
+  }
+  uploadInstallUrl = URL.createObjectURL(file);
+  installButton.disabled = false;
+  installButton.textContent = "Install IPA đã tải lên";
+  installButton.onclick = () => {
+    window.location.href = uploadInstallUrl;
+  };
+  installNote.textContent =
+    "Cài đặt trực tiếp tệp IPA vừa ký. Hãy mở trang này trên Safari của thiết bị iOS để bắt đầu.";
+  installAction.hidden = false;
+}
+
+function resetInstallAction() {
+  if (uploadInstallUrl) {
+    URL.revokeObjectURL(uploadInstallUrl);
+    uploadInstallUrl = null;
+  }
+  installAction.hidden = true;
+  installButton.onclick = null;
 }

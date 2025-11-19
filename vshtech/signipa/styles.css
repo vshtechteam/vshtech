@@ -254,6 +254,39 @@ input[type="password"]:focus-visible {
   color: var(--danger);
 }
 
+.install-action {
+  margin-top: 1.25rem;
+  text-align: center;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.25rem;
+  box-shadow: var(--card-shadow);
+  animation: fadeSlide 0.25s ease;
+}
+
+.install-action button {
+  padding: 0.9rem 1.75rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.25);
+}
+
+.install-action button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.install-action .hint {
+  margin-top: 0.75rem;
+}
+
 @media (max-width: 640px) {
   body {
     padding: 1.5rem 1rem;
