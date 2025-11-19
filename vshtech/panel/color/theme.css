@@ -724,30 +724,26 @@ body.mod-still .code-column {
   }
 
   .feature-row {
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: flex-start;
     gap: 0.5rem;
   }
 
   .feature-title {
+    flex-basis: 100%;
     font-size: 0.95rem;
     letter-spacing: 0.12em;
     text-align: left;
   }
 
   .status-toggle {
-    width: 100%;
-    justify-content: flex-start;
+    margin-left: auto;
+    justify-content: flex-end;
     gap: 0.6rem;
   }
 
   .status-toggle .aimlock-switch {
     width: 78px;
     height: 34px;
-    margin-left: auto;
-  }
-
-  .status-pill {
-    flex-shrink: 0;
   }
 }
