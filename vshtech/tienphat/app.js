@@ -295,14 +295,13 @@ async function runTask(name, ms=2000){
 const mem={alloc:[]};
 async function actRam(){ await runTask('Dọn RAM', 2000); const n=Math.floor(rnd(4,9)); for(let i=0;i<n;i++){mem.alloc.push(new Uint8Array(1024*1024));} await sleep(140); mem.alloc=[]; const freed=Math.round(rnd(6,14)); metrics.ram=clamp(metrics.ram-freed,5,98); renderStats(); console.log(`Giải phóng ~${freed}% heap tạm.`); }
 async function actFps(){ await runTask('Tối ưu FPS', 2400); metrics.cpu=clamp(metrics.cpu-rnd(2,6),3,98); renderStats(); console.log('Game profile: ưu tiên canvas, giảm tác vụ nền.'); }
-async function actCache(){ await runTask('Xoá cache', 2200); try{localStorage.clear();console.info('LocalStorage cleared');}catch(e){console.error('LocalStorage error:',e.message);} try{const dbs=await indexedDB.databases?.()||[]; await Promise.all(dbs.map(d=>new Promise(r=>{const rq=indexedDB.deleteDatabase(d.name); rq.onsuccess=rq.onerror=rq.onblocked=()=>r();}))); console.info('IndexedDB cleared');}catch(e){console.error('IndexedDB error:',e.message);} metrics.io=clamp(metrics.io-rnd(6,15),0,98); renderStats(); console.log('Cache đã dọn.'); }
 async function actNet(){ await runTask('Tối ưu mạng', 2300); const reduce=Math.round(rnd(8,22)); metrics.ping=clamp(metrics.ping-reduce,5,200); renderStats(); console.log(`Độ trễ ước giảm ~${reduce}ms.`); }
 async function actKill(){ await runTask('Diệt tiến trình nền', 1600); let c=0; for(const id of timers){clearInterval(id); c++;} timers.clear();
   timers.add(setInterval(()=>{ metrics.cpu=clamp(metrics.cpu+rnd(-driftAmp.cpu,driftAmp.cpu)*jitter,3,98); metrics.ram=clamp(metrics.ram+rnd(-driftAmp.ram,driftAmp.ram)*jitter,8,98); metrics.io=clamp(metrics.io+rnd(-3,3)*jitter,0,98); metrics.ping=clamp(metrics.ping+rnd(-3,3)*jitter,5,200); renderStats(); },1000));
   timers.add(setInterval(()=>{ S.cpu.push(clamp(metrics.cpu,0,100)); S.ram.push(clamp(metrics.ram,0,100)); if(S.cpu.length>maxPts){S.cpu.shift();S.ram.shift();} draw();},1000));
   console.log(`Dừng ${c} interval; khởi động monitor nhẹ.`); }
 async function actBench(){ await runTask('Benchmark CPU', 2000); const t0=performance.now(); let acc=0; for(let i=0;i<2_000_000;i++){acc+=Math.sqrt(i%97)*Math.sin(i%13);} const took=performance.now()-t0; const score=Math.round(2_000_000*1000/took); console.log(`Benchmark: ${took.toFixed(1)} ms • Score: ${score.toLocaleString()}`); metrics.cpu=clamp(metrics.cpu+rnd(3,8),5,98); renderStats(); }
-$('#btnRam').onclick=actRam; $('#btnFps').onclick=actFps; $('#btnCache').onclick=actCache; $('#btnNet').onclick=actNet; $('#btnKill').onclick=actKill; $('#btnBench').onclick=actBench;
+$('#btnRam').onclick=actRam; $('#btnFps').onclick=actFps; $('#btnNet').onclick=actNet; $('#btnKill').onclick=actKill; $('#btnBench').onclick=actBench;
 
 /* ============== SKILL CONFIG (tiles with 10s C++ stream) ============== */
 const skills = [
