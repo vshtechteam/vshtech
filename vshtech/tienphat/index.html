@@ -11,7 +11,6 @@
 </head>
 <body>
 
-<!-- ===== HOME (drag) + MENU ===== -->
 <button class="home-fab" id="homeFab" title="HOME / Menu">
   <svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-4V12H9v10H5a2 2 0 0 1-2-2z"/></svg>
 </button>
@@ -29,17 +28,14 @@
   </div>
 </div>
 
-<!-- ===== HEADER ===== -->
 <div class="container">
   <header class="header">
     <div class="brand-pill">Fatx007 Booster</div>
     <div class="h-sub">Bảng điều khiển tối ưu hoá an toàn — mô phỏng trong trình duyệt</div>
   </header>
 
-  <!-- ===== PAGES ===== -->
   <main style="margin-top:14px">
 
-    <!-- PAGE: METRICS -->
     <section class="panel page active" id="page-metrics">
       <div class="page-head"><h2>Realtime Monitor</h2></div>
 
@@ -73,19 +69,15 @@
       </div>
     </section>
 
-    <!-- PAGE: SKILL CONFIG -->
     <section class="panel page" id="page-skills">
       <div class="page-head"><h2>Function</h2></div>
 
       <div class="skill-grid" id="skillGrid">
-        <!-- Tiles will be injected by JS -->
       </div>
 
-      <!-- Console riêng cho Skill -->
       <div class="console"><div class="log-body" id="logsSkill"></div></div>
     </section>
 
-    <!-- PAGE: FILE -->
     <section class="panel page" id="page-file">
       <div class="page-head"><h2>File Runner (.cfg / .ini / .so)</h2></div>
       <div class="diag">
@@ -107,7 +99,6 @@
       </div>
     </section>
 
-    <!-- PAGE: CONSOLE (tổng) -->
     <section class="panel page" id="page-console">
       <div class="page-head"><h2>Console</h2></div>
       <div class="console"><div class="log-body" id="logsOnly"></div></div>
@@ -116,7 +107,6 @@
   </main>
 </div>
 
-<!-- ===== Icons ===== -->
 <svg width="0" height="0" style="position:absolute;visibility:hidden">
   <symbol id="ic-ram" viewBox="0 0 24 24"><path fill="currentColor" d="M3 7h18v10H3V7zm2 2v6h14V9H5zm-1 8h2v2H4v-2zm4 0h2v2H8v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2z"/></symbol>
   <symbol id="ic-fps" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3 9h7l-5.5 4 2 7-6.5-4.5L5.5 22l2-7L2 11h7z"/></symbol>

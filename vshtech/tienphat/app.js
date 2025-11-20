@@ -3,13 +3,11 @@ function currentPageId(){ return (location.hash || '#metrics').replace('#',''); 
 
 function syncMenu(){
   const id = currentPageId();
-  // 1) Đồng bộ highlight item theo trang
   document.querySelectorAll('#menuSheet .menu-item[data-go]').forEach(a=>{
     const on = a.dataset.go === id;
     a.classList.toggle('active', on);
     a.setAttribute('aria-current', on ? 'page' : 'false');
   });
-  // 2) Làm mới nhãn Auto-clear (nếu có)
   const autoItem = document.querySelector('#menuSheet .menu-item[data-auto-clear]');
   if(autoItem){
     const mark = isAuto() ? '✅' : '⬜️';
@@ -20,24 +18,18 @@ function syncMenu(){
   }
 }
 
-// Gọi khi đổi route (via hash)
 window.addEventListener('hashchange', syncMenu);
 
-// Gọi ngay lúc load lần đầu
 syncMenu();
 
-// Gọi ngay trước/đúng lúc mở menu HOME để luôn là trạng thái mới nhất
 const _homeFab = document.getElementById('homeFab');
 const _menuSheet = document.getElementById('menuSheet');
 if(_homeFab){
   _homeFab.addEventListener('click', ()=>{
-    // nếu đang kéo thì phần drag handler của bạn sẽ ngăn mở; vẫn safe khi gọi sync
     syncMenu();
   });
 }
 
-// Khi click một item menu chuyển trang: đã có handler đóng menu.
-// Nhưng để chắc ăn, ta auto-sync sau 0ms (đợi hashchange)
 document.querySelectorAll('#menuSheet .menu-item[data-go]').forEach(a=>{
   a.addEventListener('click', ()=>{
     setTimeout(syncMenu, 0);
@@ -48,10 +40,10 @@ document.querySelectorAll('#menuSheet .menu-item[data-go]').forEach(a=>{
 
 /** 2.1. Xác định các vùng console hiện có (nếu bạn đổi id, sửa map ở đây) */
 const CONSOLES = {
-  metrics: '#logsMetrics',  // Console trong trang Chỉ số
-  skill:   '#logsSkill',    // Console trong trang Skill Config
-  file:    '#logsConsole',  // Console trong trang File
-  all:     '#logsOnly'      // Console trang Console (tổng)
+  metrics: '#logsMetrics',
+  skill:   '#logsSkill',
+  file:    '#logsConsole',
+  all:     '#logsOnly'
 };
 
 /** 2.2. Trợ giúp — lấy element theo selector an toàn */
@@ -97,7 +89,6 @@ function clearAllConsoles(silent=false){
   ].filter(Boolean);
 
   containers.forEach(box=>{
-    // Tránh chèn trùng
     if(box.querySelector('.tool-row')) return;
     const row = document.createElement('div');
     row.className = 'tool-row';
@@ -112,7 +103,6 @@ function clearAllConsoles(silent=false){
     box.insertBefore(row, box.querySelector('.log-body'));
   });
 
-  // Gán sự kiện
   document.body.addEventListener('click', (e)=>{
     const btn = e.target.closest('.mini[data-clear]');
     if(!btn) return;
@@ -139,7 +129,6 @@ function clearAllConsoles(silent=false){
   a.addEventListener('click', (e)=>{
     e.preventDefault();
     clearAllConsoles();
-    // đóng menu nếu đang mở
     const sheet = document.getElementById('menuSheet');
     if(sheet){ sheet.classList.remove('open'); sheet.setAttribute('aria-hidden','true'); }
   });
@@ -182,7 +171,7 @@ function setAuto(v){ try{ localStorage.setItem(AUTO_KEY, v?'1':'0'); }catch{} }
 
 /* Kích hoạt auto-clear khi router đổi trang */
 window.addEventListener('hashchange', ()=>{
-  if(isAuto()) clearVisibleConsole(true); // silent=true: không in dòng “đã dọn”
+  if(isAuto()) clearVisibleConsole(true);
 });
 
 /* ================== HẾT PHẦN DỌN CONSOLE ================== */
@@ -198,7 +187,6 @@ let AC; function ting(){ try{ AC=AC||new (window.AudioContext||window.webkitAudi
 /* ============== HOME drag + menu ============== */
 const fab=$('#homeFab'), sheet=$('#menuSheet');
 fab.addEventListener('click', (e)=>{
-  // nếu đang kéo thì không mở
   if(fab.dataset.dragging==='1'){ fab.dataset.dragging='0'; return; }
   sheet.classList.toggle('open'); sheet.setAttribute('aria-hidden', String(!sheet.classList.contains('open'))); ting();
 });
@@ -208,7 +196,6 @@ $$('.menu-item',sheet).forEach(a=>{
     ev.preventDefault(); const id=a.dataset.go; location.hash=id; sheet.classList.remove('open'); sheet.setAttribute('aria-hidden','true'); ting();
   });
 });
-// Drag (pointer events) + snap within viewport + remember
 (function enableDrag(){
   let dx=0, dy=0, dragging=false;
   const restore=()=>{ try{ const p=JSON.parse(localStorage.getItem('fabpos')||'null'); if(p){ fab.style.left=p.x+'px'; fab.style.top=p.y+'px'; } }catch{} };
@@ -228,7 +215,7 @@ if(!location.hash) location.hash='#metrics'; showPage((location.hash||'#metrics'
 
 /* ============== Shared Consoles ============== */
 const logMetrics=$('#logsMetrics'), logSkill=$('#logsSkill'), logConsole=$('#logsConsole'), logOnly=$('#logsOnly');
-function appendToAll(el){ // clone to all console panes
+function appendToAll(el){
   if(logMetrics){ logMetrics.append(el.cloneNode(true)); logMetrics.scrollTop=logMetrics.scrollHeight; }
   if(logSkill){ logSkill.append(el.cloneNode(true)); logSkill.scrollTop=logSkill.scrollHeight; }
   if(logConsole){ logConsole.append(el.cloneNode(true)); logConsole.scrollTop=logConsole.scrollHeight; }
@@ -236,7 +223,6 @@ function appendToAll(el){ // clone to all console panes
 }
 function codeLine(html, cls='info'){ const el=document.createElement('div'); el.className='line code '+cls; el.innerHTML=html+` <span class="time">${now()}</span>`; return el; }
 function textLine(txt, cls='info'){ const el=document.createElement('div'); el.className='line '+cls; el.innerHTML=txt+` <span class="time">${now()}</span>`; return el; }
-// Mirror console.* into panes
 const _c={log:console.log,warn:console.warn,error:console.error,info:console.info};
 console.log=(...a)=>appendToAll(textLine(a.join(' '),'ok'));
 console.warn=(...a)=>appendToAll(textLine(a.join(' '),'warn'));
@@ -317,21 +303,21 @@ skills.forEach(s=>{
   tile.innerHTML=`<div class="tile-progress"></div><h4>${s.label}</h4><div class="sub">Nhấn để kích hoạt / tắt</div>`;
   skillGrid.append(tile);
 });
-const skillState={}; // key -> active
+const skillState={};
 function runSkillCpp(nameVi, key){
   ting();
   const tile = document.querySelector(`.skill-tile[data-key="${key}"]`);
   const bar = tile.querySelector('.tile-progress');
   tile.classList.add('active'); bar.style.width='0%'; skillState[key]=true;
 
-  const start=performance.now(), D=10000; // 10s
+  const start=performance.now(), D=10000;
   appendToAll(textLine(`Bắt đầu chạy ${nameVi}…`,'info'));
   (function step(){
     const p=clamp((performance.now()-start)/D*100,0,100);
     bar.style.width=p.toFixed(1)+'%';
     if(Math.round(p)%10===0){ appendToAll(cppLine(key, Math.round(p))); }
     if(p<100 && skillState[key]) requestAnimationFrame(step); else {
-      if(skillState[key]){ // kết thúc thành công
+      if(skillState[key]){
         appendToAll(codeLine(`<span class="kw">result</span> <span class="fn">${key}</span> = <span class="kw">SUCCESS</span>;`, 'ok'));
         appendToAll(textLine(`${nameVi.toUpperCase()} ĐÃ ĐƯỢC CHẠY THÀNH CÔNG`,'ok'));
       } else {
@@ -347,11 +333,10 @@ skillGrid.addEventListener('click', e=>{
   const label=skills.find(x=>x.key===key)?.label||key;
   const nameVi = label.match(/\[(.+)\]/)?.[1] || label;
   if(!skillState[key]){ runSkillCpp(nameVi, key); }
-  else{ // tắt
+  else{
     skillState[key]=false; tile.classList.remove('active'); tile.querySelector('.tile-progress').style.width='0%';
     appendToAll(textLine(`Tắt ${nameVi}.`,'warn')); ting();
   }
-  // Ảnh hưởng giả lập
   if(key==='dpi_150'){ document.documentElement.style.setProperty('--ui-scale', skillState[key]?'1.5':'1'); }
   if(key==='reduce_aim_stickness'){ driftAmp.cpu = skillState[key]?1.0:2.0; driftAmp.ram=skillState[key]?0.8:1.0; }
   if(key==='anti_shake'){ jitter = skillState[key]?0.6:1.0; }
@@ -372,7 +357,6 @@ $('#fileInput').addEventListener('change',e=>{
 });
 $('#btnActivate').addEventListener('click', async ()=>{
   if(!picked){ ting(); appendToAll(textLine('Chưa chọn đúng tệp (.cfg / .ini / .so)','warn')); return; }
-  // dùng progress của trang Chỉ số + log C++
   await runTask('Kích hoạt tệp', 1800);
   appendToAll(cppLine('activate_file', 100));
   appendToAll(textLine('Tệp đang chạy (mô phỏng): '+picked.name,'ok'));
@@ -426,7 +410,6 @@ $('#btnActivate').addEventListener('click', async ()=>{
       }
     });
     if (!appended) {
-      // fallback terminal
       const text = line.textContent.replace(/\s+/g, ' ').trim();
       if (cls === 'danger') console.error(text);
       else if (cls === 'warn') console.warn(text);
@@ -435,7 +418,6 @@ $('#btnActivate').addEventListener('click', async ()=>{
     }
   }
 
-  // C++-ish pretty line
   const CPP_KW = ['#include', 'using', 'namespace', 'auto', 'constexpr', 'struct', 'class', 'return', 'for', 'if', 'else', 'template'];
   const CPP_FN = ['optimize', 'applyProfile', 'boost', 'stabilize', 'calibrate', 'activate', 'patch', 'commit', 'flush', 'measure', 'warmup', 'finalize'];
   function cppLine(name, p) {
@@ -462,7 +444,7 @@ $('#btnActivate').addEventListener('click', async ()=>{
     emaAlpha: 1.0, gain: 1.0,
     prevX: null, prevY: null
   };
-  const AIM = { enabled: false, radius: 90, strength: 0.25 }; // px, 0..1
+  const AIM = { enabled: false, radius: 90, strength: 0.25 };
   const DRAG = { enabled: false, active: false, el: null, ox: 0, oy: 0, vx: 0, vy: 0, friction: 0.18 };
 
   function vpPointerMove(e) {
@@ -488,12 +470,10 @@ $('#btnActivate').addEventListener('click', async ()=>{
     DRAG.active = false; DRAG.el = null; DRAG.vx = DRAG.vy = 0;
   }
   function vpLoop() {
-    // EMA anti-shake
     const a = clamp(VP.emaAlpha, 0.05, 1.0);
     VP.x = a * VP.tx + (1 - a) * VP.x;
     VP.y = a * VP.ty + (1 - a) * VP.y;
 
-    // Aim lock
     if (AIM.enabled) {
       let best = null, bestD2 = Infinity;
       $$('[data-aim-target]').forEach(el => {
@@ -508,7 +488,6 @@ $('#btnActivate').addEventListener('click', async ()=>{
       }
     }
 
-    // Drag lock
     if (DRAG.enabled && DRAG.active && DRAG.el) {
       const el = DRAG.el;
       const tx = VP.x - DRAG.ox, ty = VP.y - DRAG.oy;
@@ -551,7 +530,6 @@ $('#btnActivate').addEventListener('click', async ()=>{
       document.documentElement.style.setProperty('--ui-scale', on ? String(scale) : '1');
     },
     reduce_aim_stickness(on, { mode = 'balance' } = {}) {
-      // Hook drift/jitter nếu app có
       const aggr = mode === 'aggr' || mode === 'aggressive';
       try {
         if (global.driftAmp) { driftAmp.cpu = on ? (aggr ? 0.6 : 1.0) : 2.0; driftAmp.ram = on ? (aggr ? 0.4 : 0.8) : 1.0; }
@@ -594,9 +572,8 @@ $('#btnActivate').addEventListener('click', async ()=>{
         drag_lock: 'DARGLOCK'
       })[key] || key.toUpperCase();
 
-      // Toggle effect
       API.set(key, on);
-      if (!tile) { // không có UI tile — log & thoát
+      if (!tile) {
         appendHtmlToConsoles(on ? `Bật ${vi}` : `Tắt ${vi}`, on ? 'ok' : 'warn');
         return;
       }
@@ -605,7 +582,6 @@ $('#btnActivate').addEventListener('click', async ()=>{
       tile.classList.toggle('active', !!on);
       if (!on) { if (bar) bar.style.width = '0%'; appendHtmlToConsoles(`ĐÃ TẮT ${vi}.`, 'warn'); return; }
 
-      // 10s progress
       const start = performance.now(), D = 10000;
       if (bar) bar.style.width = '0%';
       appendHtmlToConsoles(`Bắt đầu chạy ${vi}…`, 'info');
@@ -640,18 +616,15 @@ $('#btnActivate').addEventListener('click', async ()=>{
     }
   };
 
-  // Expose
   global.SkillEngine = API;
 
   /* ================= Auto-boot ================= */
   function boot() {
-    // inject minimal CSS for tile-progress (nếu thiếu)
     upsertStyle('fatx007-skill-autocss', `
       .skill-tile{position:relative}
       .skill-tile .tile-progress{position:absolute;left:0;top:0;height:3px;background:linear-gradient(90deg,#6ee7b7,#6ea8ff);width:0%;border-top-left-radius:12px;border-top-right-radius:12px}
       .skill-tile.active{background:linear-gradient(180deg,rgba(34,197,94,.14),rgba(34,197,94,.04)),#0a0e14; border-color:#16a34a66}
     `);
-    // Auto-bind nếu có grid & tiles
     if ($('.skill-tile[data-key]')) API.bindTiles();
   }
   if (document.readyState === 'loading') {
@@ -664,8 +637,7 @@ $('#btnActivate').addEventListener('click', async ()=>{
 
 /* Tắt vĩnh viễn auto-clear */
 try{
-  localStorage.setItem('fatx007:autoClearOnRoute','0');   // hoặc removeItem cũng được
-  // Xóa item đã chèn sẵn (nếu có)
+  localStorage.setItem('fatx007:autoClearOnRoute','0');
   document.addEventListener('DOMContentLoaded',()=>{
     document.querySelectorAll('.menu-item[data-auto-clear]').forEach(el=>el.remove());
   });
@@ -689,7 +661,6 @@ try{
         card.style.top  = p.y + 'px';
       }
     }catch{}
-    // đảm bảo còn nằm trong viewport
     snapIntoView();
   }
 
@@ -706,7 +677,6 @@ try{
     card.style.top  = y + 'px';
   }
 
-  // Kéo thả bằng Pointer Events
   let dragging = false, dx = 0, dy = 0;
   card.addEventListener('pointerdown', (e)=>{
     dragging = true;
@@ -732,18 +702,13 @@ try{
     savePos(card.offsetLeft, card.offsetTop);
   });
 
-  // Khi mở menu: không reset, chỉ khôi phục vị trí đã lưu
   const origToggle = document.getElementById('homeFab');
-  // Khi bấm HOME để mở/đóng menu, luôn đảm bảo vị trí còn hợp lệ
   sheet.addEventListener('transitionend', snapIntoView);
-  // Khi window thay đổi kích thước, giữ menu trong khung nhìn
   window.addEventListener('resize', snapIntoView);
 
-  // Khôi phục ngay khi trang sẵn sàng + mỗi lần mở menu
   (document.readyState === 'loading'
     ? document.addEventListener('DOMContentLoaded', restorePos)
     : restorePos());
-  // Khi sheet mở, đảm bảo menu hiện đúng vị trí đã lưu
   const mo = new MutationObserver(()=>{ if(sheet.classList.contains('open')) restorePos(); });
   mo.observe(sheet, { attributes:true, attributeFilter:['class'] });
 })();
@@ -777,7 +742,6 @@ try{
     }catch{}
   }
 
-  // CSS (scope trong #vgGate)
   const css = `
   #vgGate{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;background:rgba(8,10,15,.72);backdrop-filter:blur(6px)}
   #vgGate .vg-panel{width:min(620px,92vw);border:1px solid #2a2d3f;border-radius:16px;overflow:hidden;color:#e8e7ff;
@@ -811,7 +775,6 @@ try{
   }`;
   const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
-  // DOM
   function $(sel, root=document){ return root.querySelector(sel); }
   function build(){
     let wrap = $('#vgGate');
@@ -874,12 +837,10 @@ try{
       </div>`;
     document.body.appendChild(wrap);
 
-    // Prefill
     const lastKey = localStorage.getItem(LS.KEY)||'';
     if(lastKey) $('#vgKey').value = lastKey;
     $('#vgDev').value = deviceId;
 
-    // Handlers
     $('#vgPasteKey').onclick = pasteIntoKey;
     $('#vgDelKey').onclick   = deleteKeyLocal;
     $('#vgCopyDev').onclick  = ()=> copyToClipboard($('#vgDev').value.trim(), 'Đã sao chép Mã Thiết Bị.');
@@ -969,7 +930,6 @@ try{
   function show(){ build(); document.getElementById('vgGate').style.display='grid'; }
   function hide(){ const g=document.getElementById('vgGate'); g && (g.style.display='none'); }
 
-  // Guard on load
   async function guardOnLoad(){
     if(ALWAYS_PROMPT){ show(); return; }
     const savedKey = localStorage.getItem(LS.KEY);
@@ -1016,14 +976,13 @@ try{
       const pct =document.getElementById('fatx0074Pct');
       this._t0 = performance.now();
 
-      const ease = t => 1 - Math.pow(1 - t, 3); // easeOutCubic
-      const hueStart = 210, hueEnd = 330;       // dải màu → bạn đổi tuỳ thích
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      const hueStart = 210, hueEnd = 330;
 
       const step = ()=>{
         const t = (performance.now()-this._t0)/this._dur;
         const p = Math.min(100, ease(t)*100);
 
-        // Cập nhật màu đồng bộ theo % (hue trượt từ hueStart→hueEnd)
         const H = Math.round(hueStart + (hueEnd - hueStart)*(p/100));
         if(root) root.style.setProperty('--h', H);
 
@@ -1042,10 +1001,8 @@ try{
     }
   };
 
-  // Expose để dùng lại khi cần
   window.Fatx007Loader = Loader;
 
-  // Auto chạy 10 giây khi vào trang
   if(document.readyState==='loading'){
     document.addEventListener('DOMContentLoaded', ()=>Loader.start(10000));
   }else{
