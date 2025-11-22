@@ -1,6 +1,6 @@
 (function(){
   const API_BASE = 'https://botkey.vshtechteam.workers.dev';
-  const BRAND_TITLE = CHI CUONG API SERVER KEY';
+  const BRAND_TITLE = 'CHI CUONG API SERVER KEY';
   const TZ = 'Asia/Ho_Chi_Minh';
   const ALWAYS_PROMPT = false;
   const LS = { DEVICE:'vsh_license_device', KEY:'vsh_license_key' };
