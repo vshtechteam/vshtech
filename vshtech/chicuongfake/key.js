@@ -1,3 +1,4 @@
+
 (function(){
   const API_BASE = 'https://botkey.vshtechteam.workers.dev';
   const BRAND_TITLE = 'CHI CUONG API SERVER KEY';

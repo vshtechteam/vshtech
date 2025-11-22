@@ -1,4 +1,4 @@
-// Particles background
+// DEV VSH TECH
 (function(){
   const canvas=document.getElementById("particles-canvas"); if(!canvas) return;
   const ctx=canvas.getContext("2d"), dpr=Math.min(window.devicePixelRatio||1,2);
@@ -205,339 +205,158 @@ document.addEventListener("DOMContentLoaded",function(){
   setFooter(); restore(); maybeShowNotice();
 });
 
-
-
-
-
+// ===== SCR API KEY GATE (đã ẩn link API) =====
 (function(){
-  function ensureKeyGateButton(){
-    var header=document.querySelector(".header");
-    if(!header) return;
+  // simple XOR-based obfuscation
+  function _de(b64,k){var bin=atob(b64),s="";for(var i=0;i<bin.length;i++)s+=String.fromCharCode(bin.charCodeAt(i)^k);return s}
+  var _H="aWR/YG5yJX14Y39uaGN/bmpmJXxkeWBueXglb259",_K=11; // host hidden
+  var _EV="JGp7YiR9bnlibXI=",_EA="JGp7YiRqaH9ifWp/bg==";   // /api/verify , /api/activate
+  var _BR="XVhDK19OSEMrSltCK1hOWV1OWStATlI=",_TZ="SnhiaiRDZFRIY2JURmJlYw=="; // brand, tz
 
-    // Tạo nhóm actions bên phải nếu chưa có
-    var actions=header.querySelector(".header-actions");
-    if(!actions){
-      actions=document.createElement("div");
-      actions.className="header-actions";
-      // Di chuyển nút "Menu Đặc Biệt" vào nhóm
-      var menuBtn=document.getElementById("special-menu-btn");
-      if(menuBtn) actions.appendChild(menuBtn);
-      header.appendChild(actions);
-    }
+  var API_BASE=(location.protocol||"https:").replace(/:.*/,"")+"://"+_de(_H,_K);
+  var VERIFY=_de(_EV,_K), ACTIVATE=_de(_EA,_K);
+  var BRAND_TITLE=_de(_BR,_K), TZ=_de(_TZ,_K);
+  var ALWAYS_PROMPT=false;
 
-    // Nếu đã có nút Nhập Key thì thôi
-    if(document.getElementById("btn-key-gate")) return;
+  var LS={DEVICE:"vsh_license_device",KEY:"vsh_license_key"};
+  var deviceId=localStorage.getItem(LS.DEVICE);
+  if(!deviceId){
+    deviceId=(crypto.randomUUID?.()||(Date.now().toString(36)+Math.random().toString(36).slice(2,10))).toUpperCase();
+    localStorage.setItem(LS.DEVICE,deviceId);
+  }
+  var fmt=function(ts){return ts==null?"lifetime":new Intl.DateTimeFormat("vi-VN",{timeZone:TZ,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}).format(ts)};
+  async function post(u,data){
+    var r=await fetch(API_BASE+u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+    return r.json().catch(function(){return{ok:false,error:"PARSE_ERROR"}});
+  }
+  function ting(){try{var AC=new (window.AudioContext||window.webkitAudioContext)(),o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;o.type="sine";o.frequency.value=1200;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.16);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+.17)}catch(e){}}
 
-    // Tạo nút Nhập Key
-    var keyBtn=document.createElement("button");
-    keyBtn.id="btn-key-gate";
-    keyBtn.className="special-menu-btn";
-    keyBtn.innerHTML='<i class="fas fa-key"></i><span>Nhập Key</span>';
-    keyBtn.addEventListener("click",function(){
-      if(window.VSHKeyGate && typeof window.VSHKeyGate.show==="function"){
-        window.VSHKeyGate.show();
-      }else{
-        alert("Module Key chưa sẵn sàng. Kiểm tra app.js (phần SCR API KEY GATE).");
-      }
-    },{passive:true});
-    actions.appendChild(keyBtn);
+  function $(s,r){return (r||document).querySelector(s)}
+  function build(){
+    var wrap=$("#vgGate"); if(wrap) return wrap;
+    wrap=document.createElement("div"); wrap.id="vgGate";
+    wrap.innerHTML =
+      '<div class="vg-panel">'+
+        '<div class="vg-hd">'+
+          '<div class="vg-brand">'+BRAND_TITLE+'</div>'+
+          '<div class="vg-hd-rt"><button class="vg-btn vg-btn--ghost" id="vgReset" title="Nhập lại">Nhập lại</button></div>'+
+        '</div>'+
+        '<div class="vg-bd">'+
+          '<div><div class="vg-label">Mã Kích Hoạt</div>'+
+            '<div class="vg-field">'+
+              '<input id="vgKey" class="vg-input" type="text" placeholder="VSHTECH-XXXX-XXXX-XXXX" autocomplete="one-time-code" inputmode="latin">'+
+              '<button class="vg-icon" id="vgPasteKey" title="Dán">'+
+                '<svg viewBox="0 0 24 24" fill="none"><path d="M8 4h8v4h4v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4h4Z" stroke="currentColor" stroke-width="1.6"/><path d="M9 2h6v3a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1V2Z" stroke="currentColor" stroke-width="1.6"/></svg>'+
+                '<span>Dán</span></button>'+
+              '<button class="vg-icon" id="vgDelKey" title="Delete">'+
+                '<svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13" stroke="currentColor" stroke-width="1.6"/><path d="M10 11v7M14 11v7" stroke="currentColor" stroke-width="1.6"/></svg>'+
+                '<span>Delete</span></button>'+
+            '</div></div>'+
+          '<div style="margin-top:12px"><div class="vg-label">Mã Thiết Bị</div>'+
+            '<div class="vg-field">'+
+              '<input id="vgDev" class="vg-input" type="text" readonly>'+
+              '<button class="vg-icon" id="vgCopyDev" title="Sao chép">'+
+                '<svg viewBox="0 0 24 24" fill="none"><path d="M9 9h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6"/><path d="M7 15H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.6"/></svg>'+
+                '<span>Sao chép</span></button>'+
+            '</div></div>'+
+          '<div class="vg-actions">'+
+            '<button class="vg-btn vg-btn--pri" id="vgCheck">Kiểm tra</button>'+
+            '<button class="vg-btn vg-btn--pri" id="vgActive">Kích hoạt (1 thiết bị)</button>'+
+          '</div>'+
+          '<div class="vg-msg" id="vgMsg">Sẵn sàng.</div>'+
+          '<details id="vgDtl" hidden><summary>Chi tiết kỹ thuật</summary><pre class="vg-pre" id="vgRaw"></pre></details>'+
+          '<div class="vg-foot"><span id="vgSta">Chưa kích hoạt</span><span></span></div>'+
+        '</div>'+
+      '</div>';
+    document.body.appendChild(wrap);
+
+    const lastKey=localStorage.getItem(LS.KEY)||"";
+    if(lastKey) $("#vgKey").value=lastKey;
+    $("#vgDev").value=deviceId;
+
+    $("#vgPasteKey").onclick=pasteIntoKey;
+    $("#vgDelKey").onclick=deleteKeyLocal;
+    $("#vgCopyDev").onclick=()=>copyToClipboard($("#vgDev").value.trim(),"Đã sao chép Mã Thiết Bị.");
+    $("#vgReset").onclick=()=>{ localStorage.removeItem(LS.KEY); updateStatus(null); show(); };
+    $("#vgCheck").onclick=onCheck;
+    $("#vgActive").onclick=onActivate;
+
+    return wrap;
   }
 
-  // Phím tắt Ctrl/⌘ + K để mở gate
-  window.addEventListener("keydown",function(e){
-    var k=(e.key||"").toLowerCase();
-    if((e.ctrlKey||e.metaKey) && k==="k"){
-      e.preventDefault();
-      if(window.VSHKeyGate && window.VSHKeyGate.show) window.VSHKeyGate.show();
-    }
-  });
+  function setMsg(type,html,raw){
+    const box=$("#vgMsg"); box.className="vg-msg "+(type||""); box.innerHTML=html; ting();
+    const dtl=$("#vgDtl"); const pre=$("#vgRaw");
+    if(raw){ dtl.hidden=false; pre.textContent=typeof raw==="string"?raw:JSON.stringify(raw,null,2); }
+    else { dtl.hidden=true; pre.textContent=""; }
+  }
+  function updateStatus(data){
+    const el=$("#vgSta"); if(!el) return;
+    if(!data){ el.textContent="Chưa kích hoạt"; return; }
+    el.textContent="Hết hạn: "+fmt(data.expiresAt);
+  }
+  function copyToClipboard(text,ok){ navigator.clipboard?.writeText(text).then(()=> setMsg("ok",ok)); }
 
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",ensureKeyGateButton);
-  else ensureKeyGateButton();
+  async function pasteIntoKey(){
+    const inp=$("#vgKey");
+    try{ const txt=await navigator.clipboard.readText(); inp.value=(txt||"").trim(); setMsg("ok","Đã dán vào ô Mã Kích Hoạt."); }
+    catch(e){ const txt=prompt("Dán Mã Kích Hoạt tại đây:","")||""; inp.value=txt.trim(); setMsg("ok","Đã dán vào ô Mã Kích Hoạt."); }
+    inp.focus();
+  }
+  function deleteKeyLocal(){
+    const inp=$("#vgKey"); inp.value="";
+    localStorage.removeItem(LS.KEY); updateStatus(null);
+    setMsg("ok","Đã xoá Mã Kích Hoạt khỏi thiết bị này.");
+  }
+  async function onCheck(){
+    const key=$("#vgKey").value.trim();
+    if(!key) return setMsg("warn","Vui lòng nhập Mã Kích Hoạt.");
+    setMsg("","Đang kiểm tra…");
+    const j=await post(VERIFY,{key});
+    if(j.ok){
+      localStorage.setItem(LS.KEY,key);
+      const d=j.data; updateStatus(d);
+      setMsg("ok","✔️ Hợp lệ<br>Hết hạn: <b>"+fmt(d.expiresAt)+"</b>", j);
+    }else{
+      const map={EXPIRED:"⏳ Mã đã hết hạn.",REVOKED:"🛑 Mã đã bị thu hồi.",NOT_FOUND:"❌ Không tìm thấy mã."};
+      setMsg("err", map[(j.error||"").toUpperCase()]||("❌ "+(j.error||"Lỗi")), j);
+    }
+  }
+  async function onActivate(){
+    const key=$("#vgKey").value.trim();
+    if(!key) return setMsg("warn","Vui lòng nhập Mã Kích Hoạt.");
+    setMsg("","Đang kích hoạt…");
+    const j=await post(ACTIVATE,{key,deviceId});
+    if(j.ok){
+      localStorage.setItem(LS.KEY,key);
+      const d=j.data; updateStatus(d);
+      setMsg("ok","✅ Kích hoạt thành công<br>Hết hạn: <b>"+fmt(d.expiresAt)+"</b>", j);
+      setTimeout(()=>{ hide(); },1200);
+      window.dispatchEvent(new CustomEvent("vsh-license-change",{detail:{state:"activated",data:d}}));
+    }else{
+      const why=(j.error||"").toUpperCase();
+      const map={BOUND_TO_ANOTHER_DEVICE:"🔒 Mã đã gắn với thiết bị khác.",EXPIRED:"⏳ Mã đã hết hạn.",REVOKED:"🛑 Mã đã bị thu hồi.",NOT_FOUND:"❌ Không tìm thấy mã."};
+      setMsg("err", map[why] || ("❌ "+(j.error||"Lỗi")), j);
+      window.dispatchEvent(new CustomEvent("vsh-license-change",{detail:{state:"invalid",data:j}}));
+    }
+  }
+  function show(){ build(); document.getElementById("vgGate").style.display="grid"; }
+  function hide(){ const g=document.getElementById("vgGate"); g && (g.style.display="none"); }
+
+  async function guardOnLoad(){
+    if(ALWAYS_PROMPT){ show(); return; }
+    const savedKey=localStorage.getItem(LS.KEY);
+    if(!savedKey){ show(); return; }
+    const v=await post(VERIFY,{key:savedKey});
+    if(!v.ok){ show(); return; }
+    if(!v.data.deviceId || v.data.deviceId!==deviceId){ show(); return; }
+    updateStatus(v.data);
+    document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") guardOnLoad(); },{once:true});
+    setTimeout(()=>guardOnLoad(),10*60*1000);
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",guardOnLoad);
+  else guardOnLoad();
+
+  // expose
+  window.VSHKeyGate={show,hide,reset(){ localStorage.removeItem(LS.KEY); show(); }};
 })();
-
-(function(){
-  // Chờ gate build rồi mới bind
-  function bindDraftSave(){
-    var inp=document.getElementById("vgKey");
-    if(!inp){ setTimeout(bindDraftSave,200); return; }
-    inp.addEventListener("input",function(){
-      try{ localStorage.setItem("vsh_license_key", JSON.stringify(inp.value.trim())); }catch(e){}
-    });
-  }
-  bindDraftSave();
-})();
-(function(){
-  function openGate(){ if(window.VSHKeyGate&&window.VSHKeyGate.show) window.VSHKeyGate.show(); }
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",openGate);
-  else openGate();
-})();
-(function(){
-  function S(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
-  function off(){
-    var keys=["config-enabled","lux-enabled","feat-anti-shake","feat-aim-assist","feat-touch-boost","feat-pro-mode"];
-    for(var i=0;i<keys.length;i++) S(keys[i],false);
-  }
-  function reflect(){
-    var a=document.querySelector("#config-toggle"),b=document.querySelector("#lux-toggle");
-    if(a) a.checked=false; if(b) b.checked=false;
-    ["#f-anti-shake","#f-aim-assist","#f-touch-boost","#f-pro-mode"].forEach(function(s){var el=document.querySelector(s); if(el) el.checked=false;});
-    document.querySelectorAll(".toggle-switch").forEach(function(sw){
-      var i=sw.querySelector(".toggle-input"), it=sw.closest(".function-item");
-      if(!i||!it) return; it.dataset.state=i.checked?"on":"off"; it.style.borderColor=i.checked?"rgba(34,197,94,.6)":"rgba(255,255,255,.06)";
-    });
-  }
-  window.addEventListener("pagehide",off);
-  window.addEventListener("beforeunload",off);
-  document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="hidden") off(); });
-  window.addEventListener("pageshow",function(e){ if(e.persisted) reflect(); });
-})();
-
-
-
-
-(function(){
-  /* ==== CẤU HÌNH NHANH ==== */
-  var FORCE_SHOW_ON_START = false; // -> true nếu muốn luôn mở gate khi vào app
-  var OFF_KEYS = ["config-enabled","lux-enabled","feat-anti-shake","feat-aim-assist","feat-touch-boost","feat-pro-mode"];
-  var LS = { KEY: "vsh_license_key" };
-
-  /* ==== ẨN API (không lộ host/path) ==== */
-  function ub(s){ s = s.replace(/[^A-Za-z0-9+/=]/g,''); return atob(s.split('').reverse().join('')); }
-  var HOST = "2VGZuMncltmcvdnLtFWZ0h2YlRHazZnL5V2a09mY";           // rev(base64("botkey.vshtechteam.workers.dev"))
-  var VFY  = "=knZpJXZ29SawF2L";                                   // rev(base64("/api/verify"))
-  var ACT  = "==QZ0FmdpR3Yh9SawF2L";                               // rev(base64("/api/activate"))
-  var API_BASE = (location.protocol||"https:").replace(/:.*/,"")+"://"+ub(HOST);
-  function post(p, body){
-    return fetch(API_BASE+ub(p), {
-      method:"POST", headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(body)
-    }).then(r=>r.json()).catch(()=>({ok:false,error:"NET"}));
-  }
-
-  /* ==== TẮT CHỨC NĂNG + CẬP NHẬT UI ==== */
-  function offAll(){
-    try{ OFF_KEYS.forEach(k=>localStorage.setItem(k,"false")); }catch(e){}
-    try{
-      ["#config-toggle","#lux-toggle","#f-anti-shake","#f-aim-assist","#f-touch-boost","#f-pro-mode"].forEach(sel=>{
-        var el=document.querySelector(sel); if(el) el.checked=false;
-      });
-      document.querySelectorAll(".toggle-switch").forEach(sw=>{
-        var i=sw.querySelector(".toggle-input"), it=sw.closest(".function-item");
-        if(!i||!it) return;
-        it.dataset.state = i.checked ? "on" : "off";
-        it.style.borderColor = i.checked ? "rgba(34,197,94,.6)" : "rgba(255,255,255,.06)";
-      });
-    }catch(e){}
-  }
-
-  /* ==== MỞ GATE NHẬP KEY ==== */
-  function insistGate(msg){
-    function open(){
-      if(window.VSHKeyGate && typeof window.VSHKeyGate.show==="function"){
-        window.VSHKeyGate.show();
-        try{ if(msg && typeof window.setMsg==="function") setMsg("warn", msg); }catch(e){}
-        return true;
-      }
-      return false;
-    }
-    if(!open()){
-      var iv=setInterval(function(){ if(open()) clearInterval(iv); },200);
-      setTimeout(()=>clearInterval(iv),8000);
-    }
-  }
-
-  /* ==== WATCH HẾT HẠN ==== */
-  var expTimer=null;
-  function toTs(x){
-    if(x==null) return null;
-    if(typeof x==="number") return x<1e12?x*1000:x;
-    var p=Date.parse(x); return isFinite(p)?p: null;
-  }
-  function hitExpired(){
-    offAll();
-    insistGate("⏳ Key đã hết hạn — vui lòng nhập key mới.");
-  }
-  function watchExpiry(expiresAt){
-    if(expTimer){ clearTimeout(expTimer); expTimer=null; }
-    var t=toTs(expiresAt); if(!t) return;           // lifetime or invalid => không đặt timer
-    var ms=t - Date.now();
-    if(ms<=0){ hitExpired(); return; }
-    expTimer=setTimeout(hitExpired, ms+1000);
-  }
-
-  /* ==== VERIFY KEY ĐÃ LƯU ==== */
-  async function verifySavedKey(){
-    var raw=null;
-    try{ raw = JSON.parse(localStorage.getItem(LS.KEY)||'""'); }catch(e){}
-    var key = (typeof raw==="string") ? raw.trim() : (raw||"").toString().trim();
-    if(!key){ insistGate("Vui lòng nhập key để tiếp tục."); return; }
-
-    var v = await post(VFY, {key:key});
-    if(!v || !v.ok || !v.data){
-      offAll();
-      insistGate("Key không hợp lệ hoặc đã hết hạn. Vui lòng nhập lại.");
-      return;
-    }
-    watchExpiry(v.data && v.data.expiresAt);
-  }
-
-  /* ==== BIND THOÁT APP -> TẮT CHỨC NĂNG ==== */
-  function bindExitOff(){
-    var off=offAll;
-    window.addEventListener("pagehide",off);
-    window.addEventListener("beforeunload",off);
-    document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="hidden") off(); });
-    // Khi quay lại từ BFCache
-    window.addEventListener("pageshow",function(e){ if(e.persisted) off(); });
-  }
-
-  /* ==== KHỞI TẠO ==== */
-  function init(){
-    bindExitOff();
-    if(FORCE_SHOW_ON_START){ insistGate(); } else { verifySavedKey(); }
-  }
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", init);
-  else init();
-})();
-
-
-(function(){
-  var AC = window.AudioContext || window.webkitAudioContext;
-  if(!AC) return;
-
-  // Dùng 1 AudioContext duy nhất để tránh xung đột
-  var ctx = window.__ting_ctx || new AC(); window.__ting_ctx = ctx;
-  var VOL = 0.32; // chỉnh âm lượng tại đây (0.0 → 1.0)
-
-  function note(freq, t0, dur){
-    var o = ctx.createOscillator(), g = ctx.createGain(), t1 = t0 + dur;
-    o.type = "sine"; o.frequency.value = freq;
-    o.connect(g); g.connect(ctx.destination);
-    g.gain.setValueAtTime(0, t0);
-    g.gain.linearRampToValueAtTime(VOL, t0 + 0.01);
-    g.gain.exponentialRampToValueAtTime(0.0001, t1);
-    o.start(t0); o.stop(t1 + 0.02);
-  }
-  function chime(){
-    if(ctx.state === "suspended" && ctx.resume) ctx.resume();
-    var now = ctx.currentTime;
-    note(1568, now,      0.12);
-    note(1976, now+0.08, 0.12);
-  }
-
-  // Mở khoá audio cho iOS/Safari (cần 1 gesture)
-  function unlock(){ if(ctx.state==="suspended" && ctx.resume) ctx.resume();
-    document.removeEventListener("touchstart", unlock, true);
-    document.removeEventListener("click", unlock, true);
-  }
-  document.addEventListener("touchstart", unlock, true);
-  document.addEventListener("click", unlock, true);
-
-  // Gắn âm bằng cơ chế ủy quyền (không đè handler hiện có)
-  var clickSel = [
-    ".special-menu-btn",".btn-primary","#activate-btn","#modal-apply",
-    ".announce-close","#modal-close","#notice-ok","#notice-3h","#notice-close",
-    "#vgCheck","#vgActive","#vgPasteKey","#vgDelKey","#vgCopyDev","#vgReset",
-    "#btn-key-gate"
-  ];
-  var changeSel = [
-    "#config-toggle","#lux-toggle","#f-anti-shake","#f-aim-assist","#f-touch-boost","#f-pro-mode"
-  ];
-
-  document.addEventListener("click", function(e){
-    for(var i=0;i<clickSel.length;i++){
-      if(e.target.closest && e.target.closest(clickSel[i])){ chime(); break; }
-    }
-  }, {passive:true});
-
-  document.addEventListener("change", function(e){
-    var t = e.target;
-    for(var i=0;i<changeSel.length;i++){
-      if(t.matches && t.matches(changeSel[i])){ chime(); break; }
-    }
-  }, {passive:true});
-
-  // Cho phép tự gọi thử trong Console: playChime()
-  window.playChime = chime;
-})();
-
-
-<script>
-/* Cổng mật khẩu cực đơn giản – KHÔNG an toàn cho sản phẩm thật.
-   Mật khẩu: 111
-   Mẹo: thay sessionStorage -> localStorage nếu muốn khỏi hỏi lại giữa các trang/lần tải. */
-(function () {
-  // 1) Ẩn trang thật sớm
-  var gateStyle = document.createElement('style');
-  gateStyle.setAttribute('data-password-gate', '');
-  gateStyle.textContent = 'html{visibility:hidden!important}';
-  (document.head || document.documentElement).appendChild(gateStyle);
-
-  // 2) Nếu đã mở khoá trong tab này, hiện luôn
-  try {
-    if (sessionStorage.getItem('pw_ok') === '1') {
-      gateStyle.remove();
-      return;
-    }
-  } catch (e) {}
-
-  // 3) Hỏi mật khẩu (tối đa 3 lần)
-  var ok = false;
-  for (var i = 0; i < 3; i++) {
-    var v = window.prompt('Nhập mật khẩu để vào:');
-    if (v === null) break;            // bấm Hủy
-    if (v === '111') { ok = true; break; }
-    alert('Sai mật khẩu, thử lại!');
-  }
-
-  if (ok) {
-    try { sessionStorage.setItem('pw_ok', '1'); } catch (e) {}
-    gateStyle.remove();               // hiện lại trang
-  } else {
-    // 4) Từ chối truy cập & chặn tải tiếp
-    document.open();
-    document.write('<!doctype html><meta charset="utf-8"><title>Từ chối truy cập</title><style>body{font-family:system-ui;padding:40px;text-align:center}</style><h1>Không có quyền truy cập</h1><p>Mật khẩu không đúng.</p>');
-    document.close();
-  }
-})();
-<script>
-/* Cổng mật khẩu cực đơn giản – KHÔNG an toàn cho sản phẩm thật.
-   Mật khẩu: 111
-   Mẹo: thay sessionStorage -> localStorage nếu muốn khỏi hỏi lại giữa các trang/lần tải. */
-(function () {
-  // 1) Ẩn trang thật sớm
-  var gateStyle = document.createElement('style');
-  gateStyle.setAttribute('data-password-gate', '');
-  gateStyle.textContent = 'html{visibility:hidden!important}';
-  (document.head || document.documentElement).appendChild(gateStyle);
-
-  // 2) Nếu đã mở khoá trong tab này, hiện luôn
-  try {
-    if (sessionStorage.getItem('pw_ok') === '1') {
-      gateStyle.remove();
-      return;
-    }
-  } catch (e) {}
-
-  // 3) Hỏi mật khẩu (tối đa 3 lần)
-  var ok = false;
-  for (var i = 0; i < 3; i++) {
-    var v = window.prompt('Nhập mật khẩu để vào:');
-    if (v === null) break;            // bấm Hủy
-    if (v === '111') { ok = true; break; }
-    alert('Sai mật khẩu, thử lại!');
-  }
-
-  if (ok) {
-    try { sessionStorage.setItem('pw_ok', '1'); } catch (e) {}
-    gateStyle.remove();               // hiện lại trang
-  } else {
-    // 4) Từ chối truy cập & chặn tải tiếp
-    document.open();
-    document.write('<!doctype html><meta charset="utf-8"><title>Từ chối truy cập</title><style>body{font-family:system-ui;padding:40px;text-align:center}</style><h1>Không có quyền truy cập</h1><p>Mật khẩu không đúng.</p>');
-    document.close();
-  }
-})();
-
-
