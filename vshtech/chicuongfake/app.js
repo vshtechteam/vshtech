@@ -360,3 +360,35 @@ document.addEventListener("DOMContentLoaded",function(){
   // expose
   window.VSHKeyGate={show,hide,reset(){ localStorage.removeItem(LS.KEY); show(); }};
 })();
+
+
+
+(function(){
+  var OFF_KEYS=["config-enabled","lux-enabled","feat-anti-shake","feat-aim-assist","feat-touch-boost","feat-pro-mode"];
+  var DEF={mode:"muot-ma",dpi:"1.0"};
+  function S(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+  function off(){
+    OFF_KEYS.forEach(function(k){S(k,false)});
+    S("mode",DEF.mode); S("dpi",DEF.dpi);
+  }
+  function reflect(){
+    var a=document.querySelector("#config-toggle"),b=document.querySelector("#lux-toggle");
+    if(a) a.checked=false; if(b) b.checked=false;
+    ["#f-anti-shake","#f-aim-assist","#f-touch-boost","#f-pro-mode"].forEach(function(s){
+      var el=document.querySelector(s); if(el) el.checked=false;
+    });
+    var m=document.querySelector("#mode-select"),d=document.querySelector("#dpi-select");
+    if(m) m.value=DEF.mode; if(d) d.value=DEF.dpi;
+    document.querySelectorAll(".toggle-switch").forEach(function(sw){
+      var i=sw.querySelector(".toggle-input"),it=sw.closest(".function-item");
+      if(!i||!it) return; it.dataset.state="off"; it.style.borderColor="rgba(255,255,255,.06)";
+    });
+  }
+  window.addEventListener("pagehide",off);
+  window.addEventListener("beforeunload",off);
+  document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="hidden") off(); });
+  window.addEventListener("pageshow",function(){ reflect(); });
+})();
+
+
+
