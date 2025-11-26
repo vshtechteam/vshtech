@@ -2,7 +2,7 @@
   const API_BASE = 'https://botkey.vshtechteam.workers.dev';
   const BRAND_TITLE = 'VSH TECH API SERVER KEY';
   const TZ = 'Asia/Ho_Chi_Minh';
-  const ALWAYS_PROMPT = false; // show gate when no key
+  const ALWAYS_PROMPT = false;
   const LS = { DEVICE: 'vsh_license_device', KEY: 'vsh_license_key' };
 
   let deviceId = localStorage.getItem(LS.DEVICE);
@@ -83,6 +83,8 @@
   #vgGate .vg-msg.ok{border-color:rgba(73,245,196,.4);background:rgba(73,245,196,.14);color:#d5ffef}
   #vgGate .vg-msg.warn{border-color:rgba(255,214,102,.4);background:rgba(255,214,102,.12);color:#fff2c0}
   #vgGate .vg-msg.err{border-color:rgba(255,115,115,.45);background:rgba(255,95,95,.12);color:#ffd7d7}
+  body.vg-locked{overflow:hidden}
+  body.vg-locked>*:not(#vgGate){filter:blur(4px);pointer-events:none !important;user-select:none !important}
   #vgGate details{margin-top:16px;border:1px dashed rgba(255,255,255,.14);border-radius:14px;overflow:hidden}
   #vgGate summary{padding:12px 18px;cursor:pointer;list-style:none;background:rgba(4,7,18,.92);color:#c1ceff;font-weight:600}
   #vgGate summary::-webkit-details-marker{display:none}
@@ -112,7 +114,7 @@
       <div class="vg-panel">
         <div class="vg-hd">
           <div class="vg-brand-block">
-            <p class="vg-tag">Truy cập an toàn</p>
+            <p class="vg-tag">Secure Access</p>
             <h3 class="vg-brand">${BRAND_TITLE}</h3>
           </div>
           <button class="vg-close" id="vgReset" aria-label="Nhập lại key">&#8635;</button>
@@ -127,7 +129,7 @@
                 <span>Dán</span>
               </button>
               <button class="vg-icon" id="vgDelKey" title="Xóa mã">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a 2 2 0 0 0 2-2l1-13" stroke="currentColor" stroke-width="1.6"/><path d="M10 11v7M14 11v7" stroke="currentColor" stroke-width="1.6"/></svg>
+                <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13" stroke="currentColor" stroke-width="1.6"/><path d="M10 11v7M14 11v7" stroke="currentColor" stroke-width="1.6"/></svg>
                 <span>Xóa</span>
               </button>
             </div>
@@ -255,67 +257,57 @@
     inp.value = '';
     localStorage.removeItem(LS.KEY);
     updateStatus(null);
-    setMsg('ok', 'Đã xóa mã khỏi thiết bị này.');
-    window.dispatchEvent(new CustomEvent('vsh-license-change', { detail: { state: 'cleared' } }));
+    setMsg('ok', 'Đã xoá mã khỏi thiết bị này.');
   }
 
   async function onCheck() {
-    const key = document.querySelector('#vgKey').value.trim();
-    if (!key) return setMsg('warn', 'Vui lòng nhập Mã Kích Hoạt.');
-    setMsg('', 'Đang kiểm tra...');
-    const j = await post('/api/verify', { key, deviceId });
+    const key = document.querySelector("#vgKey").value.trim();
+    if (!key) return setMsg("warn", "Vui long nhap Ma Kich Hoat.");
+    setMsg("", "Dang kiem tra...");
+    const j = await post("/api/verify", { key, deviceId });
     if (j.ok) {
-      const d = j.data;
-      if (d?.deviceId && d.deviceId !== deviceId) {
-        setMsg('err', 'Mã đã gắn với thiết bị khác.', j);
-        window.dispatchEvent(
-          new CustomEvent('vsh-license-change', { detail: { state: 'invalid', data: j } }),
-        );
+      const d = j.data || {};
+      const boundDev = d.deviceId || d.device || null;
+      if (boundDev && boundDev !== deviceId) {
+        setMsg("err", "Ma da gan voi thiet bi khac.", j);
         return;
       }
       localStorage.setItem(LS.KEY, key);
       updateStatus(d);
-      setMsg('ok', `Mã hợp lệ. Hết hạn: ${fmt(d.expiresAt)}`, j);
-      window.dispatchEvent(
-        new CustomEvent('vsh-license-change', { detail: { state: 'verified', data: d } }),
-      );
+      setMsg("ok", `Ma hop le<br>Het han: <b>${fmt(d.expiresAt)}</b>`, j);
     } else {
       const map = {
-        BOUND_TO_ANOTHER_DEVICE: 'Mã đã gắn với thiết bị khác.',
-        EXPIRED: 'Mã đã hết hạn.',
-        REVOKED: 'Mã đã bị thu hồi.',
-        NOT_FOUND: 'Không tìm thấy mã.',
+        EXPIRED: "Mã đã hết hạn.",
+        REVOKED: "Mã đã bị thu hồi.",
+        NOT_FOUND: "Không tìm thấy mã.",
+        BOUND_TO_ANOTHER_DEVICE: "Mã đã gắn với thiết bị khác.",
       };
-      setMsg('err', map[(j.error || '').toUpperCase()] || 'Lỗi không xác định', j);
-      window.dispatchEvent(
-        new CustomEvent('vsh-license-change', { detail: { state: 'invalid', data: j } }),
-      );
+      setMsg("err", map[(j.error || "").toUpperCase()] || "Loi khong xac dinh", j);
     }
   }
-
-  async function onActivate() {
+async function onActivate() {
     const key = document.querySelector('#vgKey').value.trim();
     if (!key) return setMsg('warn', 'Vui lòng nhập Mã Kích Hoạt.');
-    setMsg('', 'Đang kích hoạt...');
+    setMsg('', 'Đang kích hoạt…');
     const j = await post('/api/activate', { key, deviceId });
     if (j.ok) {
       localStorage.setItem(LS.KEY, key);
       const d = j.data;
       updateStatus(d);
-      setMsg('ok', `Kích hoạt thành công. Hết hạn: ${fmt(d.expiresAt)}`, j);
+      setMsg('ok', `✅ Kích hoạt thành công<br>Hết hạn: <b>${fmt(d.expiresAt)}</b>`, j);
       setTimeout(() => hide(), 1200);
       window.dispatchEvent(
         new CustomEvent('vsh-license-change', { detail: { state: 'activated', data: d } }),
       );
     } else {
       const why = (j.error || '').toUpperCase();
-      const map = {
+            const map = {
         BOUND_TO_ANOTHER_DEVICE: 'Mã đã gắn với thiết bị khác.',
         EXPIRED: 'Mã đã hết hạn.',
         REVOKED: 'Mã đã bị thu hồi.',
         NOT_FOUND: 'Không tìm thấy mã.',
       };
-      setMsg('err', map[why] || 'Lỗi kích hoạt', j);
+      setMsg('err', map[why] || '❌ Lỗi kích hoạt', j);
       window.dispatchEvent(
         new CustomEvent('vsh-license-change', { detail: { state: 'invalid', data: j } }),
       );
@@ -324,28 +316,42 @@
 
   function show() {
     build();
+    document.body.classList.add('vg-locked');
     document.getElementById('vgGate').style.display = 'grid';
   }
 
   function hide() {
     const g = document.getElementById('vgGate');
     if (g) g.style.display = 'none';
+    document.body.classList.remove('vg-locked');
   }
 
   async function guardOnLoad() {
+    if (ALWAYS_PROMPT) {
+      show();
+      return;
+    }
     const savedKey = localStorage.getItem(LS.KEY);
-    if (!savedKey || ALWAYS_PROMPT) {
+    if (!savedKey) {
       show();
       return;
     }
     const v = await post('/api/verify', { key: savedKey, deviceId });
-    if (!v.ok || !v.data.deviceId || v.data.deviceId !== deviceId) {
+    if (!v.ok) {
+      show();
+      return;
+    }
+    if (!v.data.deviceId || v.data.deviceId !== deviceId) {
       show();
       return;
     }
     updateStatus(v.data);
-    window.dispatchEvent(
-      new CustomEvent('vsh-license-change', { detail: { state: 'verified', data: v.data } }),
+    document.addEventListener(
+      'visibilitychange',
+      () => {
+        if (document.visibilityState === 'visible') guardOnLoad();
+      },
+      { once: true },
     );
     setTimeout(() => guardOnLoad(), 10 * 60 * 1000);
   }
@@ -365,3 +371,5 @@
     },
   };
 })();
+
+
