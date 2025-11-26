@@ -144,6 +144,7 @@
             </div>
 
             <div class="vg-actions">
+            <button class="vg-btn vg-btn--ghost" id="vgCheck">Kiểm tra</button>
               <button class="vg-btn vg-btn--pri" id="vgActive">Kích hoạt</button>
             </div>
           </section>
@@ -361,6 +362,7 @@
     },
   };
 })();
+
 
 
 
