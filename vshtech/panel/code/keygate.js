@@ -83,6 +83,8 @@
   #vgGate .vg-msg.ok{border-color:rgba(73,245,196,.4);background:rgba(73,245,196,.14);color:#d5ffef}
   #vgGate .vg-msg.warn{border-color:rgba(255,214,102,.4);background:rgba(255,214,102,.12);color:#fff2c0}
   #vgGate .vg-msg.err{border-color:rgba(255,115,115,.45);background:rgba(255,95,95,.12);color:#ffd7d7}
+  body.vg-locked{overflow:hidden}
+  body.vg-locked>*:not(#vgGate){filter:blur(4px);pointer-events:none !important;user-select:none !important}
   #vgGate details{margin-top:16px;border:1px dashed rgba(255,255,255,.14);border-radius:14px;overflow:hidden}
   #vgGate summary{padding:12px 18px;cursor:pointer;list-style:none;background:rgba(4,7,18,.92);color:#c1ceff;font-weight:600}
   #vgGate summary::-webkit-details-marker{display:none}
@@ -144,7 +146,7 @@
             </div>
 
             <div class="vg-actions">
-            <button class="vg-btn vg-btn--ghost" id="vgCheck">Kiểm tra</button>
+              <button class="vg-btn vg-btn--ghost" id="vgCheck">Kiểm tra</button>
               <button class="vg-btn vg-btn--pri" id="vgActive">Kích hoạt</button>
             </div>
           </section>
@@ -259,26 +261,31 @@
   }
 
   async function onCheck() {
-    const key = document.querySelector('#vgKey').value.trim();
-    if (!key) return setMsg('warn', 'Vui lòng nhập Mã Kích Hoạt.');
-    setMsg('', 'Đang kiểm tra…');
-    const j = await post('/api/verify', { key });
+    const key = document.querySelector("#vgKey").value.trim();
+    if (!key) return setMsg("warn", "Vui long nhap Ma Kich Hoat.");
+    setMsg("", "Dang kiem tra...");
+    const j = await post("/api/verify", { key, deviceId });
     if (j.ok) {
+      const d = j.data || {};
+      const boundDev = d.deviceId || d.device || null;
+      if (boundDev && boundDev !== deviceId) {
+        setMsg("err", "Ma da gan voi thiet bi khac.", j);
+        return;
+      }
       localStorage.setItem(LS.KEY, key);
-      const d = j.data;
       updateStatus(d);
-      setMsg('ok', `✔️ Mã hợp lệ<br>Hết hạn: <b>${fmt(d.expiresAt)}</b>`, j);
+      setMsg("ok", `Ma hop le<br>Het han: <b>${fmt(d.expiresAt)}</b>`, j);
     } else {
       const map = {
-        EXPIRED: '⏳ Mã đã hết hạn.',
-        REVOKED: '🛑 Mã đã bị thu hồi.',
-        NOT_FOUND: '❌ Không tìm thấy mã.',
+        EXPIRED: "Ma da het han.",
+        REVOKED: "Ma da bi thu hoi.",
+        NOT_FOUND: "Khong tim thay ma.",
+        BOUND_TO_ANOTHER_DEVICE: "Ma da gan voi thiet bi khac.",
       };
-      setMsg('err', map[(j.error || '').toUpperCase()] || '❌ Lỗi không xác định', j);
+      setMsg("err", map[(j.error || "").toUpperCase()] || "Loi khong xac dinh", j);
     }
   }
-
-  async function onActivate() {
+async function onActivate() {
     const key = document.querySelector('#vgKey').value.trim();
     if (!key) return setMsg('warn', 'Vui lòng nhập Mã Kích Hoạt.');
     setMsg('', 'Đang kích hoạt…');
@@ -294,11 +301,11 @@
       );
     } else {
       const why = (j.error || '').toUpperCase();
-      const map = {
-        BOUND_TO_ANOTHER_DEVICE: '🔒 Mã đã gắn với thiết bị khác.',
-        EXPIRED: '⏳ Mã đã hết hạn.',
-        REVOKED: '🛑 Mã đã bị thu hồi.',
-        NOT_FOUND: '❌ Không tìm thấy mã.',
+            const map = {
+        BOUND_TO_ANOTHER_DEVICE: "Ma da gan voi thiet bi khac.",
+        EXPIRED: "Ma da het han.",
+        REVOKED: "Ma da bi thu hoi.",
+        NOT_FOUND: "Khong tim thay ma.",
       };
       setMsg('err', map[why] || '❌ Lỗi kích hoạt', j);
       window.dispatchEvent(
@@ -309,12 +316,14 @@
 
   function show() {
     build();
+    document.body.classList.add('vg-locked');
     document.getElementById('vgGate').style.display = 'grid';
   }
 
   function hide() {
     const g = document.getElementById('vgGate');
     if (g) g.style.display = 'none';
+    document.body.classList.remove('vg-locked');
   }
 
   async function guardOnLoad() {
@@ -327,7 +336,7 @@
       show();
       return;
     }
-    const v = await post('/api/verify', { key: savedKey });
+    const v = await post('/api/verify', { key: savedKey, deviceId });
     if (!v.ok) {
       show();
       return;
@@ -362,7 +371,5 @@
     },
   };
 })();
-
-
 
 
