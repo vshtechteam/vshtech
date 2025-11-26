@@ -1,0 +1,70 @@
+        mainMenu.classList.add('hidden-content');
+    }
+}
+
+// Feature toggles
+function toggleFeature(name, enabled, featureElement) {
+    const status = enabled ? 'b?t' : 't?t';
+    const emoji = enabled ? '?' : '?';
+    const type = enabled ? 'success' : 'error';
+    playSound('toggle');
+
+    let feature = featureElement;
+    if (!feature) {
+        const nameNode = Array.from(document.querySelectorAll('.feature-name')).find(el => el.textContent.includes(name));
+        if (nameNode) feature = nameNode.closest('.feature');
+    }
+
+    if (feature) {
+        const featureNameEl = feature.querySelector('.feature-name');
+        if (enabled) {
+            feature.style.borderColor = 'rgba(59, 201, 255, 0.6)';
+            feature.style.boxShadow = '0 12px 30px rgba(59, 201, 255, 0.15)';
+            if (featureNameEl) featureNameEl.style.color = 'var(--primary)';
+        } else {
+            feature.style.borderColor = 'rgba(148, 169, 214, 0.25)';
+            feature.style.boxShadow = 'none';
+            if (featureNameEl) featureNameEl.style.color = '';
+        }
+    }
+
+    showNotification(`${emoji} ${name} dã ${status}!`, type);
+}
+
+function initFeatureToggles() {
+    const handleToggle = (inputEl) => {
+        const featureElement = inputEl.closest('.feature');
+        let featureName = 'Tùy ch?n';
+        if (featureElement) {
+            const featureNameEl = featureElement.querySelector('.feature-name');
+            if (featureNameEl) featureName = featureNameEl.textContent;
+        }
+        featureName = featureName.replace('VIP', '').trim();
+        toggleFeature(featureName, inputEl.checked, featureElement);
+    };
+
+    document.querySelectorAll('.toggle-switch input').forEach(inputEl => {
+        inputEl.addEventListener('change', function () {
+            handleToggle(this);
+        });
+    });
+
+    // Delegation fallback for any future dynamic nodes
+    document.addEventListener('change', (e) => {
+        const target = e.target;
+        if (target && target.matches('.toggle-switch input') && !target.dataset.bound) {
+            target.dataset.bound = 'true';
+            target.addEventListener('change', function () {
+                handleToggle(this);
+            });
+            handleToggle(target);
+        }
+    });
+}
+
+// Performance circles
+const TOTAL_LENGTH = 251.2;
+let cpuInterval;
+
+function setCircleValue(idPrefix, percent, color, overrideText) {
+    const progress = document.getElementById(`${idPrefix}-progress`);
