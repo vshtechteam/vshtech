@@ -7,6 +7,10 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.pathname === "/keyserver/allow.js") {
+      const loc = `${url.origin}/keyserver/key.js${url.search}`;
+      return Response.redirect(loc, 302);
+    }
     if (url.pathname !== "/keyserver/key.js") {
       return new Response("Not Found", { status: 404 });
     }
