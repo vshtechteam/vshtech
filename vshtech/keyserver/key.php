@@ -1,24 +1,21 @@
 <?php
-// Lấy referer (nếu có)
+// Serve JS through PHP to avoid exposing the raw .js file directly.
 $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 
-// Trả về kiểu nội dung JS
 header('Content-Type: application/javascript; charset=UTF-8');
+header('X-Content-Type-Options: nosniff');
 
-// Kiểm tra referer có phải từ domain của bạn không
+// Only allow the real payload when the request comes from your domain.
 if (strpos($referer, 'https://vshtech.online/') === 0) {
-    // ===== CODE THẬT =====
-    ?>
-    // Real key.js
-    console.log("Real key loaded");
-    // Ví dụ:
-    // const API_KEY = "abcd1234";
-    <?php
-} else {
-    // ===== CODE GIẢ =====
-    ?>
-    // Fake key.js
-    console.log("Fake key loaded");
-    // Ở đây có thể để code fake hoặc rỗng
-    <?php
+    $realFile = __DIR__ . '/key.js';
+    if (is_readable($realFile)) {
+        readfile($realFile);
+        exit;
+    }
+    echo "// Real key.js is missing on the server.\n";
+    exit;
 }
+
+// Fake / fallback response for disallowed referrers.
+echo "// Fake key.js\n";
+echo "console.log('Fake key loaded');\n";
