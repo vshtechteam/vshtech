@@ -4,7 +4,7 @@ Ban dau la mot panel phong cach iOS, hien tai duoc don dep de san sang bo sung c
 
 ## Cach chay
 
-- Mo file `code/index.html` trong trinh duyet la co the xem giao dien ngay.
+- Mo file `index.html` trong thu muc `panel` la co the xem giao dien ngay.
 - Tat ca tac vu chi chay client-side, nen chi can mo trang la co the bat/tat cac muc tren menu ngay lap tuc.
 
 ## Build / Minify (tuy chon)
@@ -19,4 +19,4 @@ npx terser java/app.js --compress --mangle --output dist/app.min.js
 npx cssnano color/theme.css dist/theme.min.css
 ```
 
-Neu dung file minify, nhap duong dan moi trong `code/index.html`.
+Neu dung file minify, nhap duong dan moi trong `index.html`.
