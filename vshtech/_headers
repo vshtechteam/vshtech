@@ -1,0 +1,16 @@
+/*
+  Cache-Control: no-cache, no-store, must-revalidate, s-maxage=0
+
+/install/profiles/*.mobileconfig
+  Content-Type: application/x-apple-aspen-config
+  Content-Disposition: attachment; filename="vpn.mobileconfig"
+  Cache-Control: no-store, s-maxage=0
+
+/certificate/files/*.zip
+  Content-Type: application/zip
+  Content-Disposition: attachment; filename="cert.zip"
+  Cache-Control: no-store, s-maxage=0
+
+/certificate/plist/*.plist
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: no-store, s-maxage=0

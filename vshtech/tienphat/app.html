@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="vi">
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Fatx007 Booster</title>
+<meta name="color-scheme" content="dark" />
+
+<link rel="stylesheet" href="app.css" />
+</head>
+<body>
+
+<!-- ===== HOME (drag) + MENU ===== -->
+<button class="home-fab" id="homeFab" title="HOME / Menu">
+  <svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-4V12H9v10H5a2 2 0 0 1-2-2z"/></svg>
+</button>
+<div class="menu-sheet" id="menuSheet" aria-hidden="true">
+  <div class="menu-card">
+    <div class="menu-title">Đi đến trang</div>
+    <div class="menu-list">
+      <a href="#metrics" class="menu-item" data-go="metrics">
+        <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10Zm10 8h8V3h-8v18Z"/></svg> Chỉ số
+      </a>
+      <a href="#skills" class="menu-item" data-go="skills">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1 3-7Z"/></svg> Function
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<div class="container">
+  <header class="header">
+    <div class="brand-pill">Fatx007 Booster</div>
+    <div class="h-sub">Bảng điều khiển tối ưu hoá an toàn — mô phỏng trong trình duyệt</div>
+  </header>
+
+  <!-- ===== PAGES ===== -->
+  <main style="margin-top:14px">
+
+    <!-- PAGE: METRICS -->
+    <section class="panel page active" id="page-metrics">
+      <div class="page-head"><h2>Realtime Monitor</h2></div>
+
+      <div class="stats">
+        <div class="stat"><div class="label">CPU</div><div class="value" id="cpuVal">0%</div><div class="tag">Realtime</div></div>
+        <div class="stat"><div class="label">RAM</div><div class="value" id="ramVal">0%</div><div class="tag" id="ramTag">Heap</div></div>
+        <div class="stat"><div class="label">I/O</div><div class="value" id="ioVal">0%</div><div class="tag">Virtual</div></div>
+        <div class="stat"><div class="label">Ping</div><div class="value" id="pingVal">0</div><div class="tag">Simulated</div></div>
+      </div>
+
+      <div class="card">
+        <div class="legend"><span class="dot cpu"></span><span>CPU</span><span class="dot ram" style="margin-left:10px"></span><span>RAM</span></div>
+        <canvas id="chart"></canvas>
+      </div>
+
+      <div class="actions" style="margin-top:8px">
+        <button class="btn ok" id="btnRam"><svg class="ico"><use href="#ic-ram"/></svg>Dọn RAM</button>
+        <button class="btn ok" id="btnFps"><svg class="ico"><use href="#ic-fps"/></svg>Tối ưu FPS</button>
+        <button class="btn"    id="btnCache"><svg class="ico"><use href="#ic-cache"/></svg>Xoá cache</button>
+        <button class="btn ok" id="btnNet"><svg class="ico"><use href="#ic-net"/></svg>Tối ưu mạng</button>
+        <button class="btn warn" id="btnKill"><svg class="ico"><use href="#ic-kill"/></svg>Diệt nền</button>
+        <button class="btn dan" id="btnBench"><svg class="ico"><use href="#ic-bench"/></svg>Benchmark</button>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="state"><span class="dot" id="stateDot"></span><span id="stateText">Nhàn rỗi</span></div>
+        <div class="progress"><div id="bar" class="bar"></div><div id="pct" class="pct">0%</div></div>
+      </div>
+
+      <div class="console">
+        <div class="log-body" id="logsMetrics" role="log" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- PAGE: SKILL CONFIG -->
+    <section class="panel page" id="page-skills">
+      <div class="page-head"><h2>Function</h2></div>
+
+      <div class="skill-grid" id="skillGrid">
+        <!-- Tiles will be injected by JS -->
+      </div>
+
+      <!-- Console riêng cho Skill -->
+      <div class="console"><div class="log-body" id="logsSkill"></div></div>
+    </section>
+
+    <!-- PAGE: FILE -->
+    <section class="panel page" id="page-file">
+      <div class="page-head"><h2>File Runner (.cfg / .ini / .so)</h2></div>
+      <div class="diag">
+        <div class="box">
+          <h3><svg class="ico"><use href="#ic-file"/></svg> Chọn & kích hoạt file</h3>
+          <div class="row">
+            <input id="fileInput" class="input" type="file" accept=".cfg,.ini,.so" />
+            <button class="btn ok" id="btnActivate"><svg class="ico"><use href="#ic-play"/></svg>KÍCH HOẠT</button>
+          </div>
+          <div class="row" style="margin-top:8px">
+            <div class="tag" id="fileName">Tên: —</div>
+            <div class="tag" id="fileInfo">Kích thước/Loại: —</div>
+          </div>
+        </div>
+
+        <div class="console">
+          <div class="log-body" id="logsConsole"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: CONSOLE (tổng) -->
+    <section class="panel page" id="page-console">
+      <div class="page-head"><h2>Console</h2></div>
+      <div class="console"><div class="log-body" id="logsOnly"></div></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===== Icons ===== -->
+<svg width="0" height="0" style="position:absolute;visibility:hidden">
+  <symbol id="ic-ram" viewBox="0 0 24 24"><path fill="currentColor" d="M3 7h18v10H3V7zm2 2v6h14V9H5zm-1 8h2v2H4v-2zm4 0h2v2H8v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2z"/></symbol>
+  <symbol id="ic-fps" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3 9h7l-5.5 4 2 7-6.5-4.5L5.5 22l2-7L2 11h7z"/></symbol>
+  <symbol id="ic-cache" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6h18v2H3V6zm2 4h14v8H5v-8zm2 2v4h10v-4H7z"/></symbol>
+  <symbol id="ic-net" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3a9 9 0 0 1 9 9h-2a7 7 0 0 0-14 0H3a9 9 0 0 1 9-9zm0 4a5 5 0 0 1 5 5h-2a3 3 0 0 0-6 0H7a5 5 0 0 1 5-5zm0 4a1 1 0 0 1 1 1h-2a1 1 0 0 1 1-1zm-1 7h2v3h-2v-3z"/></symbol>
+  <symbol id="ic-kill" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="ic-bench" viewBox="0 0 24 24"><path fill="currentColor" d="M4 19V5h2v14H4zm14 0V5h2v14h-2zM9 19V5h6v14H9z"/></symbol>
+  <symbol id="ic-file" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h8l4 4v16H6V2zm8 1.5V7h3.5L14 3.5z"/></symbol>
+  <symbol id="ic-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></symbol>
+</svg>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
