@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Đang gửi cấu hình…</title>
+  <meta name="color-scheme" content="dark">
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;
+         background:#0b0f14;color:#eaf1ff;height:100vh;display:flex;align-items:center;justify-content:center}
+    .box{max-width:560px;padding:20px;border:1px solid rgba(255,255,255,.08);border-radius:12px;
+         background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))}
+    .muted{color:#8b9bb4}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Đang gửi cấu hình tới iPhone…</h1>
+    <p class="muted">Nếu sau vài giây chưa thấy, hãy mở <b>Hồ sơ đã tải về</b> trong Cài đặt.</p>
+  </div>
+
+  <script>
+    const FILE = '/install/profiles/vpn.mobileconfig';
+    // Gửi file ở nền để iOS hiện “Cho phép” nhưng vẫn giữ URL
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = FILE;
+    document.body.appendChild(iframe);
+    // Nhảy sang trang cảm ơn sau ~1.5s
+    setTimeout(()=>location.replace('/install/thanks/'), 1500);
+  </script>
+
+  <noscript>
+    Trình duyệt đang tắt JavaScript. <a href="/install/profiles/vpn.mobileconfig">Bấm để tải trực tiếp</a>.
+  </noscript>
+</body>
+</html>

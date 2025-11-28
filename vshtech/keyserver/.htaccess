@@ -1,0 +1,17 @@
+Options -Indexes
+RewriteEngine On
+
+# Serve key.php when key.js is requested
+RewriteRule ^key\.js$ key.php [L]
+
+# Block direct access to key.php (only allow via rewrite)
+RewriteCond %{THE_REQUEST} \s/keyserver/key\.php[\s?] [NC]
+RewriteRule ^key\.php$ - [F,L]
+
+# Ensure correct JS content type
+<IfModule mod_headers.c>
+  <Files "key.php">
+    Header set Content-Type "application/javascript; charset=UTF-8"
+    Header set X-Content-Type-Options "nosniff"
+  </Files>
+</IfModule>
