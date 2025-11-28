@@ -1,5 +1,0 @@
-/certificate/files/*.zip
-  content-type: application/zip
-  content-disposition: attachment; filename="cert.zip"
-  cache-control: public, max-age=86400, immutable
-  x-content-type-options: nosniff
