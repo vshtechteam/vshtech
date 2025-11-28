@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>VSHTECH.ONLINE - Bảo trì hệ thống</title>
+    <meta name="description" content="VSHTECH.ONLINE đang bảo trì và nâng cấp. Dự kiến hoàn tất 05/12/2025.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1224;
+            --card: #0f172a;
+            --card-soft: #111a31;
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --accent: #3b82f6;
+            --accent-2: #22d3ee;
+            --shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(59, 130, 246, 0.16), transparent 32%),
+                radial-gradient(circle at 82% 0%, rgba(34, 211, 238, 0.12), transparent 28%),
+                var(--bg);
+            font-family: "Space Grotesk", "Segoe UI", system-ui, -apple-system, sans-serif;
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 14px 26px;
+        }
+
+        .card {
+            width: min(520px, 92vw);
+            background: linear-gradient(160deg, var(--card), var(--card-soft));
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: var(--shadow);
+        }
+
+        .top-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(34, 211, 238, 0.18));
+            border: 1px solid var(--border);
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--text);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .brand-domain {
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            font-size: 13px;
+        }
+
+        .brand-tagline {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .status-pill {
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--accent);
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.2);
+        }
+
+        .eyebrow {
+            font-size: 12px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 30px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent));
+            display: inline-block;
+        }
+
+        h1 {
+            font-size: clamp(22px, 4.6vw, 30px);
+            line-height: 1.25;
+            margin: 10px 0 6px;
+        }
+
+        .lead {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 8px;
+            margin: 10px 0 12px;
+        }
+
+        .count-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px 10px;
+            text-align: center;
+        }
+
+        .count-number {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+        }
+
+        .count-label {
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 8px;
+            margin: 8px 0 12px;
+        }
+
+        .meta-item {
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .label {
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .value {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .list {
+            margin: 6px 0 6px 0;
+            padding-left: 18px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .list li {
+            margin-bottom: 6px;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+
+        .btn {
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid var(--border);
+            display: inline-flex;
+            gap: 10px;
+            align-items: center;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .btn-primary {
+            background: linear-gradient(120deg, var(--accent), var(--accent-2));
+            color: #0b1224;
+            border-color: transparent;
+            box-shadow: 0 10px 35px rgba(59, 130, 246, 0.35);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        footer {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <div class="top-line">
+            <div class="brand">
+                
+                <div class="brand-text">
+                    <div class="brand-domain">VSHTECH.ONLINE</div>
+                    <div class="brand-tagline">Hệ thống đang bảo trì & nâng cấp</div>
+                </div>
+            </div>
+            <div class="status-pill">
+                <span class="dot" aria-hidden="true"></span>
+                Đang bảo trì
+            </div>
+        </div>
+
+        <div class="eyebrow">Thông báo bảo trì</div>
+        <h1>Chúng tôi đang hoàn thiện trải nghiệm mới cho bạn.</h1>
+        <p class="lead">
+            Hệ thống đang được tối ưu hiệu năng, bảo mật và cập nhật tính năng. Dữ liệu khách hàng vẫn được bảo vệ an toàn và sao lưu định kỳ.
+        </p>
+
+        <div class="countdown-grid" aria-label="Đếm ngược tới thời gian hoàn tất">
+            <div class="count-box">
+                <div class="count-number" id="days">--</div>
+                <div class="count-label">Ngày</div>
+            </div>
+            <div class="count-box">
+                <div class="count-number" id="hours">--</div>
+                <div class="count-label">Giờ</div>
+            </div>
+            <div class="count-box">
+                <div class="count-number" id="minutes">--</div>
+                <div class="count-label">Phút</div>
+            </div>
+            <div class="count-box">
+                <div class="count-number" id="seconds">--</div>
+                <div class="count-label">Giây</div>
+            </div>
+        </div>
+
+        <div class="meta">
+            <div class="meta-item">
+                <div class="label">Dự kiến hoàn tất</div>
+                <div class="value">05/12/2025 (giờ Việt Nam)</div>
+            </div>
+            <div class="meta-item">
+                <div class="label">Trạng thái</div>
+                <div class="value">Hệ thống tạm dừng để bảo trì</div>
+            </div>
+        </div>
+
+        <ul class="list">
+            <li>Dữ liệu và sao lưu vẫn được giữ nguyên, không ảnh hưởng tới tài khoản.</li>
+            <li>Hỗ trợ kỹ thuật 24/7: <strong>luxury@vshtech.online</strong>.</li>
+            <li>Chúng tôi sẽ mở lại truy cập ngay khi hoàn tất nâng cấp.</li>
+        </ul>
+
+        <div class="cta-row">
+            <a class="btn btn-primary" href="mailto:admin@vshtech.online?subject=Nh%E1%BA%ADn%20th%C3%B4ng%20b%C3%A1o%20khi%20ho%C3%A0n%20t%E1%BA%A5t%20b%E1%BA%A3o%20tr%C3%AC">
+                Nhận thông báo khi xong
+            </a>
+            <a class="btn" href="mailto:luxury@vshtech.online">Liên hệ kỹ thuật</a>
+        </div>
+
+        <p class="lead" id="status-message" style="margin-top: 14px;">
+            Trạng thái: Hệ thống đang nâng cấp. Cảm ơn bạn đã kiên nhẫn chờ đợi.
+        </p>
+
+        <footer>
+            <div>© <span id="year"></span> VSHTECH.ONLINE</div>
+            <div>Liên hệ: <a href="mailto:admin@vshtech.online">admin@vshtech.online</a></div>
+        </footer>
+    </main>
+
+    <script>
+        // Năm hiện tại
+        (function () {
+            var yearEl = document.getElementById("year");
+            if (yearEl) {
+                yearEl.textContent = new Date().getFullYear();
+            }
+        })();
+
+        // Thời gian kết thúc bảo trì: 05/12/2025
+        var maintenanceEnd = new Date("2025-12-05T00:00:00+07:00").getTime();
+
+        function updateCountdown() {
+            var now = new Date().getTime();
+            var distance = maintenanceEnd - now;
+
+            var daysEl = document.getElementById("days");
+            var hoursEl = document.getElementById("hours");
+            var minutesEl = document.getElementById("minutes");
+            var secondsEl = document.getElementById("seconds");
+            var statusMessage = document.getElementById("status-message");
+
+            if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+            if (distance <= 0) {
+                daysEl.textContent = "00";
+                hoursEl.textContent = "00";
+                minutesEl.textContent = "00";
+                secondsEl.textContent = "00";
+
+                if (statusMessage) {
+                    statusMessage.textContent = "Trạng thái: Thời gian bảo trì dự kiến đã kết thúc. Nếu website chưa hoạt động, vui lòng thử lại sau vài phút.";
+                }
+                return;
+            }
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            daysEl.textContent = String(days).padStart(2, "0");
+            hoursEl.textContent = String(hours).padStart(2, "0");
+            minutesEl.textContent = String(minutes).padStart(2, "0");
+            secondsEl.textContent = String(seconds).padStart(2, "0");
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
