@@ -1,10 +1,10 @@
-const AVATAR_URL = "";
+﻿const AVATAR_URL = "";
 const CONTACT_URL = "https://instabio.cc/vshtech";
 const BOT_LANDING_URL = "https://www.vshtech.online/bot/";
 const MEDIA_SERVICE_URL = "https://vshtech.online/asset/";
 const ROLES = [
   "Digital Seller",
-  "Hệ sinh thái cấu hình",
+  "Há»‡ sinh thÃ¡i cáº¥u hÃ¬nh",
   "Mobile DevOps",
   "iOS Certificate Specialist",
   "Game Support Lead",
@@ -166,13 +166,13 @@ const ROLES = [
         if (navigator.share) {
           await navigator.share({
             title: "VSH TECH",
-            text: "VSH TECH – Digital ecosystem",
+            text: "VSH TECH â€“ Digital ecosystem",
             url: location.href
           });
         } else if (navigator.clipboard) {
           await navigator.clipboard.writeText(location.href);
           const t = share.textContent;
-          share.textContent = "Đã sao chép liên kết";
+          share.textContent = "ÄÃ£ sao chÃ©p liÃªn káº¿t";
           setTimeout(() => (share.textContent = t), 1400);
         }
       } catch {}
@@ -208,9 +208,22 @@ const ROLES = [
       const key = (event.key || "").toUpperCase();
       const blockKey =
         key === "F12" ||
-        (event.ctrlKey && event.shiftKey && ["I", "C", "J"].includes(key)) ||
+        key === "F11" ||
+        (event.ctrlKey && event.shiftKey && ["I", "C", "J", "K"].includes(key)) ||
         (event.ctrlKey && key === "U");
       if (blockKey) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    },
+    true
+  );
+
+  document.addEventListener(
+    "keypress",
+    (event) => {
+      const key = (event.key || "").toUpperCase();
+      if (key === "F12") {
         event.preventDefault();
         event.stopPropagation();
       }
@@ -274,9 +287,34 @@ const ROLES = [
       try {
         await navigator.clipboard.writeText("@vshtech");
         const t = cp.textContent;
-        cp.textContent = "Đã sao chép!";
+        cp.textContent = "Copied!";
         setTimeout(() => (cp.textContent = t), 1200);
       } catch {}
     });
   }
+
+  // Devtools guard: detect opened inspector and lock UI
+  (() => {
+    let locked = false;
+    const lockUi = () => {
+      if (locked) return;
+      locked = true;
+      const shield = document.createElement("div");
+      shield.setAttribute("role", "presentation");
+      shield.style.cssText = "position:fixed;inset:0;background:#01010a;z-index:9999;color:#f1f5f9;display:flex;align-items:center;justify-content:center;font-family:Inter,system-ui,sans-serif;font-size:16px;letter-spacing:0.4px;text-align:center;padding:24px;";
+      shield.textContent = "Devtools blocked.";
+      document.body.innerHTML = "";
+      document.body.appendChild(shield);
+    };
+
+    const detect = () => {
+      const gapW = Math.abs(window.outerWidth - window.innerWidth) > 160;
+      const gapH = Math.abs(window.outerHeight - window.innerHeight) > 160;
+      if (gapW || gapH) lockUi();
+    };
+
+    setInterval(detect, 900);
+    window.addEventListener("resize", detect, true);
+  })();
 })();
+

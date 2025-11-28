@@ -15,5 +15,9 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    { "source": "/panel/code", "destination": "/panel/", "permanent": true },
+    { "source": "/panel/code/(.*)", "destination": "/panel/", "permanent": true }
   ]
 }

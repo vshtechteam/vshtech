@@ -5,8 +5,8 @@ https://www.vshtech.online/*  https://vshtech.online/:splat  301
 /certificate/tager /certificate/ 301
 /certificate/tager/* /certificate/ 301
 
-/panel/code         /panel/index.html 301
-/panel/code/*       /panel/index.html 301
+/panel/code         /panel/ 301
+/panel/code/*       /panel/ 301
 
 /favicon.ico              /shared/vshtech-logo.png    200
 /apple-touch-icon.png     /shared/vshtech-logo.png    200
