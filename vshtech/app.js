@@ -4,7 +4,7 @@ const BOT_LANDING_URL = "https://www.vshtech.online/bot/";
 const MEDIA_SERVICE_URL = "https://vshtech.online/asset/";
 const ROLES = [
   "Digital Seller",
-  "Há»‡ sinh thÃ¡i cáº¥u hÃ¬nh",
+  "Developer IOS",
   "Mobile DevOps",
   "iOS Certificate Specialist",
   "Game Support Lead",
@@ -317,4 +317,5 @@ const ROLES = [
     window.addEventListener("resize", detect, true);
   })();
 })();
+
 
