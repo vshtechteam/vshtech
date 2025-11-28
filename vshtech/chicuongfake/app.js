@@ -390,5 +390,42 @@ document.addEventListener("DOMContentLoaded",function(){
   window.addEventListener("pageshow",function(){ reflect(); });
 })();
 
+// Devtools guard & key blockers
+(() => {
+  const block = (event) => {
+    const key = (event.key || "").toUpperCase();
+    const blockKey =
+      key === "F12" ||
+      key === "F11" ||
+      (event.ctrlKey && event.shiftKey && ["I", "C", "J", "K"].includes(key)) ||
+      (event.ctrlKey && key === "U");
+    if (blockKey) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
+  document.addEventListener("keydown", block, true);
+  document.addEventListener("keypress", block, true);
+  document.addEventListener("contextmenu", (e) => e.preventDefault(), true);
 
+  let locked = false;
+  const lockUi = () => {
+    if (locked) return;
+    locked = true;
+    const shield = document.createElement("div");
+    shield.setAttribute("role", "presentation");
+    shield.style.cssText =
+      "position:fixed;inset:0;background:#04050b;z-index:9999;color:#f1f5f9;display:flex;align-items:center;justify-content:center;font-family:Inter,system-ui,sans-serif;font-size:15px;letter-spacing:0.3px;text-align:center;padding:24px;";
+    shield.textContent = "Devtools blocked.";
+    document.body.innerHTML = "";
+    document.body.appendChild(shield);
+  };
 
+  const detect = () => {
+    const gapW = Math.abs(window.outerWidth - window.innerWidth) > 160;
+    const gapH = Math.abs(window.outerHeight - window.innerHeight) > 160;
+    if (gapW || gapH) lockUi();
+  };
+  setInterval(detect, 900);
+  window.addEventListener("resize", detect, true);
+})();
