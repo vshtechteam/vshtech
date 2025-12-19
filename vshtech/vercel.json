@@ -21,20 +21,3 @@
     { "source": "/panel/code/", "destination": "/panel/", "permanent": true }
   ]
 }
-{
-  "redirects": [
-    {
-      "source": "/panel",
-      "destination": "https://www.appstack.blog/app/menu-app-ios-development-apple-blacklisted/",
-      "permanent": false
-    },
-    {
-      "source": "/panel/",
-      "destination": "https://www.appstack.blog/app/menu-app-ios-development-apple-blacklisted/",
-      "permanent": false
-    }
-  ]
-}
-
-
-
