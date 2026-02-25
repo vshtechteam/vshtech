@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHU THẾ HẢI ĐĂNG — Full-Stack Developer</title>
+<meta name="description" content="Full-Stack Developer Portfolio">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="#main-content" class="skip-link">Bỏ qua đến nội dung</a>
+
+<div id="scroll-progress" role="progressbar" aria-label="Scroll progress"></div>
+
+<canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+<nav class="navbar" id="navbar" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo" aria-label="CHU THẾ HẢI ĐĂNG Portfolio">
+      <span class="brand-logo-mark" aria-hidden="true">
+        <span class="brand-logo-glyph">D</span>
+      </span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#about" aria-label="About section">About</a></li>
+      <li><a href="#skills" aria-label="Skills section">Skills</a></li>
+      <li><a href="#projects" aria-label="Projects section">Projects</a></li>
+      <li><a href="#timeline" aria-label="Experience section">Experience</a></li>
+      <li><a href="#contact" aria-label="Contact section">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">🌙</button>
+      <button class="hamburger" id="hamburger" aria-label="Open mobile menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" role="dialog" aria-hidden="true" tabindex="-1">
+  <a href="#about" class="mobile-nav-link">About</a>
+  <a href="#skills" class="mobile-nav-link">Skills</a>
+  <a href="#projects" class="mobile-nav-link">Projects</a>
+  <a href="#timeline" class="mobile-nav-link">Experience</a>
+  <a href="#contact" class="mobile-nav-link">Contact</a>
+</nav>
+
+<main id="main-content" tabindex="-1">
+<section id="hero" aria-label="Hero section">
+  <div class="container">
+    <div class="hero-inner">
+
+      <div class="hero-content">
+        <div class="hero-eyebrow">Available for work</div>
+        <h1 class="hero-name"><span>CHU THẾ HẢI ĐĂNG</span></h1>
+        <div class="hero-role-wrap">
+          <span class="hero-role-prefix">I build</span>
+          <span id="typing-text"></span>
+        </div>
+        <p class="hero-desc">
+          Full-Stack Developer with 5+ years crafting high-performance web apps and scalable backend systems. 
+          I turn complex problems into elegant, user-first products that make an impact.
+        </p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary" aria-label="Hire me">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.93 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012.86 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"></path></svg>
+            Hire Me
+          </a>
+          <button class="btn btn-outline" onclick="downloadCV()" aria-label="Download CV">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
+            Download CV
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">5+</div>
+            <div class="stat-label">Years Exp</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">40+</div>
+            <div class="stat-label">Projects</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">15+</div>
+            <div class="stat-label">Happy Clients</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="avatar-wrap">
+          <div class="avatar-blob" aria-hidden="true"></div>
+          <div class="avatar-ring" aria-hidden="true"></div>
+          <div class="avatar-ring-2" aria-hidden="true"></div>
+          <div class="avatar-img" aria-label="Avatar of CHU THẾ HẢI ĐĂNG">
+            
+            <svg class="avatar-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="avgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#4f8ef7"/>
+                  <stop offset="50%" style="stop-color:#a259ff"/>
+                  <stop offset="100%" style="stop-color:#00d4aa"/>
+                </linearGradient>
+                <clipPath id="circClip"><circle cx="150" cy="150" r="140"/></clipPath>
+              </defs>
+              <circle cx="150" cy="150" r="150" fill="url(#avgrad)" opacity="0.15"/>
+              
+              <ellipse cx="150" cy="240" rx="80" ry="60" fill="url(#avgrad)" opacity="0.4" clip-path="url(#circClip)"/>
+              
+              <circle cx="150" cy="120" r="55" fill="url(#avgrad)" opacity="0.6"/>
+              
+              <circle cx="130" cy="112" r="7" fill="rgba(255,255,255,0.6)"/>
+              <circle cx="170" cy="112" r="7" fill="rgba(255,255,255,0.6)"/>
+              <path d="M 132 138 Q 150 152 168 138" stroke="rgba(255,255,255,0.7)" stroke-width="3" fill="none" stroke-linecap="round"/>
+              
+              <text x="150" y="195" text-anchor="middle" font-family="monospace" font-size="18" fill="rgba(255,255,255,0.3)">&lt;/&gt;</text>
+            </svg>
+          </div>
+          
+          <div class="float-badge float-badge-1" aria-hidden="true">
+            <span class="badge-dot"></span>
+            React Expert
+          </div>
+          <div class="float-badge float-badge-2" aria-hidden="true">
+            <span style="font-size:1rem">⚡</span>
+            Fast Delivery
+          </div>
+          <div class="float-badge float-badge-3" aria-hidden="true">
+            <span style="font-size:1rem">🏆</span>
+            Top Rated
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="about" aria-label="About section">
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="about-img-placeholder reveal" aria-label="Code showcase">
+        <div class="about-code" aria-label="Profile data in code format">
+          <div class="about-code-head" aria-hidden="true">
+            <span class="about-code-dot about-code-dot-red"></span>
+            <span class="about-code-dot about-code-dot-yellow"></span>
+            <span class="about-code-dot about-code-dot-green"></span>
+            <span class="about-code-file">profile.json</span>
+          </div>
+          <pre class="about-code-body"><code>{
+  <span class="code-key">"name"</span>: <span class="code-str">"CHU THẾ HẢI ĐĂNG"</span>,
+  <span class="code-key">"title"</span>: <span class="code-str">"Senior Full-Stack Developer"</span>,
+  <span class="code-key">"location"</span>: <span class="code-str">"Hà Nội, VN"</span>,
+  <span class="code-key">"experience_years"</span>: <span class="code-num">5</span>,
+  <span class="code-key">"status"</span>: <span class="code-str">"open_to_work"</span>,
+  <span class="code-key">"specialties"</span>: [
+    <span class="code-str">"high-performance web apps"</span>,
+    <span class="code-str">"scalable backend systems"</span>,
+    <span class="code-str">"product-focused UX"</span>
+  ],
+  <span class="code-key">"remote"</span>: <span class="code-num">true</span>
+}</code></pre>
+          <div class="about-code-meta" aria-hidden="true">
+            <span class="about-code-chip">Available Now</span>
+            <span class="about-code-chip">Freelance / Full-time</span>
+            <span class="about-code-chip">UTC+7</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label reveal">About Me</div>
+        <h2 class="section-title reveal reveal-delay-1">Crafting digital<br>experiences<span style="color:var(--c-accent)">.</span></h2>
+        <div class="about-text">
+          <p class="reveal reveal-delay-2">
+            I'm a passionate Full-Stack Developer who loves building products that are both technically solid and delightful to use. With 5+ years of experience, I've worked across startups and enterprise projects across Southeast Asia.
+          </p>
+          <p class="reveal reveal-delay-3">
+            My approach combines deep technical expertise with a strong sense of design and user empathy. I believe great software is invisible — it just works, beautifully.
+          </p>
+        </div>
+        <div class="about-highlights reveal reveal-delay-4">
+          <div class="highlight-card">
+            <span class="highlight-icon">🚀</span>
+            <div class="highlight-num">40+</div>
+            <div class="highlight-label">Projects Shipped</div>
+          </div>
+          <div class="highlight-card">
+            <span class="highlight-icon">⭐</span>
+            <div class="highlight-num">4.9</div>
+            <div class="highlight-label">Avg Rating</div>
+          </div>
+          <div class="highlight-card">
+            <span class="highlight-icon">🌍</span>
+            <div class="highlight-num">12+</div>
+            <div class="highlight-label">Countries Served</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills" aria-label="Skills section">
+  <div class="container">
+    <div class="skills-header">
+      <div class="section-label reveal">Expertise</div>
+      <h2 class="section-title reveal reveal-delay-1">Skills & Technologies</h2>
+      <p class="section-desc reveal reveal-delay-2" style="margin: 0 auto">
+        A curated stack built through years of real-world projects and continuous learning.
+      </p>
+    </div>
+    <div class="skills-grid">
+      <div>
+        <div class="skill-category-title reveal">Frontend & Design</div>
+        <div class="chips-container reveal reveal-delay-1">
+          <span class="skill-chip" data-tooltip="4 years · Expert">⚛️ React</span>
+          <span class="skill-chip" data-tooltip="3 years · Advanced">🟢 Vue.js</span>
+          <span class="skill-chip" data-tooltip="3 years · Advanced">▲ Next.js</span>
+          <span class="skill-chip" data-tooltip="5 years · Expert">🎨 CSS/Sass</span>
+          <span class="skill-chip" data-tooltip="3 years · Advanced">💨 Tailwind</span>
+          <span class="skill-chip" data-tooltip="2 years · Intermediate">🏃 Framer Motion</span>
+          <span class="skill-chip" data-tooltip="2 years · Advanced">📱 React Native</span>
+          <span class="skill-chip" data-tooltip="4 years · Advanced">🖌 Figma</span>
+        </div>
+        <div class="skill-category-title reveal reveal-delay-2" style="margin-top: 8px;">Backend & DevOps</div>
+        <div class="chips-container reveal reveal-delay-3">
+          <span class="skill-chip" data-tooltip="5 years · Expert">🟨 Node.js</span>
+          <span class="skill-chip" data-tooltip="3 years · Advanced">🐍 Python</span>
+          <span class="skill-chip" data-tooltip="3 years · Advanced">🐘 PostgreSQL</span>
+          <span class="skill-chip" data-tooltip="3 years · Advanced">🍃 MongoDB</span>
+          <span class="skill-chip" data-tooltip="2 years · Advanced">🐳 Docker</span>
+          <span class="skill-chip" data-tooltip="2 years · Intermediate">☁️ AWS</span>
+          <span class="skill-chip" data-tooltip="3 years · Advanced">🔄 REST/GraphQL</span>
+          <span class="skill-chip" data-tooltip="2 years · Intermediate">🔧 CI/CD</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-category-title reveal">Proficiency Levels</div>
+        <div class="skill-bars reveal reveal-delay-1">
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">React / Next.js</span>
+              <span class="skill-bar-pct">95%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-pct="95"></div>
+            </div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">Node.js / Express</span>
+              <span class="skill-bar-pct">90%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-pct="90"></div>
+            </div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">UI/UX Design</span>
+              <span class="skill-bar-pct">82%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-pct="82"></div>
+            </div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">Python / FastAPI</span>
+              <span class="skill-bar-pct">78%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-pct="78"></div>
+            </div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">DevOps / Docker</span>
+              <span class="skill-bar-pct">72%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-pct="72"></div>
+            </div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">Database Design</span>
+              <span class="skill-bar-pct">85%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-pct="85"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" aria-label="Projects section">
+  <div class="container">
+    <div class="projects-header">
+      <div>
+        <div class="section-label reveal">Portfolio</div>
+        <h2 class="section-title reveal reveal-delay-1">Featured Projects</h2>
+      </div>
+      <div class="filter-bar reveal reveal-delay-2" role="group" aria-label="Filter projects">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="react">React</button>
+        <button class="filter-btn" data-filter="node">Node.js</button>
+        <button class="filter-btn" data-filter="python">Python</button>
+      </div>
+    </div>
+    <div class="projects-grid" id="projects-grid">
+
+      <article class="project-card reveal" data-tags="react node" tabindex="0">
+        <div class="project-thumb">
+          <div class="project-thumb-glow"></div>
+          <span class="project-thumb-icon">🛒</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">React</span>
+            <span class="project-tag">Node.js</span>
+          </div>
+          <h3 class="project-name">ShopFlow — E-Commerce Platform</h3>
+          <p class="project-desc">Full-featured e-commerce solution with real-time inventory, payment integration (Stripe/MoMo), and admin dashboard. Handles 10k+ daily transactions.</p>
+          <div class="project-stack">
+            <span class="stack-chip">React</span>
+            <span class="stack-chip">Node.js</span>
+            <span class="stack-chip">PostgreSQL</span>
+            <span class="stack-chip">Redis</span>
+            <span class="stack-chip">Stripe</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link" aria-label="Live demo of ShopFlow">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              Demo
+            </a>
+            <a href="#" class="project-link" aria-label="GitHub repository for ShopFlow">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card reveal reveal-delay-1" data-tags="react python" tabindex="0">
+        <div class="project-thumb">
+          <div class="project-thumb-glow"></div>
+          <span class="project-thumb-icon">🤖</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">React</span>
+            <span class="project-tag">Python</span>
+          </div>
+          <h3 class="project-name">AiChat — AI Support Assistant</h3>
+          <p class="project-desc">Multi-tenant AI chatbot platform powered by LLM APIs. Features streaming responses, custom knowledge base, and analytics dashboard for businesses.</p>
+          <div class="project-stack">
+            <span class="stack-chip">React</span>
+            <span class="stack-chip">FastAPI</span>
+            <span class="stack-chip">OpenAI</span>
+            <span class="stack-chip">Pinecone</span>
+            <span class="stack-chip">Docker</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link" aria-label="Live demo of AiChat">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              Demo
+            </a>
+            <a href="#" class="project-link" aria-label="GitHub repository for AiChat">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card reveal reveal-delay-2" data-tags="node" tabindex="0">
+        <div class="project-thumb">
+          <div class="project-thumb-glow"></div>
+          <span class="project-thumb-icon">📊</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">Node.js</span>
+          </div>
+          <h3 class="project-name">DataPulse — Analytics SaaS</h3>
+          <p class="project-desc">Real-time business analytics platform. Aggregates data from 20+ sources, visualizes KPIs, and sends smart alerts. Powers decisions for 50+ SMEs.</p>
+          <div class="project-stack">
+            <span class="stack-chip">Node.js</span>
+            <span class="stack-chip">ClickHouse</span>
+            <span class="stack-chip">WebSocket</span>
+            <span class="stack-chip">Chart.js</span>
+            <span class="stack-chip">AWS</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link" aria-label="Live demo of DataPulse">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card reveal" data-tags="react" tabindex="0">
+        <div class="project-thumb">
+          <div class="project-thumb-glow"></div>
+          <span class="project-thumb-icon">🎓</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">React</span>
+          </div>
+          <h3 class="project-name">EduTrack — LMS Platform</h3>
+          <p class="project-desc">Learning management system with live classes, interactive quizzes, and progress tracking. Used by 3,000+ students across 5 universities.</p>
+          <div class="project-stack">
+            <span class="stack-chip">Next.js</span>
+            <span class="stack-chip">Prisma</span>
+            <span class="stack-chip">MongoDB</span>
+            <span class="stack-chip">WebRTC</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link" aria-label="Live demo of EduTrack">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              Demo
+            </a>
+            <a href="#" class="project-link" aria-label="GitHub for EduTrack">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card reveal reveal-delay-1" data-tags="python" tabindex="0">
+        <div class="project-thumb">
+          <div class="project-thumb-glow"></div>
+          <span class="project-thumb-icon">🔐</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+          </div>
+          <h3 class="project-name">SecureVault — Password Manager</h3>
+          <p class="project-desc">End-to-end encrypted password manager with zero-knowledge architecture. Features biometric auth, breach alerts, and secure sharing for teams.</p>
+          <div class="project-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">FastAPI</span>
+            <span class="stack-chip">AES-256</span>
+            <span class="stack-chip">SQLite</span>
+            <span class="stack-chip">Electron</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link" aria-label="GitHub for SecureVault">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card reveal reveal-delay-2" data-tags="react node" tabindex="0">
+        <div class="project-thumb">
+          <div class="project-thumb-glow"></div>
+          <span class="project-thumb-icon">💬</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">React</span>
+            <span class="project-tag">Node.js</span>
+          </div>
+          <h3 class="project-name">TeamSync — Collaboration Tool</h3>
+          <p class="project-desc">Slack-inspired team workspace with real-time messaging, file sharing, and integrated task management. Deployed to 20+ remote teams.</p>
+          <div class="project-stack">
+            <span class="stack-chip">React</span>
+            <span class="stack-chip">Socket.io</span>
+            <span class="stack-chip">Node.js</span>
+            <span class="stack-chip">MongoDB</span>
+            <span class="stack-chip">AWS S3</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link" aria-label="Demo for TeamSync">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="timeline" aria-label="Experience and Education timeline">
+  <div class="container">
+    <div class="timeline-header">
+      <div class="section-label reveal">My Journey</div>
+      <h2 class="section-title reveal reveal-delay-1">Experience & Education</h2>
+    </div>
+    <div class="timeline-tabs reveal reveal-delay-2" role="tablist">
+      <button class="timeline-tab active" data-tab="experience" role="tab" aria-selected="true">Work Experience</button>
+      <button class="timeline-tab" data-tab="education" role="tab" aria-selected="false">Education</button>
+    </div>
+
+    <div class="timeline-content active" id="experience" role="tabpanel">
+      <div class="timeline-list">
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-period">Jan 2023 — Present</div>
+          <div class="timeline-card">
+            <div class="timeline-role">Senior Full-Stack Developer</div>
+            <div class="timeline-company">TechVision Agency · Ho Chi Minh City</div>
+            <div class="timeline-desc">Lead developer for 8+ client projects including SaaS platforms and e-commerce. Architected microservices systems, mentored 3 junior devs, reduced deployment time by 60%.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal reveal-delay-1">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-period">Mar 2021 — Dec 2022</div>
+          <div class="timeline-card">
+            <div class="timeline-role">Full-Stack Developer</div>
+            <div class="timeline-company">StartupXYZ · Remote</div>
+            <div class="timeline-desc">Built the core product from scratch — a B2B SaaS analytics tool. Handled frontend, REST API, database design, and AWS infrastructure. Grew the user base from 0 to 2,000+.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal reveal-delay-2">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-period">Jun 2019 — Feb 2021</div>
+          <div class="timeline-card">
+            <div class="timeline-role">Frontend Developer</div>
+            <div class="timeline-company">WebCraft Studio · Hanoi</div>
+            <div class="timeline-desc">Developed interactive UIs for corporate clients across finance and education sectors. Specialized in React, performance optimization, and accessibility (WCAG 2.1).</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="timeline-content" id="education" role="tabpanel">
+      <div class="timeline-list">
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-period">2022</div>
+          <div class="timeline-card">
+            <div class="timeline-role">AWS Certified Developer – Associate</div>
+            <div class="timeline-company">Amazon Web Services</div>
+            <div class="timeline-desc">Certified in designing, deploying, and debugging cloud-based applications on AWS. Score: 890/1000.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal reveal-delay-1">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-period">2021</div>
+          <div class="timeline-card">
+            <div class="timeline-role">Meta Front-End Developer Certificate</div>
+            <div class="timeline-company">Coursera / Meta</div>
+            <div class="timeline-desc">9-course professional certificate covering advanced React, UX design, testing, and web accessibility.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal reveal-delay-2">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-period">2015 — 2019</div>
+          <div class="timeline-card">
+            <div class="timeline-role">B.Sc. Computer Science</div>
+            <div class="timeline-company">University of Science — VNUHCM</div>
+            <div class="timeline-desc">GPA 3.6/4.0. Thesis: "Real-time Collaborative Code Editor using CRDTs." Graduated with Distinction.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="testimonials" aria-label="Client testimonials">
+  <div class="container">
+    <div class="testimonials-header">
+      <div class="section-label reveal">Social Proof</div>
+      <h2 class="section-title reveal reveal-delay-1">What Clients Say</h2>
+    </div>
+    <div class="testimonials-track">
+
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+        <p class="testimonial-text">
+          "CHU THẾ HẢI ĐĂNG delivered our platform 2 weeks ahead of schedule with zero bugs at launch. The code quality was exceptional — clean, well-documented, and scalable. He's not just a developer, he's a product thinker."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar" aria-hidden="true">SM</div>
+          <div>
+            <div class="author-name">Sarah Mitchell</div>
+            <div class="author-role">CTO, ShopFlow Inc.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Working with CHU THẾ HẢI ĐĂNG transformed how we think about our product. He brought creative solutions to every challenge and the final result exceeded our expectations massively. Absolutely recommend."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #a259ff, #00d4aa)" aria-hidden="true">JL</div>
+          <div>
+            <div class="author-name">James Liu</div>
+            <div class="author-role">CEO, DataPulse Analytics</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+        <p class="testimonial-text">
+          "The AI chatbot CHU THẾ HẢI ĐĂNG built for us reduced our support tickets by 40% in the first month. Incredibly fast turnaround, excellent communication, and he genuinely cared about our business outcomes."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #00d4aa, #4f8ef7)" aria-hidden="true">PT</div>
+          <div>
+            <div class="author-name">Pham Thi Thanh</div>
+            <div class="author-role">Founder, AiChat Platform</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="contact" aria-label="Contact section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div>
+        <div class="section-label reveal">Get In Touch</div>
+        <h2 class="section-title reveal reveal-delay-1">Let's build something<br><span style="color:var(--c-accent)">amazing</span> together</h2>
+        <p class="reveal reveal-delay-2" style="color:var(--c-text-muted); line-height:1.8; margin-bottom:32px; font-size:1.05rem;">
+          I'm currently available for freelance projects and full-time opportunities. Whether you have a project in mind or just want to chat — my inbox is always open.
+        </p>
+        <div class="contact-links reveal reveal-delay-3">
+          <a href="mailto:admin@vshtech.online" class="contact-link-item" aria-label="Send email to CHU THẾ HẢI ĐĂNG">
+            <div class="contact-link-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            admin@vshtech.online
+          </a>
+          <a href="https://github.com/" class="contact-link-item" target="_blank" rel="noopener" aria-label="CHU THẾ HẢI ĐĂNG on GitHub">
+            <div class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            </div>
+            github.com/
+          </a>
+          <a href="https://linkedin.com/in/" class="contact-link-item" target="_blank" rel="noopener" aria-label="CHU THẾ HẢI ĐĂNG on LinkedIn">
+            <div class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </div>
+            linkedin.com/in/
+          </a>
+          <a href="https://t.me/cskh_vshtech" class="contact-link-item" target="_blank" rel="noopener" aria-label="CHU THẾ HẢI ĐĂNG on Telegram">
+            <div class="contact-link-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            </div>
+            Telegram: @cskh_vshtech
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-form reveal reveal-delay-2">
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="cf-name">Name *</label>
+              <input id="cf-name" class="form-control" type="text" placeholder="Your name" autocomplete="name">
+              <div class="form-error" id="err-name">Name is required</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-email">Email *</label>
+              <input id="cf-email" class="form-control" type="email" placeholder="your@email.com" autocomplete="email">
+              <div class="form-error" id="err-email">Valid email required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cf-subject">Subject</label>
+            <input id="cf-subject" class="form-control" type="text" placeholder="What's this about?">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cf-message">Message *</label>
+            <textarea id="cf-message" class="form-control" placeholder="Tell me about your project..."></textarea>
+            <div class="form-error" id="err-message">Message is required</div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; font-size:1rem; padding:16px;" aria-label="Send message">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            Send Message
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo" aria-label="Brand logo">
+        <span class="brand-logo-mark brand-logo-mark-lg" aria-hidden="true">
+          <span class="brand-logo-glyph">D</span>
+        </span>
+      </div>
+      <div class="footer-socials">
+        <a href="https://github.com/" class="social-link" target="_blank" rel="noopener" aria-label="GitHub profile">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn profile">
+          <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="https://twitter.com/" class="social-link" target="_blank" rel="noopener" aria-label="Twitter/X profile">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="mailto:admin@vshtech.online" class="social-link" aria-label="Send email">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </a>
+        <a href="https://t.me/cskh_vshtech" class="social-link" target="_blank" rel="noopener" aria-label="Telegram contact">
+          <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+      <div class="footer-copy">
+        © 2025 CHU THẾ HẢI ĐĂNG.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite" aria-atomic="true">
+  <div class="toast-badge" aria-hidden="true">
+    <span class="toast-icon">✅</span>
+  </div>
+  <div class="toast-content">
+    <strong class="toast-title" id="toast-title">Thành công</strong>
+    <span id="toast-msg">Đã gửi tin nhắn thành công.</span>
+  </div>
+  <button id="toast-close" class="toast-close" type="button" aria-label="Đóng thông báo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="toast-progress" aria-hidden="true"></div>
+</div>
+
+<button id="back-to-top" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 15l-6-6-6 6"></path></svg>
+</button>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+
