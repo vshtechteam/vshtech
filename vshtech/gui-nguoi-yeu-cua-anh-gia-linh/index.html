@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Mobile-first, chặn double-tap zoom -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#ffd1e8" />
+  <title>💌 Thư dành riêng cho em</title>
+
+  <!-- =====================================================================
+       GOOGLE FONTS — chỉ dùng @import để không cần CDN script tag ngoài
+       (Vẫn là request mạng; nếu muốn offline hoàn toàn thì bỏ dòng này)
+       Dùng: Playfair Display (lãng mạn) + DM Serif Display + Lato
+  ====================================================================== -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=DM+Serif+Display:ital@0;1&family=Lato:wght@300;400&display=swap');
+
+    /* =====================================================================
+       1. DESIGN TOKENS
+    ===================================================================== */
+    :root {
+      --bg-main:        #ffd1e8;
+      --bg-light:       #fff1f7;
+      --bg-white:       #fffaf8;
+      --accent:         #ff4d8d;
+      --accent-soft:    #ff7eb6;
+      --accent-pale:    #ffe0ef;
+      --text-dark:      #3a2a2f;
+      --text-mid:       #7a5560;
+      --text-light:     #b98a96;
+      --paper-bg:       #fffcfa;
+      --shadow-soft:    0 8px 48px rgba(255,77,141,0.12), 0 2px 16px rgba(255,77,141,0.07);
+      --shadow-card:    0 24px 80px rgba(200,60,100,0.15);
+      --radius-card:    24px;
+      --radius-btn:     14px;
+      --font-display:   'DM Serif Display', Georgia, serif;
+      --font-body:      'Playfair Display', Georgia, serif;
+      --font-ui:        'Lato', sans-serif;
+      --transition:     cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-smooth:    cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* =====================================================================
+       2. RESET & BASE
+    ===================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Nền phủ kín toàn màn hình kể cả overscroll */
+    html {
+      height: 100%;
+      background-color: var(--bg-main);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100%;
+      min-height: 100dvh;
+      font-family: var(--font-body);
+      color: var(--text-dark);
+      background: linear-gradient(160deg, #ffd1e8 0%, #fff1f7 50%, #ffe0ef 100%);
+      background-attachment: fixed;
+      /* Overscroll màu nền */
+      overscroll-behavior: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Bảo đảm overscroll trên iOS không lộ màu trắng */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: -200px;
+      z-index: -1;
+      background: linear-gradient(160deg, #ffd1e8 0%, #fff1f7 50%, #ffe0ef 100%);
+      pointer-events: none;
+    }
+
+    /* =====================================================================
+       3. FLOATING HEARTS (Canvas)
+    ===================================================================== */
+    #heartCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* =====================================================================
+       4. LOCK SCREEN
+    ===================================================================== */
+    #lockScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: linear-gradient(160deg, #ffd1e8 0%, #fff1f7 55%, #fce4ee 100%);
+      transition: opacity 0.55s var(--ease-smooth), transform 0.55s var(--ease-smooth);
+    }
+
+    #lockScreen.hiding {
+      opacity: 0;
+      transform: scale(0.94);
+      pointer-events: none;
+    }
+
+    .lock-card {
+      background: var(--paper-bg);
+      border-radius: var(--radius-card);
+      padding: 40px 32px 36px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: var(--shadow-card);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Con dấu trang trí góc */
+    .lock-card::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffb3d1 0%, transparent 70%);
+      opacity: 0.5;
+    }
+
+    .lock-icon {
+      font-size: 52px;
+      line-height: 1;
+      margin-bottom: 12px;
+      display: inline-block;
+      animation: floatIcon 3s ease-in-out infinite;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-6px); }
+    }
+
+    .lock-title {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.25rem, 5vw, 1.6rem);
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .lock-hint {
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-bottom: 28px;
+      letter-spacing: 0.03em;
+    }
+
+    /* Input */
+    .input-wrap {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    #passInput {
+      width: 100%;
+      padding: 14px 48px 14px 18px;
+      border: 1.5px solid #f5c0d5;
+      border-radius: var(--radius-btn);
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      color: var(--text-dark);
+      background: #fff8fb;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      -webkit-appearance: none;
+    }
+
+    #passInput:focus {
+      border-color: var(--accent-soft);
+      box-shadow: 0 0 0 3px rgba(255,126,182,0.18);
+    }
+
+    .toggle-pass {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--text-light);
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    .toggle-pass:hover { color: var(--accent); }
+
+    /* Nút mở thư */
+    #unlockBtn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: var(--radius-btn);
+      background: linear-gradient(135deg, var(--accent-soft) 0%, var(--accent) 100%);
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(255,77,141,0.28);
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #unlockBtn:hover    { opacity: 0.93; transform: translateY(-1px); box-shadow: 0 10px 32px rgba(255,77,141,0.32); }
+    #unlockBtn:active   { transform: translateY(0); box-shadow: 0 4px 16px rgba(255,77,141,0.22); }
+    #unlockBtn:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 3px; }
+
+    /* Thông báo lỗi */
+    #errorMsg {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      color: var(--accent);
+      min-height: 22px;
+      margin-top: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      letter-spacing: 0.01em;
+    }
+    #errorMsg.show { opacity: 1; }
+
+    /* Shake animation */
+    @keyframes shake {
+      0%  { transform: translateX(0); }
+      15% { transform: translateX(-7px); }
+      30% { transform: translateX(7px); }
+      45% { transform: translateX(-5px); }
+      60% { transform: translateX(5px); }
+      75% { transform: translateX(-3px); }
+      90% { transform: translateX(3px); }
+      100%{ transform: translateX(0); }
+    }
+    .shake { animation: shake 0.45s var(--ease-smooth); }
+
+    /* Shimmer loading overlay */
+    .shimmer-overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-card);
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .shimmer-overlay.active { opacity: 1; }
+    @keyframes shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position:  200% 0; }
+    }
+
+    /* =====================================================================
+       5. LETTER SCREEN
+    ===================================================================== */
+    #letterScreen {
+      display: none;
+      position: relative;
+      z-index: 10;
+      min-height: 100dvh;
+      padding: 20px 16px 60px;
+    }
+
+    #letterScreen.visible {
+      display: block;
+      animation: fadeInUp 0.6s var(--ease-smooth) both;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(28px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)    scale(1); }
+    }
+
+    /* Paper card */
+    .paper {
+      background: var(--paper-bg);
+      border-radius: var(--radius-card);
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 40px 28px 48px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Texture tim mờ trên giấy */
+    .paper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ctext x='8' y='28' font-size='18' fill='%23ffb3ce' opacity='0.18'%3E♥%3C/text%3E%3C/svg%3E");
+      background-repeat: repeat;
+      pointer-events: none;
+      border-radius: var(--radius-card);
+      z-index: 0;
+    }
+
+    .paper > * { position: relative; z-index: 1; }
+
+    /* Header thư */
+    .letter-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      gap: 12px;
+    }
+
+    .letter-meta {
+      flex: 1;
+    }
+
+    .letter-to {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .letter-date {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--text-light);
+      letter-spacing: 0.06em;
+    }
+
+    /* Nút khóa lại */
+    #lockBtn {
+      background: rgba(255,77,141,0.08);
+      border: 1px solid rgba(255,77,141,0.2);
+      border-radius: 10px;
+      padding: 7px 12px;
+      font-family: var(--font-ui);
+      font-size: 0.76rem;
+      color: var(--accent);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
+    }
+    #lockBtn:hover  { background: rgba(255,77,141,0.14); transform: translateY(-1px); }
+    #lockBtn:active { transform: translateY(0); }
+    #lockBtn:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 2px; }
+
+    /* Divider trang trí */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 28px;
+      color: var(--accent-pale);
+    }
+    .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #ffb3ce, transparent); }
+    .divider-heart { font-size: 0.9rem; color: var(--accent-soft); }
+
+    /* Wax seal — SVG tự vẽ */
+    .wax-seal-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    /* Nội dung thư */
+    #letterContent {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 3.5vw, 1.1rem);
+      line-height: 1.9;
+      color: var(--text-dark);
+    }
+
+    /* Từng dòng được wrap bởi JS */
+    .line {
+      display: block;
+      opacity: 0;
+      transform: translateX(18px);
+      transition: opacity 0.5s var(--ease-smooth), transform 0.5s var(--ease-smooth);
+      will-change: transform, opacity;
+    }
+
+    .line.in-view {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Đoạn mở đầu — chữ hoa lớn */
+    .letter-opening {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.4rem, 5vw, 1.8rem);
+      color: var(--accent);
+      margin-bottom: 22px;
+      display: block;
+    }
+
+    /* Chữ ký */
+    .letter-sign {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+      color: var(--accent);
+      margin-top: 32px;
+      display: block;
+    }
+
+    /* Footer của giấy */
+    .paper-footer {
+      margin-top: 36px;
+      text-align: center;
+    }
+
+    /* Envelope SVG logo ở đầu */
+    .envelope-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* =====================================================================
+       6. PREFERS-REDUCED-MOTION
+    ===================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      .line {
+        opacity: 0;
+        transform: none;
+        transition: opacity 0.3s ease;
+      }
+      .line.in-view { opacity: 1; }
+      #lockScreen { transition: opacity 0.3s ease; }
+      .lock-icon  { animation: none; }
+      #heartCanvas { display: none; }
+      @keyframes shimmer { 0%,100%{ background-position: 0 0; } }
+    }
+
+    /* =====================================================================
+       7. RESPONSIVE — DESKTOP
+    ===================================================================== */
+    @media (min-width: 640px) {
+      #letterScreen { padding: 40px 24px 80px; }
+      .paper { padding: 60px 56px 72px; }
+      .lock-card { padding: 52px 44px 48px; }
+    }
+
+    /* =====================================================================
+       8. SCROLLBAR tùy chỉnh (Webkit)
+    ===================================================================== */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #ffb3ce; border-radius: 99px; }
+
+    /* =====================================================================
+       9. SELECTION màu
+    ===================================================================== */
+    ::selection { background: #ffb3ce; color: var(--text-dark); }
+  </style>
+</head>
+<body>
+
+<!-- =====================================================================
+     CANVAS: Floating hearts (nền)
+====================================================================== -->
+<canvas id="heartCanvas" aria-hidden="true"></canvas>
+
+<!-- =====================================================================
+     LOCK SCREEN
+====================================================================== -->
+<div id="lockScreen" role="main" aria-label="Màn hình khóa">
+  <div class="lock-card">
+    <div class="shimmer-overlay" id="shimmerOverlay"></div>
+
+    <!-- Icon lá thư / khóa SVG -->
+    <div class="lock-icon" aria-hidden="true">💌</div>
+
+    <h1 class="lock-title">Thư dành riêng cho em</h1>
+    <p class="lock-hint">Nhập đúng mật khẩu để mở 🌸</p>
+
+    <div class="input-wrap">
+      <input
+        type="password"
+        id="passInput"
+        placeholder="Mật khẩu của em…"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        aria-label="Ô nhập mật khẩu"
+        maxlength="40"
+      />
+      <button class="toggle-pass" id="togglePass" aria-label="Hiện/ẩn mật khẩu" type="button">
+        👁
+      </button>
+    </div>
+
+    <button id="unlockBtn" type="button">✦ Mở thư ✦</button>
+
+    <div id="errorMsg" role="alert" aria-live="polite"></div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     LETTER SCREEN
+====================================================================== -->
+<main id="letterScreen" aria-label="Lá thư tình">
+  <div class="paper">
+
+    <!-- Header: logo phong bì + meta + nút khóa -->
+    <div class="letter-header">
+      <div class="envelope-logo">
+        <!-- SVG inline: biểu tượng phong bì lá thư -->
+        <svg width="42" height="34" viewBox="0 0 42 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="40" height="32" rx="6" fill="#fff0f6" stroke="#ffb3ce" stroke-width="1.5"/>
+          <path d="M1 7L21 20L41 7" stroke="#ffb3ce" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- trái tim nhỏ ở giữa phong bì -->
+          <path d="M21 14 C20 12.5 18 12 17.5 13.5 C17 15 19 17 21 19 C23 17 25 15 24.5 13.5 C24 12 22 12.5 21 14Z" fill="#ff7eb6" opacity="0.7"/>
+        </svg>
+        <div class="letter-meta">
+          <div class="letter-to">To: Người thương của anh 💗</div>
+          <div class="letter-date" id="letterDate"></div>
+        </div>
+      </div>
+      <button id="lockBtn" type="button" aria-label="Khóa lại">🔐 Khóa lại</button>
+    </div>
+
+    <!-- Divider -->
+    <div class="divider" aria-hidden="true">
+      <div class="divider-line"></div>
+      <span class="divider-heart">♥</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- Wax seal SVG tự vẽ -->
+    <div class="wax-seal-wrap" aria-hidden="true">
+      <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+        <!-- Nền sáp -->
+        <circle cx="35" cy="35" r="32" fill="#ff7eb6" opacity="0.92"/>
+        <circle cx="35" cy="35" r="28" fill="none" stroke="#fff" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6"/>
+        <!-- Chữ L lãng mạn hoặc trái tim -->
+        <path d="M35 20 C33 16 27 16 26 20.5 C25 25 29.5 30 35 36 C40.5 30 45 25 44 20.5 C43 16 37 16 35 20Z" fill="#fff" opacity="0.92"/>
+        <!-- Chữ nhỏ quanh seal -->
+        <text x="35" y="60" text-anchor="middle" font-size="6" fill="#fff" opacity="0.7" font-family="Georgia,serif" letter-spacing="1">✦ LOVE ✦</text>
+      </svg>
+    </div>
+
+    <!-- ================================================================
+         NỘI DUNG THƯ
+         - Thay toàn bộ nội dung bên trong #letterContent
+         - Mỗi thẻ <p> sẽ được JS tự tách thành các .line để animate
+         - GIỮ NGUYÊN id="letterContent"
+    ================================================================= -->
+    <div id="letterContent">
+
+      <!-- OPENING — giữ class letter-opening -->
+      <span class="letter-opening">Em yêu dấu của anh,</span>
+
+      <!-- ============================================================
+           PASTE_LONG_LETTER_HERE
+           Thay thế toàn bộ các <p> bên dưới bằng nội dung thực tế.
+           Mỗi <p> là một đoạn. JS sẽ tự tách theo dấu chấm / xuống dòng.
+      ============================================================= -->
+
+      <p>
+        Có những buổi sáng anh thức dậy, nhìn lên trần nhà và thấy tim mình đang nhẹ bổng — không phải vì trời đẹp, không phải vì cà phê pha đúng vị, mà đơn giản vì trong đầu lại hiện ra khuôn mặt của em. Cái cảm giác đó, anh không biết gọi tên gì khác ngoài hai chữ "yêu thương".
+      </p>
+
+      <p>
+        Anh nhớ hôm đó, lần đầu tiên em cười thật to trước một câu chuyện vớ vẩn của anh. Anh đứng đó, lặng đi mất vài giây, tự hỏi rằng liệu mình có đang mơ không — vì thế giới trong khoảnh khắc ấy đẹp đến mức khó tin.
+      </p>
+
+      <p>
+        Em có biết không, những lần em ngồi im lặng bên cạnh anh — không nói gì, chỉ cần có mặt thôi — lại là những khoảnh khắc anh cảm thấy bình yên nhất. Sự im lặng bên em không bao giờ nặng nề. Nó nhẹ như mây, ấm như nắng sớm tháng Ba.
+      </p>
+
+      <p>
+        Có lẽ tình yêu không phải lúc nào cũng cần những lời hoa mỹ. Đôi khi nó chỉ là một tin nhắn hỏi "Ăn chưa?" lúc giữa trưa. Là nhớ ra em thích trà đào hơn cà phê. Là lo lắng mỗi khi trời trở lạnh mà em lại hay quên mang áo khoác.
+      </p>
+
+      <p>
+        Anh yêu em theo cách mà anh không cần giải thích với ai. Không cần lý do, không cần điều kiện. Chỉ là — anh muốn em ổn. Anh muốn em vui. Anh muốn mỗi ngày của em đều có ít nhất một khoảnh khắc thật sự nhẹ nhõm và hạnh phúc.
+      </p>
+
+      <p>
+        Đôi khi anh nghĩ về tương lai — không phải những điều to lớn vĩ đại, chỉ là những buổi chiều bình thường, hai đứa ngồi đâu đó, em đọc sách còn anh nhìn em đọc. Chỉ vậy thôi, cũng đã là tất cả những gì anh muốn.
+      </p>
+
+      <p>
+        Cảm ơn em đã xuất hiện trong cuộc đời anh đúng lúc. Cảm ơn em vì đã là em — với tất cả những điều bé nhỏ, những lần dỗi hờn, những cái cười vô cớ, và những ánh mắt mà anh sẽ không bao giờ quên được dù có đi hết bao nhiêu năm tháng.
+      </p>
+
+      <p>
+        Lá thư này, anh viết không cần dịp đặc biệt. Chỉ vì hôm nay anh muốn nói với em rằng: anh yêu em — hôm qua, hôm nay, và tất cả những ngày sau này.
+      </p>
+      <!-- ============================================================
+           KẾT THÚC PASTE_LONG_LETTER_HERE
+      ============================================================= -->
+
+      <!-- Chữ ký -->
+      <span class="letter-sign">Mãi là của em, 🌸</span>
+
+    </div><!-- end #letterContent -->
+
+    <!-- Footer giấy -->
+    <div class="paper-footer" aria-hidden="true">
+      <svg width="120" height="20" viewBox="0 0 120 20" xmlns="http://www.w3.org/2000/svg" opacity="0.3">
+        <path d="M10 10 Q60 2 110 10" stroke="#ff7eb6" stroke-width="1" fill="none"/>
+        <circle cx="60" cy="6" r="2" fill="#ff7eb6"/>
+        <circle cx="30" cy="9" r="1.5" fill="#ff7eb6"/>
+        <circle cx="90" cy="9" r="1.5" fill="#ff7eb6"/>
+      </svg>
+    </div>
+
+  </div><!-- end .paper -->
+</main>
+
+<!-- =====================================================================
+     JAVASCRIPT
+====================================================================== -->
+<script>
+// =========================================================================
+// 0. CONSTANTS
+// =========================================================================
+const CORRECT_PASS  = 'anhselamnguoiyeuem';
+const STORAGE_KEY   = 'loveLetterUnlocked';
+
+// =========================================================================
+// 1. ELEMENTS
+// =========================================================================
+const lockScreen    = document.getElementById('lockScreen');
+const letterScreen  = document.getElementById('letterScreen');
+const passInput     = document.getElementById('passInput');
+const unlockBtn     = document.getElementById('unlockBtn');
+const errorMsg      = document.getElementById('errorMsg');
+const togglePass    = document.getElementById('togglePass');
+const lockBtn       = document.getElementById('lockBtn');
+const shimmer       = document.getElementById('shimmerOverlay');
+const letterDate    = document.getElementById('letterDate');
+const letterContent = document.getElementById('letterContent');
+
+// =========================================================================
+// 2. NGÀY THÁNG
+// =========================================================================
+letterDate.textContent = new Date().toLocaleDateString('vi-VN', {
+  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+});
+
+// =========================================================================
+// 3. CHECK SESSION — nếu đã mở rồi thì hiện thẳng thư
+// =========================================================================
+(function checkSession() {
+  if (sessionStorage.getItem(STORAGE_KEY) === 'yes') {
+    lockScreen.style.display = 'none';
+    showLetter(false); // không có animation vào từ lock screen
+  }
+})();
+
+// =========================================================================
+// 4. TOGGLE HIỆN/ẨN MẬT KHẨU
+// =========================================================================
+togglePass.addEventListener('click', () => {
+  const isHidden = passInput.type === 'password';
+  passInput.type = isHidden ? 'text' : 'password';
+  togglePass.textContent = isHidden ? '🙈' : '👁';
+});
+
+// =========================================================================
+// 5. UNLOCK LOGIC
+// =========================================================================
+function attemptUnlock() {
+  const val = passInput.value.trim();
+
+  if (val === CORRECT_PASS) {
+    // --- Đúng mật khẩu ---
+    shimmer.classList.add('active');
+    unlockBtn.disabled = true;
+    passInput.disabled = true;
+    errorMsg.classList.remove('show');
+
+    setTimeout(() => {
+      sessionStorage.setItem(STORAGE_KEY, 'yes');
+      lockScreen.classList.add('hiding');
+
+      setTimeout(() => {
+        lockScreen.style.display = 'none';
+        shimmer.classList.remove('active');
+        showLetter(true);
+      }, 580);
+    }, 600);
+
+  } else {
+    // --- Sai mật khẩu ---
+    errorMsg.textContent = val === '' ? 'Nhập mật khẩu trước nha em 🥺' : 'Sai rồi nè 😗 thử lại nha!';
+    errorMsg.classList.add('show');
+
+    // Shake input
+    passInput.classList.remove('shake');
+    void passInput.offsetWidth; // reflow để restart animation
+    passInput.classList.add('shake');
+
+    passInput.addEventListener('animationend', () => {
+      passInput.classList.remove('shake');
+    }, { once: true });
+
+    passInput.select();
+  }
+}
+
+unlockBtn.addEventListener('click', attemptUnlock);
+passInput.addEventListener('keydown', e => { if (e.key === 'Enter') attemptUnlock(); });
+
+// Ẩn lỗi khi nhập lại
+passInput.addEventListener('input', () => {
+  errorMsg.classList.remove('show');
+});
+
+// =========================================================================
+// 6. KHÓA LẠI
+// =========================================================================
+lockBtn.addEventListener('click', () => {
+  sessionStorage.removeItem(STORAGE_KEY);
+  letterScreen.style.display = 'none';
+  letterScreen.classList.remove('visible');
+  lockScreen.style.display = '';
+  lockScreen.classList.remove('hiding');
+  lockScreen.style.opacity = '';
+  lockScreen.style.transform = '';
+  passInput.value = '';
+  passInput.disabled = false;
+  unlockBtn.disabled = false;
+  errorMsg.classList.remove('show');
+  passInput.type = 'password';
+  togglePass.textContent = '👁';
+  // Cuộn lên đầu
+  window.scrollTo({ top: 0, behavior: 'instant' });
+});
+
+// =========================================================================
+// 7. HIỆN LÁ THƯ + INIT ANIMATIONS
+// =========================================================================
+function showLetter(withAnimation) {
+  letterScreen.style.display = 'block';
+  if (withAnimation) {
+    // Kích hoạt animation vào
+    requestAnimationFrame(() => {
+      letterScreen.classList.add('visible');
+    });
+  } else {
+    letterScreen.classList.add('visible');
+  }
+  window.scrollTo({ top: 0, behavior: 'instant' });
+
+  // Cần chờ DOM sẵn sàng rồi mới wrap lines
+  requestAnimationFrame(() => {
+    initLineAnimation();
+    initHearts();
+  });
+}
+
+// =========================================================================
+// 8. LINE ANIMATION — tách nội dung thư thành .line và dùng IntersectionObserver
+// =========================================================================
+function initLineAnimation() {
+  // Nếu đã init rồi thì bỏ qua
+  if (letterContent.dataset.inited) return;
+  letterContent.dataset.inited = '1';
+
+  // Lấy tất cả các node con trực tiếp (p, span...)
+  const children = Array.from(letterContent.childNodes);
+
+  // Với mỗi child, tách theo câu (dấu . ! ? ) hoặc dấu xuống dòng ảo
+  const SENTENCE_REGEX = /([^.!?\n]+[.!?…]?\s*)/g;
+
+  let globalIndex = 0;
+
+  children.forEach(node => {
+    // Nếu là element (p, span, div...)
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const el = node;
+      const originalHTML = el.innerHTML;
+
+      // Nếu đây là .letter-opening hoặc .letter-sign — xử lý riêng (1 line toàn bộ)
+      if (el.classList.contains('letter-opening') || el.classList.contains('letter-sign')) {
+        wrapAsLine(el, globalIndex);
+        globalIndex++;
+        return;
+      }
+
+      // Tách text thành các câu
+      const text = el.textContent.trim();
+      if (!text) return;
+
+      const sentences = [];
+      let m;
+      const rex = /([^.!?\n]+[.!?…]?\s*)/g;
+      while ((m = rex.exec(text)) !== null) {
+        const s = m[1].trim();
+        if (s.length > 1) sentences.push(s);
+      }
+
+      if (sentences.length <= 1) {
+        // Không tách được → wrap toàn bộ
+        wrapAsLine(el, globalIndex);
+        globalIndex++;
+      } else {
+        // Thay nội dung p bằng các span.line
+        el.innerHTML = '';
+        sentences.forEach((sentence, i) => {
+          const span = document.createElement('span');
+          span.className = 'line';
+          span.textContent = sentence + ' ';
+          span.style.transitionDelay = `${(globalIndex % 6) * 0.04}s`;
+          el.appendChild(span);
+          globalIndex++;
+        });
+      }
+
+    } else if (node.nodeType === Node.TEXT_NODE) {
+      // Text node thuần — bỏ qua khoảng trắng
+    }
+  });
+
+  // Đặt tất cả .line có delay stagger
+  document.querySelectorAll('#letterContent .line').forEach((line, i) => {
+    line.style.transitionDelay = `${(i % 8) * 0.035}s`;
+  });
+
+  // IntersectionObserver
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        // Không unobserve → cho phép reset khi scroll ngược
+      } else {
+        // Khi ra khỏi viewport (cuộn ngược) → reset nhẹ nhàng
+        // Chỉ reset nếu element ở TRÊN viewport (scroll ngược)
+        const rect = entry.boundingClientRect;
+        if (rect.top > window.innerHeight * 0.5) {
+          // Phần tử chưa được xem tới → giữ ẩn
+          // (không làm gì)
+        } else if (rect.bottom < 0) {
+          // Đã qua rồi → giữ in-view
+          entry.target.classList.add('in-view');
+        }
+      }
+    });
+  }, {
+    rootMargin: '0px 0px -60px 0px',
+    threshold: 0.05
+  });
+
+  document.querySelectorAll('#letterContent .line').forEach(line => {
+    observer.observe(line);
+  });
+}
+
+function wrapAsLine(el, index) {
+  el.classList.add('line');
+  el.style.transitionDelay = `${(index % 6) * 0.05}s`;
+}
+
+// =========================================================================
+// 9. FLOATING HEARTS — Canvas
+// =========================================================================
+function initHearts() {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas = document.getElementById('heartCanvas');
+  const ctx    = canvas.getContext('2d');
+
+  // Số lượng tim — ít hơn trên máy yếu / prefers-reduced
+  const COUNT = prefersReduced ? 4 : 18;
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Tạo danh sách tim
+  const hearts = [];
+  const COLORS = ['rgba(255,126,182,', 'rgba(255,77,141,', 'rgba(255,209,232,'];
+
+  for (let i = 0; i < COUNT; i++) {
+    hearts.push(newHeart(true));
+  }
+
+  function newHeart(random = false) {
+    return {
+      x:    Math.random() * window.innerWidth,
+      y:    random ? Math.random() * window.innerHeight : window.innerHeight + 20,
+      size: 6 + Math.random() * 14,
+      speedY: 0.35 + Math.random() * 0.55,
+      speedX: (Math.random() - 0.5) * 0.4,
+      alpha:  0.08 + Math.random() * 0.18,
+      color:  COLORS[Math.floor(Math.random() * COLORS.length)],
+      wobble: Math.random() * Math.PI * 2,
+      wobbleSpeed: 0.008 + Math.random() * 0.012,
+    };
+  }
+
+  function drawHeart(ctx, x, y, size, alpha, color) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color + alpha + ')';
+    ctx.beginPath();
+    ctx.moveTo(x, y + size * 0.25);
+    ctx.bezierCurveTo(x, y, x - size * 0.5, y, x - size * 0.5, y + size * 0.25);
+    ctx.bezierCurveTo(x - size * 0.5, y + size * 0.6, x, y + size * 0.85, x, y + size);
+    ctx.bezierCurveTo(x, y + size * 0.85, x + size * 0.5, y + size * 0.6, x + size * 0.5, y + size * 0.25);
+    ctx.bezierCurveTo(x + size * 0.5, y, x, y, x, y + size * 0.25);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  let animId;
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    hearts.forEach((h, i) => {
+      h.wobble += h.wobbleSpeed;
+      h.y      -= h.speedY;
+      h.x      += h.speedX + Math.sin(h.wobble) * 0.3;
+
+      // Vẽ
+      drawHeart(ctx, h.x - h.size * 0.5, h.y - h.size * 0.5, h.size, h.alpha, h.color);
+
+      // Reset khi bay ra ngoài
+      if (h.y < -30) {
+        hearts[i] = newHeart(false);
+      }
+    });
+
+    animId = requestAnimationFrame(tick);
+  }
+
+  // Chỉ chạy khi letterScreen visible
+  function startHearts() {
+    if (!animId) tick();
+  }
+  function stopHearts() {
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // Pause khi tab ẩn → tiết kiệm pin
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stopHearts() : startHearts();
+  });
+
+  startHearts();
+}
+
+// =========================================================================
+// 10. SMOOTH SCROLL (native — đã set scroll-behavior: smooth trong CSS)
+// =========================================================================
+
+</script>
+
+</body>
+</html>
