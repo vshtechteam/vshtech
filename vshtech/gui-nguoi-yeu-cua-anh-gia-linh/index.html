@@ -459,7 +459,7 @@
       inset: 0;
       z-index: 60;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       padding: calc(14px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left));
       overflow: auto;
@@ -502,6 +502,7 @@
       gap: 14px;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
+      margin: 8px auto 20px;
     }
 
     .memory-title {
@@ -532,6 +533,15 @@
       border-radius: 12px;
       display: block;
       background: #f7f1f4;
+    }
+
+    .memory-caption {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 4.2vw, 1.2rem);
+      color: var(--text-dark);
+      text-align: center;
+      line-height: 1.5;
+      padding: 2px 6px;
     }
 
     @supports (height: 100dvh) {
@@ -793,6 +803,7 @@
     <div class="memory-photo">
       <img id="memoryImage" src="img/gl.jpg" alt="Ảnh kỷ niệm của tụi mình" />
     </div>
+    <div class="memory-caption">Hãy Cho Anh Cảm Giác Được Em Mở Lòng Thêm Một Lần Nữa Nhé Ạ !</div>
     <div class="music-hint" id="musicHint">Chạm 🎵 để bật nhạc nha em 💗</div>
     <div class="memory-actions">
       <button id="musicToggle" class="btn-soft" type="button" aria-label="Bật hoặc tắt nhạc">🔇 Tắt nhạc</button>
@@ -970,6 +981,9 @@ function openMemoryScreen() {
 
   // Gọi play trực tiếp trong cùng gesture để tăng tỉ lệ autoplay
   attemptMusicPlay();
+
+  // Đảm bảo khung không bị khuất lên trên
+  memoryScreen.scrollTop = 0;
 }
 
 function closeMemoryScreen() {
