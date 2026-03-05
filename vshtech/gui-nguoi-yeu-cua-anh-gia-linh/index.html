@@ -7,14 +7,7 @@
   <meta name="theme-color" content="#ffd1e8" />
   <title>💌 Thư dành riêng cho em</title>
 
-  <!-- =====================================================================
-       GOOGLE FONTS — chỉ dùng @import để không cần CDN script tag ngoài
-       (Vẫn là request mạng; nếu muốn offline hoàn toàn thì bỏ dòng này)
-       Dùng: Playfair Display (lãng mạn) + DM Serif Display + Lato
-  ====================================================================== -->
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=DM+Serif+Display:ital@0;1&family=Lato:wght@300;400&display=swap');
-
     /* =====================================================================
        1. DESIGN TOKENS
     ===================================================================== */
@@ -61,7 +54,8 @@
       min-height: 100dvh;
       font-family: var(--font-body);
       color: var(--text-dark);
-      background: linear-gradient(160deg, #ffd1e8 0%, #fff1f7 50%, #ffe0ef 100%);
+      /* Nền có alpha để thấy tim rơi phía sau */
+      background: linear-gradient(160deg, rgba(255,209,232,0.86) 0%, rgba(255,241,247,0.86) 50%, rgba(255,224,239,0.86) 100%);
       background-attachment: fixed;
       /* Overscroll màu nền */
       overscroll-behavior: none;
@@ -74,7 +68,7 @@
       position: fixed;
       inset: -200px;
       z-index: -1;
-      background: linear-gradient(160deg, #ffd1e8 0%, #fff1f7 50%, #ffe0ef 100%);
+      background: linear-gradient(160deg, rgba(255,209,232,0.86) 0%, rgba(255,241,247,0.86) 50%, rgba(255,224,239,0.86) 100%);
       pointer-events: none;
     }
 
@@ -205,7 +199,8 @@
     .toggle-pass:hover { color: var(--accent); }
 
     /* Nút mở thư */
-    #unlockBtn {
+    #unlockBtn,
+    .btn-primary {
       width: 100%;
       padding: 14px;
       border: none;
@@ -222,9 +217,12 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    #unlockBtn:hover    { opacity: 0.93; transform: translateY(-1px); box-shadow: 0 10px 32px rgba(255,77,141,0.32); }
-    #unlockBtn:active   { transform: translateY(0); box-shadow: 0 4px 16px rgba(255,77,141,0.22); }
-    #unlockBtn:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 3px; }
+    #unlockBtn:hover,
+    .btn-primary:hover { opacity: 0.93; transform: translateY(-1px); box-shadow: 0 10px 32px rgba(255,77,141,0.32); }
+    #unlockBtn:active,
+    .btn-primary:active { transform: translateY(0); box-shadow: 0 4px 16px rgba(255,77,141,0.22); }
+    #unlockBtn:focus-visible,
+    .btn-primary:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 3px; }
 
     /* Thông báo lỗi */
     #errorMsg {
@@ -430,6 +428,17 @@
       text-align: center;
     }
 
+    .continue-wrap {
+      margin-top: 28px;
+      text-align: center;
+    }
+
+    .continue-btn {
+      min-width: 180px;
+      width: auto;
+      padding-inline: 32px;
+    }
+
     /* Envelope SVG logo ở đầu */
     .envelope-logo {
       display: flex;
@@ -437,6 +446,143 @@
       gap: 10px;
       margin-bottom: 20px;
     }
+
+    /* =====================================================================
+       5B. MEMORY SCREEN (UPDATED: ảnh + nhạc)
+    ===================================================================== */
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    #memoryScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(14px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left));
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      background: linear-gradient(160deg, #ffd1e8 0%, #fff1f7 50%, #ffe0ef 100%);
+      opacity: 0;
+      transform: scale(0.98);
+      pointer-events: none;
+      visibility: hidden;
+      transition: opacity 0.5s var(--ease-smooth), transform 0.5s var(--ease-smooth), visibility 0s linear 0.5s;
+    }
+
+    #memoryScreen.visible {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+      visibility: visible;
+      transition: opacity 0.5s var(--ease-smooth), transform 0.5s var(--ease-smooth);
+    }
+
+    #memoryScreen::before {
+      content: '';
+      position: fixed;
+      inset: -200px;
+      background: linear-gradient(160deg, #ffd1e8 0%, #fff1f7 50%, #ffe0ef 100%);
+      z-index: -1;
+    }
+
+    .memory-card {
+      width: 100%;
+      max-width: 760px;
+      background: rgba(255,250,248,0.9);
+      border-radius: var(--radius-card);
+      padding: 22px 18px 20px;
+      box-shadow: var(--shadow-card);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .memory-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 4.8vw, 1.4rem);
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+
+    .memory-photo {
+      width: min(92vw, 520px);
+      max-height: calc(100svh - 220px);
+      /* Bo khung sát ảnh hơn ở 2 cạnh trái/phải */
+      padding: 6px 2px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #memoryImage {
+      width: 100%;
+      height: auto;
+      max-height: calc(100svh - 240px);
+      object-fit: contain;
+      border-radius: 12px;
+      display: block;
+      background: #f7f1f4;
+    }
+
+    @supports (height: 100dvh) {
+      .memory-photo { max-height: calc(100dvh - 220px); }
+      #memoryImage { max-height: calc(100dvh - 240px); }
+    }
+    @supports (height: 100vh) {
+      .memory-photo { max-height: calc(100vh - 220px); }
+      #memoryImage { max-height: calc(100vh - 240px); }
+    }
+
+    .music-hint {
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 999px;
+      box-shadow: 0 6px 18px rgba(255,77,141,0.12);
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      color: var(--text-light);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .music-hint.show { opacity: 1; }
+
+    .memory-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .btn-soft {
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,77,141,0.22);
+      background: rgba(255,77,141,0.08);
+      color: var(--accent);
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.2s, box-shadow 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-soft:hover {
+      background: rgba(255,77,141,0.14);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(255,77,141,0.16);
+    }
+    .btn-soft:active { transform: translateY(0); box-shadow: none; }
+    .btn-soft:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 2px; }
 
     /* =====================================================================
        6. PREFERS-REDUCED-MOTION
@@ -449,6 +595,7 @@
       }
       .line.in-view { opacity: 1; }
       #lockScreen { transition: opacity 0.3s ease; }
+      #memoryScreen { transition: opacity 0.3s ease; transform: none; }
       .lock-icon  { animation: none; }
       #heartCanvas { display: none; }
       @keyframes shimmer { 0%,100%{ background-position: 0 0; } }
@@ -536,7 +683,7 @@
           <path d="M21 14 C20 12.5 18 12 17.5 13.5 C17 15 19 17 21 19 C23 17 25 15 24.5 13.5 C24 12 22 12.5 21 14Z" fill="#ff7eb6" opacity="0.7"/>
         </svg>
         <div class="letter-meta">
-          <div class="letter-to">To: Người thương của anh 💗</div>
+          <div class="letter-to">To: Nguyễn Chu Gia Linh <br>[Người Anh Thương] 💗</div>
           <div class="letter-date" id="letterDate"></div>
         </div>
       </div>
@@ -630,8 +777,30 @@
       </svg>
     </div>
 
+    <div class="continue-wrap">
+      <button id="openMemoryBtn" class="btn-primary continue-btn" type="button" aria-label="Xem tiếp kỷ niệm">XEM TIẾP</button>
+    </div>
+
   </div><!-- end .paper -->
 </main>
+
+<!-- =====================================================================
+     MEMORY SCREEN
+====================================================================== -->
+<section id="memoryScreen" aria-label="Màn hình kỷ niệm" aria-hidden="true">
+  <div class="memory-card">
+    <div class="memory-title">📸 Kỷ niệm của tụi mình</div>
+    <div class="memory-photo">
+      <img id="memoryImage" src="img/gl.jpg" alt="Ảnh kỷ niệm của tụi mình" />
+    </div>
+    <div class="music-hint" id="musicHint">Chạm 🎵 để bật nhạc nha em 💗</div>
+    <div class="memory-actions">
+      <button id="musicToggle" class="btn-soft" type="button" aria-label="Bật hoặc tắt nhạc">🔇 Tắt nhạc</button>
+      <button id="closeMemoryBtn" class="btn-soft" type="button" aria-label="Quay lại thư">⬅ Quay lại thư</button>
+    </div>
+    <audio id="bgMusic" src="video/love.mp3" preload="auto" loop></audio>
+  </div>
+</section>
 
 <!-- =====================================================================
      JAVASCRIPT
@@ -642,6 +811,9 @@
 // =========================================================================
 const CORRECT_PASS  = 'anhselamnguoiyeuem';
 const STORAGE_KEY   = 'loveLetterUnlocked';
+// UPDATED: hint khi autoplay bị chặn
+const MUSIC_HINT_DEFAULT = 'Chạm 🎵 để bật nhạc nha em 💗';
+let heartController = null;
 
 // =========================================================================
 // 1. ELEMENTS
@@ -656,6 +828,12 @@ const lockBtn       = document.getElementById('lockBtn');
 const shimmer       = document.getElementById('shimmerOverlay');
 const letterDate    = document.getElementById('letterDate');
 const letterContent = document.getElementById('letterContent');
+const openMemoryBtn = document.getElementById('openMemoryBtn');
+const memoryScreen  = document.getElementById('memoryScreen');
+const closeMemoryBtn = document.getElementById('closeMemoryBtn');
+const bgMusic       = document.getElementById('bgMusic');
+const musicToggle   = document.getElementById('musicToggle');
+const musicHint     = document.getElementById('musicHint');
 
 // =========================================================================
 // 2. NGÀY THÁNG
@@ -752,6 +930,83 @@ lockBtn.addEventListener('click', () => {
   togglePass.textContent = '👁';
   // Cuộn lên đầu
   window.scrollTo({ top: 0, behavior: 'instant' });
+});
+
+// =========================================================================
+// 6B. MEMORY SCREEN (UPDATED: ảnh + nhạc)
+// =========================================================================
+function updateMusicToggle() {
+  const isPlaying = !bgMusic.paused;
+  musicToggle.textContent = isPlaying ? '🔇 Tắt nhạc' : '🎵 Bật nhạc';
+  musicToggle.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+}
+
+function attemptMusicPlay() {
+  const playPromise = bgMusic.play();
+  if (playPromise && typeof playPromise.then === 'function') {
+    playPromise
+      .then(() => {
+        musicHint.classList.remove('show');
+        updateMusicToggle();
+      })
+      .catch(() => {
+        musicHint.classList.add('show');
+        updateMusicToggle();
+      });
+  }
+}
+
+function openMemoryScreen() {
+  memoryScreen.classList.add('visible');
+  memoryScreen.setAttribute('aria-hidden', 'false');
+  letterScreen.setAttribute('aria-hidden', 'true');
+  document.body.classList.add('no-scroll');
+
+  bgMusic.volume = 0.6;
+  musicHint.textContent = MUSIC_HINT_DEFAULT;
+  musicHint.classList.remove('show');
+  updateMusicToggle();
+  bgMusic.load();
+
+  // Gọi play trực tiếp trong cùng gesture để tăng tỉ lệ autoplay
+  attemptMusicPlay();
+}
+
+function closeMemoryScreen() {
+  memoryScreen.classList.remove('visible');
+  memoryScreen.setAttribute('aria-hidden', 'true');
+  letterScreen.setAttribute('aria-hidden', 'false');
+  document.body.classList.remove('no-scroll');
+
+  bgMusic.pause();
+  updateMusicToggle();
+  if (heartController && heartController.start) heartController.start();
+  openMemoryBtn.focus();
+}
+
+function toggleMusic() {
+  if (bgMusic.paused) {
+    attemptMusicPlay();
+  } else {
+    bgMusic.pause();
+    updateMusicToggle();
+  }
+}
+
+openMemoryBtn.addEventListener('click', openMemoryScreen);
+closeMemoryBtn.addEventListener('click', closeMemoryScreen);
+musicToggle.addEventListener('click', toggleMusic);
+bgMusic.addEventListener('play', () => {
+  musicHint.classList.remove('show');
+  updateMusicToggle();
+});
+bgMusic.addEventListener('pause', () => {
+  updateMusicToggle();
+});
+bgMusic.addEventListener('error', () => {
+  musicHint.textContent = 'Không tìm thấy nhạc. Kiểm tra file video/love.mp3 nha em 💗';
+  musicHint.classList.add('show');
+  updateMusicToggle();
 });
 
 // =========================================================================
@@ -889,7 +1144,7 @@ function initHearts() {
   const ctx    = canvas.getContext('2d');
 
   // Số lượng tim — ít hơn trên máy yếu / prefers-reduced
-  const COUNT = prefersReduced ? 4 : 18;
+  const COUNT = prefersReduced ? 4 : 22;
 
   function resize() {
     canvas.width  = window.innerWidth;
@@ -907,11 +1162,15 @@ function initHearts() {
   }
 
   function newHeart(random = false) {
+    const baseSize = 4 + Math.random() * 10;
+    const maxSize = baseSize + 8 + Math.random() * 10;
     return {
       x:    Math.random() * window.innerWidth,
-      y:    random ? Math.random() * window.innerHeight : window.innerHeight + 20,
-      size: 6 + Math.random() * 14,
-      speedY: 0.35 + Math.random() * 0.55,
+      y:    random ? Math.random() * window.innerHeight : -30,
+      size: baseSize,
+      maxSize: maxSize,
+      grow: 0.03 + Math.random() * 0.05,
+      speedY: 0.5 + Math.random() * 0.9,
       speedX: (Math.random() - 0.5) * 0.4,
       alpha:  0.08 + Math.random() * 0.18,
       color:  COLORS[Math.floor(Math.random() * COLORS.length)],
@@ -940,14 +1199,15 @@ function initHearts() {
 
     hearts.forEach((h, i) => {
       h.wobble += h.wobbleSpeed;
-      h.y      -= h.speedY;
+      h.y      += h.speedY;
       h.x      += h.speedX + Math.sin(h.wobble) * 0.3;
+      h.size   = Math.min(h.size + h.grow, h.maxSize);
 
       // Vẽ
       drawHeart(ctx, h.x - h.size * 0.5, h.y - h.size * 0.5, h.size, h.alpha, h.color);
 
-      // Reset khi bay ra ngoài
-      if (h.y < -30) {
+      // Reset khi rơi ra ngoài
+      if (h.y > canvas.height + 40) {
         hearts[i] = newHeart(false);
       }
     });
@@ -963,6 +1223,8 @@ function initHearts() {
     if (animId) { cancelAnimationFrame(animId); animId = null; }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
+
+  heartController = { start: startHearts, stop: stopHearts };
 
   // Pause khi tab ẩn → tiết kiệm pin
   document.addEventListener('visibilitychange', () => {
