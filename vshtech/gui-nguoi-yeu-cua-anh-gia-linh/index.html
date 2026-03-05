@@ -375,9 +375,60 @@
 
     /* Wax seal — SVG tự vẽ */
     .wax-seal-wrap {
+      position: relative;
       display: flex;
       justify-content: center;
       margin-bottom: 24px;
+      width: 140px;
+      height: 140px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .wax-seal-svg {
+      width: 140px;
+      height: 140px;
+    }
+
+    .seal-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      pointer-events: none;
+    }
+
+    .seal-heart {
+      font-size: 22px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+
+    .seal-days-value {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .seal-days-label {
+      font-family: var(--font-ui);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      margin-top: 2px;
+    }
+
+    .seal-time {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      margin-top: 6px;
     }
 
     /* Nội dung thư */
@@ -620,6 +671,15 @@
       .lock-card { padding: 52px 44px 48px; }
     }
 
+    /* Mobile: giữ dòng "To: ..." không xuống dòng */
+    @media (max-width: 480px) {
+      .letter-to {
+        font-size: 0.95rem;
+        white-space: nowrap;
+      }
+      .letter-to br { display: none; }
+    }
+
     /* =====================================================================
        8. SCROLLBAR tùy chỉnh (Webkit)
     ===================================================================== */
@@ -708,8 +768,8 @@
     </div>
 
     <!-- Wax seal SVG tự vẽ -->
-    <div class="wax-seal-wrap" aria-hidden="true">
-      <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+    <div class="wax-seal-wrap">
+      <svg class="wax-seal-svg" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <!-- Nền sáp -->
         <circle cx="35" cy="35" r="32" fill="#ff7eb6" opacity="0.92"/>
         <circle cx="35" cy="35" r="28" fill="none" stroke="#fff" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6"/>
@@ -718,6 +778,12 @@
         <!-- Chữ nhỏ quanh seal -->
         <text x="35" y="60" text-anchor="middle" font-size="6" fill="#fff" opacity="0.7" font-family="Georgia,serif" letter-spacing="1">✦ LOVE ✦</text>
       </svg>
+      <div class="seal-content" aria-live="polite">
+        <div class="seal-heart">❤</div>
+        <div class="seal-days-value" id="daysCount">0</div>
+        <div class="seal-days-label">DAY</div>
+        <div class="seal-time" id="timeCount">00:00:00</div>
+      </div>
     </div>
 
     <!-- ================================================================
@@ -839,6 +905,8 @@ const lockBtn       = document.getElementById('lockBtn');
 const shimmer       = document.getElementById('shimmerOverlay');
 const letterDate    = document.getElementById('letterDate');
 const letterContent = document.getElementById('letterContent');
+const daysCountEl   = document.getElementById('daysCount');
+const timeCountEl   = document.getElementById('timeCount');
 const openMemoryBtn = document.getElementById('openMemoryBtn');
 const memoryScreen  = document.getElementById('memoryScreen');
 const closeMemoryBtn = document.getElementById('closeMemoryBtn');
@@ -852,6 +920,32 @@ const musicHint     = document.getElementById('musicHint');
 letterDate.textContent = new Date().toLocaleDateString('vi-VN', {
   weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
 });
+
+// =========================================================================
+// 2B. TIMER TỪ 01/01/2025
+// =========================================================================
+const START_DATE = new Date(2025, 0, 1, 0, 0, 0);
+
+function pad2(n) {
+  return String(n).padStart(2, '0');
+}
+
+function updateLoveTimer() {
+  const now = new Date();
+  const diffMs = Math.max(0, now - START_DATE);
+  const totalSeconds = Math.floor(diffMs / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const remain = totalSeconds % 86400;
+  const hours = Math.floor(remain / 3600);
+  const minutes = Math.floor((remain % 3600) / 60);
+  const seconds = remain % 60;
+
+  if (daysCountEl) daysCountEl.textContent = String(days);
+  if (timeCountEl) timeCountEl.textContent = `${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)}`;
+}
+
+updateLoveTimer();
+setInterval(updateLoveTimer, 1000);
 
 // =========================================================================
 // 3. CHECK SESSION — nếu đã mở rồi thì hiện thẳng thư
